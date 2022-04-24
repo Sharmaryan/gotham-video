@@ -13,7 +13,7 @@ export const ExploreVideos = () => {
           watch your favourite super heroes clips
         </h1>
 
-        <button class="btn btn-secondary explore-btn">get started</button>
+        <button className="btn btn-secondary explore-btn">get started</button>
       </div>
     </div>
   );
