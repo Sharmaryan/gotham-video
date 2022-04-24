@@ -1,0 +1,40 @@
+.categories-heading {
+  margin: 1.3rem 0;
+}
+
+.categories-heading {
+  color: var(--secondary-color);
+  text-transform: uppercase;
+}
+
+.categories {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+}
+
+.category {
+  position: relative;
+  border: 3px solid var(--secondary-color);
+  box-shadow: 5px 5px var(--gray);
+  cursor: pointer;
+}
+.category-title {
+  position: absolute;
+  top: 5rem;
+  background-color: var(--secondary-color);
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 8px 0;
+}
+
+.title {
+  color: var(--primary-color);
+}
+.title:hover{
+    color: var(--black);
+}
+
