@@ -29,9 +29,9 @@ export const Categories = () => {
     {
       id: 4,
       image: "https://i.cdn.newsbytesapp.com/images/l80120220322094701.png",
-      altText: "batman",
+      altText: "hulk",
 
-      title: "batman",
+      title: "hulk",
     },
   ];
 
