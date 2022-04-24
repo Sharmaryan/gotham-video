@@ -29,4 +29,6 @@ width: 16rem;
 }
 .fas-icons{
     color: var(--secondary-color);
+    font-size: 1.2rem;
 }
+

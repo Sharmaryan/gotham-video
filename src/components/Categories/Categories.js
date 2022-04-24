@@ -1,6 +1,8 @@
 import React from "react";
 import "./Categories.css";
 import { Link } from "react-router-dom";
+import { useTheme } from "../../context/theme-context/theme-context";
+
 export const Categories = () => {
   const categories = [
     {
@@ -35,8 +37,10 @@ export const Categories = () => {
     },
   ];
 
+  const { theme } = useTheme();
+
   return (
-    <div >
+    <div style={{ background: theme }}>
       <h2 className="text-sm text-center categories-heading">categories</h2>
 
       <div className="categories">

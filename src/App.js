@@ -2,9 +2,11 @@ import "./App.css";
 import { Navbar } from "./components/index";
 import { Routes, Route } from "react-router-dom";
 import {Home, History, LikedVideos, Playlists, WatchLater,Explore} from './pages/index';
+import { useTheme } from "./context/theme-context/theme-context";
 function App() {
+  const { theme } = useTheme();
   return (
-    <div className="App">
+    <div className="App" style={{ background: theme }}>
       <Navbar />
       <Routes>
         <Route path='/' element={<Home/>}/>
