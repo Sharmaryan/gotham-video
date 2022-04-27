@@ -3,8 +3,6 @@ import { useContext, createContext, useReducer } from "react";
 const VideoContext = createContext();
 
 const videoReducer = (state, action) => {
-  console.log(action.type);
-
   switch (action.type) {
     case "ALL":
       return {
