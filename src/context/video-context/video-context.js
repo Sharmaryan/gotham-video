@@ -1,0 +1,94 @@
+import { useContext, createContext, useReducer } from "react";
+
+const VideoContext = createContext();
+
+const videoReducer = (state, action) => {
+  console.log(action.type);
+
+  switch (action.type) {
+    case "ALL":
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          all: true,
+          blackPanther: false,
+          drStrange: false,
+          hulk: false,
+          spiderman: false,
+        },
+      };
+    case "SPIDER-MAN":
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          all: false,
+          blackPanther: false,
+          drStrange: false,
+          hulk: false,
+          spiderman: true,
+        },
+      };
+    case "DR-STRANGE":
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          all: false,
+          blackPanther: false,
+          drStrange: true,
+          hulk: false,
+          spiderman: false,
+        },
+      };
+    case "HULK":
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          all: false,
+          blackPanther: false,
+          drStrange: false,
+          hulk: true,
+          spiderman: false,
+        },
+      };
+    case "BLACK-PANTHER":
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          all: false,
+          blackPanther: true,
+          drStrange: false,
+          hulk: false,
+          spiderman: false,
+        },
+      };
+    default:
+      return { ...state };
+  }
+};
+
+const VideoProvider = ({ children }) => {
+  const [{ categories }, videoDispatch] = useReducer(videoReducer, {
+    categories: {
+      all: "null",
+      spiderman: "null",
+      blackPanther: "null",
+      drStrange: "null",
+      hulk: "null",
+    },
+  });
+
+  return (
+    <VideoContext.Provider value={{ videoDispatch, categories }}>
+      {children}
+    </VideoContext.Provider>
+  );
+};
+
+const useVideo = () => useContext(VideoContext);
+
+export { VideoProvider, useVideo };

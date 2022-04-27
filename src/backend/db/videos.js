@@ -13,6 +13,7 @@ export const videos = [
     views: "74M",
     duration: "3:04",
     thumbnail: "https://i.ytimg.com/vi/JfVOs4VSpmA/hq720.jpg",
+    category: "spiderman",
   },
   {
     _id: "SLD9xzJ4oeU",
@@ -23,6 +24,7 @@ export const videos = [
     views: "35M",
     duration: "4:16",
     thumbnail: "https://i.ytimg.com/vi/SLD9xzJ4oeU/hq720.jpg",
+    category: "hulk",
   },
   {
     _id: "aWzlQ2N6qqg",
@@ -35,6 +37,7 @@ export const videos = [
     views: "48M",
     duration: "2:16",
     thumbnail: "https://i.ytimg.com/vi/aWzlQ2N6qqg/hq720.jpg",
+    category: "drStrange",
   },
   {
     _id: "tgB1wUcmbbw",
@@ -46,6 +49,7 @@ export const videos = [
     views: "33M",
     duration: "1:29",
     thumbnail: "https://i.ytimg.com/vi/tgB1wUcmbbw/hqdefault.jpg",
+    category: "thor",
   },
   {
     _id: "izCIHQLhwrc",
@@ -56,6 +60,7 @@ export const videos = [
     views: "10K",
     duration: "9:22",
     thumbnail: "https://i.ytimg.com/vi/izCIHQLhwrc/hq720.jpg",
+    category: "spiderman",
   },
   {
     _id: "EaJwNC4u4n0",
@@ -68,5 +73,17 @@ export const videos = [
     views: "3M",
     duration: "4:58",
     thumbnail: "https://i.ytimg.com/vi/EaJwNC4u4n0/hqdefault.jpg",
+    category: "hulk",
+  },
+  {
+    _id: "xjDjIWPwcPU",
+    title: "Marvel Studios' Black Panther - Official Trailer",
+    description: "Marvel Studios' Black Panther - Official Trailer",
+
+    creator: "Marvel Entertainment",
+    views: "50M",
+    duration: "2:18",
+    thumbnail: "https://i.ytimg.com/vi/xjDjIWPwcPU/hq720.jpg",
+    category: "blackPanther",
   },
 ];

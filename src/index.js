@@ -6,6 +6,7 @@ import { makeServer } from "./server";
 
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "./context/theme-context/theme-context";
+import { VideoProvider } from "./context/video-context/video-context";
 // Call make Server
 makeServer();
 
@@ -14,7 +15,9 @@ root.render(
   <StrictMode>
     <Router>
       <ThemeProvider>
-        <App />
+        <VideoProvider>
+          <App />
+        </VideoProvider>
       </ThemeProvider>
     </Router>
   </StrictMode>
