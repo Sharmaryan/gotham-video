@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 
 import "./Navbar.css";
 
@@ -40,7 +40,7 @@ export const Navbar = () => {
 
           <li className="menu-items fas-icons">
             <MdDarkMode />
-            {/* <MdLightMode />  */}
+          
           </li>
         </ul>
       </div>
