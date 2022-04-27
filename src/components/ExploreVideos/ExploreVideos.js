@@ -1,5 +1,6 @@
 import React from "react";
 import "./ExploreVideos.css";
+import {Link} from 'react-router-dom';
 export const ExploreVideos = () => {
   return (
     <div className="explore">
@@ -13,7 +14,7 @@ export const ExploreVideos = () => {
           watch your favourite super heroes clips
         </h1>
 
-        <button className="btn btn-secondary explore-btn">get started</button>
+        <button className="btn btn-secondary explore-btn"><Link to='/explore' className="text-white">get started</Link></button>
       </div>
     </div>
   );
