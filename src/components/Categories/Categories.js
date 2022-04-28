@@ -1,44 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import { useVideo } from "../../context/video-context/video-context";
 
 export const Categories = () => {
-  const categories = [
-    {
-      id: 1,
-      image: "https://i.ytimg.com/vi/BNcxTNrtRdk/maxresdefault.jpg",
-      altText: "spiderman",
-      title: "Spiderman",
-      dispatch: "SPIDER-MAN",
-    },
-    {
-      id: 2,
-      image:
-        "https://static.toiimg.com/thumb/msid-82379825,width-1200,height-900,resizemode-4/.jpg",
-      altText: "black panther",
-      title: "black panther",
-      dispatch: "BLACK-PANTHER",
-    },
-    {
-      id: 3,
-      image:
-        "https://www.cnet.com/a/img/resize/41e73c5ac49a7b175534bcd57d6b46c4776472dc/2016/10/28/3809e66e-d3fe-46bb-963a-705d88f5a902/doctor-strange6.jpg?auto=webp",
-      altText: "dr strange",
-      title: "dr strange",
-      dispatch: "DR-STRANGE",
-    },
-    {
-      id: 4,
-      image: "https://i.cdn.newsbytesapp.com/images/l80120220322094701.png",
-      altText: "hulk",
-      title: "hulk",
-      dispatch: "HULK",
-    },
-  ];
-
+  const [categories, setCategories] = useState([]);
   const { videoDispatch } = useVideo();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const getCategories = await axios.get("/api/categories");
+        setCategories((prev) => getCategories.data.categories);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
     <div>

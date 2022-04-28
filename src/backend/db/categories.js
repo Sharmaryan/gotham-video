@@ -8,20 +8,32 @@ import { v4 as uuid } from "uuid";
 export const categories = [
   {
     _id: uuid(),
-    categoryName: "Computer Programming",
-    description:
-      "Computer programming is the process of designing and building an executable computer program to accomplish a specific computing",
+    image: "https://i.ytimg.com/vi/BNcxTNrtRdk/maxresdefault.jpg",
+    altText: "spiderman",
+    title: "Spiderman",
+    dispatch: "SPIDER-MAN",
   },
   {
     _id: uuid(),
-    categoryName: "Frontend Development",
-    description:
-      "Front-end web development, also known as client-side development is the practice of producing HTML, CSS and JavaScript for a website or Web Application",
+    image:
+      "https://static.toiimg.com/thumb/msid-82379825,width-1200,height-900,resizemode-4/.jpg",
+    altText: "black panther",
+    title: "black panther",
+    dispatch: "BLACK-PANTHER",
   },
   {
     _id: uuid(),
-    categoryName: "Backend Development",
-    description:
-      "Backend Development is also known as server-side development. It is everything that the users don't see and contains behind-the-scenes activities that occur when performing any action on a website.",
+    image:
+      "https://www.cnet.com/a/img/resize/41e73c5ac49a7b175534bcd57d6b46c4776472dc/2016/10/28/3809e66e-d3fe-46bb-963a-705d88f5a902/doctor-strange6.jpg?auto=webp",
+    altText: "dr strange",
+    title: "dr strange",
+    dispatch: "DR-STRANGE",
+  },
+  {
+    _id: uuid(),
+    image: "https://i.cdn.newsbytesapp.com/images/l80120220322094701.png",
+    altText: "hulk",
+    title: "hulk",
+    dispatch: "HULK",
   },
 ];
