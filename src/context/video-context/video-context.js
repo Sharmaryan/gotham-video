@@ -5,11 +5,11 @@ const VideoContext = createContext();
 const VideoProvider = ({ children }) => {
   const [{ categories }, videoDispatch] = useReducer(videoReducer, {
     categories: {
-      all: "null",
-      spiderman: "null",
-      blackPanther: "null",
-      drStrange: "null",
-      hulk: "null",
+      all: null,
+      spiderman: null,
+      blackPanther: null,
+      drStrange: null,
+      hulk: null,
     },
   });
 
