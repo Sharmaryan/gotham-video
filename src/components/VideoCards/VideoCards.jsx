@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { VideoCard } from "../VideoCard/VideoCard";
-import { useVideo } from "../../context/video-context/video-context";
-import { selectCategory } from "../../utils/selectCategory";
+
+import { VideoCard } from "components/VideoCard/VideoCard";
+import { useVideo } from "context/video-context/video-context";
+import {selectCategory} from "utils/selectCategory";
+
 import "./VideoCards.css";
 
 export const VideoCards = () => {
