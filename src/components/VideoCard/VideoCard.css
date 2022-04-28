@@ -1,0 +1,22 @@
+.videocard-main {
+  display: flex;
+}
+
+.videocard-title {
+  font-size: 1.1rem;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+
+.videocard-icons{
+margin-right: 5px;
+}
+.videocard-section{
+    display: flex;
+    justify-content: space-around;
+}

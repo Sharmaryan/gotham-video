@@ -1,18 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 
 import "./Navbar.css";
-import { useTheme } from "../../context/theme-context/theme-context";
+
 export const Navbar = () => {
-  const { theme, setTheme } = useTheme();
-
-  const themeSwitch = () => {
-    theme === "white" ? setTheme("black") : setTheme("white");
-  };
-
   return (
-    <nav className="nav-menu navbar" style={{ background: theme }}>
+    <nav className="nav-menu navbar">
       <ul>
         <li className="menu-items">
           <Link to="/" className="text-decorations text-white nav-logo">
@@ -44,8 +38,9 @@ export const Navbar = () => {
             </Link>
           </li>
 
-          <li className="menu-items fas-icons " onClick={themeSwitch}>
-            {theme === "white" ? <MdDarkMode />: <MdLightMode /> }
+          <li className="menu-items fas-icons">
+            <MdDarkMode />
+          
           </li>
         </ul>
       </div>

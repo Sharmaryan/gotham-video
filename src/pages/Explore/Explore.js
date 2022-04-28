@@ -1,7 +1,11 @@
-import React from 'react'
-
+import React from "react";
+import { VideoCards, VideoCategories } from "../../components/index";
+import './Explore.css';
 export const Explore = () => {
   return (
-    <div>Explore</div>
-  )
-}
+    <div className="video-container">
+      <VideoCategories />
+      <VideoCards />
+    </div>
+  );
+};

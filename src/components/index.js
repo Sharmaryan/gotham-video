@@ -2,3 +2,8 @@ export {Navbar} from './Navbar/Navbar';
 export {ExploreVideos} from './ExploreVideos/ExploreVideos';
 export {Categories} from './Categories/Categories';
 export {Social} from './Social/Social';
+export {Sidebar} from './Sidebar/Sidebar';
+export {SidebarLayout} from './SidebarLayout/SidebarLayout';
+export {VideoCard} from './VideoCard/VideoCard';
+export {VideoCards} from './VideoCards/VideoCards';
+export {VideoCategories} from './VideoCategories/VideoCategories';

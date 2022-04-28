@@ -20,3 +20,6 @@
     background-color: transparent;
     border: 1px solid var(--secondary-color);
 }
+.text-white{
+  text-decoration: none;
+}
