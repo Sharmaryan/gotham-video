@@ -1,0 +1,52 @@
+.video-detail {
+  position: relative;
+  top: 5rem;
+  width: 80%;
+  left: 13.4rem;
+  right: 0;
+}
+.video-container {
+  position: absolute;
+  width: 90%;
+  top: 1.3rem;
+}
+.video-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.video-player {
+  width: 100%;
+  height: 25rem;
+}
+.video-main {
+  display: flex;
+  align-items: center;
+  column-gap: 2rem;
+  margin-top: 1rem;
+}
+.video-icons {
+  margin: auto 0;
+  font-size: 1.1rem;
+}
+.video-icon-title {
+  font-size: 1.1rem;
+  margin-left: 4px;
+}
+.video-icon-title,
+.video-icons,
+.video-title {
+  color: var(--secondary-color);
+  text-transform: capitalize;
+}
+.video {
+  display: flex;
+}
+.video-avatar-creator {
+  display: flex;
+  align-items: center;
+  color: var(--secondary-color);
+  font-weight: bolder;
+}
+.video-desc {
+  color: var(--secondary-color);
+}
