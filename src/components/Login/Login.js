@@ -23,8 +23,8 @@ export const Login = () => {
 
     try {
       const response = await axios.post(`/api/auth/login`, {
-        email: "adarshbalika@gmail.com",
-        password: "adarshBalika123",
+        email,
+        password,
       });
 
       const {
@@ -32,7 +32,7 @@ export const Login = () => {
         data: { encodedToken, foundUser },
       } = response;
 
-      if (status === 200) {
+      if (status >= 200 && status <= 299) {
         setAuth({ ...auth, auth: true, user: foundUser, token: encodedToken });
         localStorage.setItem("token", encodedToken);
         navigate(from, { replace: true });
@@ -56,8 +56,9 @@ export const Login = () => {
       } = response;
 
       if (status >= 200 && status <= 299) {
-        setAuth({ ...auth, auth: true, user: foundUser, token: encodedToken });
-        localStorage.setItem("token", encodedToken);
+      setAuth({ ...auth, auth: true, user: foundUser, token: encodedToken });
+      localStorage.setItem("token", encodedToken);
+      navigate(from, { replace: true });
       }
     } catch (error) {
       console.log(error);
