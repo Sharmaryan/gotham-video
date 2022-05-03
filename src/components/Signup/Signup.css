@@ -1,0 +1,53 @@
+.signup-section {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signup-form {
+  width: 22rem;
+  border: 3px solid var(--secondary-color);
+  margin-top: 1rem;
+  padding: 1rem;
+  text-transform: capitalize;
+}
+.signup-form-title {
+  text-align: center;
+  color: var(--secondary-color);
+}
+
+.input {
+  padding: 8px 0;
+  display: block;
+  margin: 3px 0;
+  width: 100%;
+}
+.password-input {
+  position: relative;
+}
+.password-icons {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+.t-and-c {
+  margin: 5px 0;
+}
+.signup-btn {
+  display: block;
+  margin: 1rem 0;
+  width: 100%;
+  padding: 6px 0;
+  background-color: var(--secondary-color);
+  border: none;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.have-account {
+  text-align: center;
+}
+.account {
+  color: var(--gray);
+}

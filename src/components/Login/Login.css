@@ -1,0 +1,49 @@
+.login-form {
+  width: 22rem;
+  border: 3px solid var(--secondary-color);
+  padding: 1rem;
+  text-transform: capitalize;
+  margin-top: 5rem;
+}
+.login-title {
+  text-align: center;
+  color: var(--secondary-color);
+}
+.input {
+  padding: 8px 0;
+
+  display: block;
+  margin: 1rem 0;
+  width: 100%;
+  border: 2px solid var(--gray);
+}
+
+.password-input {
+  position: relative;
+}
+.password-icons {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+.password-forgot {
+  padding-left: 1rem;
+  color: var(--gray);
+}
+.login-btn {
+  display: block;
+  margin: 1rem 0;
+  width: 100%;
+  padding: 6px 0;
+  background-color: var(--secondary-color);
+  border: none;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.new-account {
+  text-align: center;
+}
+.account-title {
+  color: var(--gray);
+}

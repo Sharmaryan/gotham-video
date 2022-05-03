@@ -1,5 +1,5 @@
 import "./App.css";
-import { Navbar } from "./components/index";
+import { Navbar, RequiresAuth } from "./components/index";
 import { Routes, Route } from "react-router-dom";
 import {
   Home,
@@ -8,6 +8,8 @@ import {
   Playlists,
   WatchLater,
   Explore,
+  LoginPage,
+  SignupPage
 } from "./pages/index";
 import { SidebarLayout } from "./components/index";
 
@@ -17,13 +19,42 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route element={<SidebarLayout />}>
           <Route path="/explore" element={<Explore />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/liked-videos" element={<LikedVideos />} />
-          <Route path="/playlists" element={<Playlists />} />
-          <Route path="/watch-later" element={<WatchLater />} />
+          <Route
+            path="/history"
+            element={
+              <RequiresAuth>
+                <History />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path="/liked-videos"
+            element={
+              <RequiresAuth>
+                <LikedVideos />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path="/playlists"
+            element={
+              <RequiresAuth>
+                <Playlists />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path="/watch-later"
+            element={
+              <RequiresAuth>
+                <WatchLater />
+              </RequiresAuth>
+            }
+          />
         </Route>
       </Routes>
     </div>

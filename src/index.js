@@ -5,8 +5,8 @@ import App from "./App";
 import { makeServer } from "./server";
 
 import { BrowserRouter as Router } from "react-router-dom";
-import { ThemeProvider } from "./context/theme-context/theme-context";
-import { VideoProvider } from "./context/video-context/video-context";
+
+import { VideoProvider, ThemeProvider, AuthProvider } from "./context/index";
 // Call make Server
 makeServer();
 
@@ -14,11 +14,13 @@ const root = ReactDOMClient.createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
     <Router>
-      <ThemeProvider>
-        <VideoProvider>
-          <App />
-        </VideoProvider>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <VideoProvider>
+            <App />
+          </VideoProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </Router>
   </StrictMode>
 );

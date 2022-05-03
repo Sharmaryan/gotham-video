@@ -7,3 +7,6 @@ export {SidebarLayout} from './SidebarLayout/SidebarLayout';
 export {VideoCard} from './VideoCard/VideoCard';
 export {VideoCards} from './VideoCards/VideoCards';
 export {VideoCategories} from './VideoCategories/VideoCategories';
+export {Login} from './Login/Login';
+export {RequiresAuth} from './RequiresAuth/RequiresAuth';
+export {Signup} from './Signup/Signup';
