@@ -14,7 +14,6 @@ export const VideoDetail = () => {
     (async () => {
       try {
         const response = await axios.get(`/api/video/${videoId}`);
-        console.log(response.data.video);
         setSingleVideoDetail(response.data.video);
       } catch (err) {
         console.log(err);

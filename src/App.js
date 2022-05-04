@@ -12,7 +12,7 @@ import {
   SignupPage,
   VideoDetail
 } from "./pages/index";
-import { SidebarLayout } from "./components/index";
+import { SidebarLayout } from "./components";
 
 function App() {
   return (
