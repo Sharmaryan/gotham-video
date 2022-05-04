@@ -9,9 +9,10 @@ import {
   WatchLater,
   Explore,
   LoginPage,
-  SignupPage
+  SignupPage,
+  VideoDetail
 } from "./pages/index";
-import { SidebarLayout } from "./components/index";
+import { SidebarLayout } from "./components";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route element={<SidebarLayout />}>
+        <Route path="/video/:videoId" element={<VideoDetail />} />
           <Route path="/explore" element={<Explore />} />
           <Route
             path="/history"
