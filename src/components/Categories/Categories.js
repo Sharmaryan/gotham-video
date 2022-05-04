@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
-// import { useVideo } from "../../context/video-context/video-context";
 import {useVideo} from 'context/video-context/video-context';
 
 export const Categories = () => {

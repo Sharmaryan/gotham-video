@@ -1,5 +1,9 @@
 .video-categories {
+  margin-top: 4.5rem;
+  position: absolute;
   display: flex;
+  width: 70%;
+  right: 0;
   justify-content: center;
 }
 .video-button {
