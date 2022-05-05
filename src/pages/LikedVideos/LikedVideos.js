@@ -1,7 +1,10 @@
-import React from 'react'
-
+import React from "react";
+import { VideoLike } from "components";
+import "./LikedVideos.css";
 export const LikedVideos = () => {
   return (
-    <div>LikedVideos</div>
-  )
-}
+    <div className="liked-videos">
+      <VideoLike />
+    </div>
+  );
+};

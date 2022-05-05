@@ -6,7 +6,12 @@ import { makeServer } from "./server";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
-import { VideoProvider, ThemeProvider, AuthProvider } from "./context/index";
+import {
+  VideoProvider,
+  ThemeProvider,
+  AuthProvider,
+  LikeProvider,
+} from "./context/index";
 // Call make Server
 makeServer();
 
@@ -16,9 +21,11 @@ root.render(
     <Router>
       <AuthProvider>
         <ThemeProvider>
-          <VideoProvider>
-            <App />
-          </VideoProvider>
+          <LikeProvider>
+            <VideoProvider>
+              <App />
+            </VideoProvider>
+          </LikeProvider>
         </ThemeProvider>
       </AuthProvider>
     </Router>
