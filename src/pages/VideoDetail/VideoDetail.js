@@ -2,27 +2,35 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./VideoDetail.css";
+
 import { BiLike, BiPlayCircle, BiTime } from "react-icons/bi";
-import { CgTimer } from "react-icons/cg";
-import { AiOutlineEye } from "react-icons/ai";
+import {MdOutlineWatchLater, MdWatchLater} from 'react-icons/md'
+import { AiOutlineEye, AiFillLike } from "react-icons/ai";
+
 import { useAuth } from "context/auth-context/auth-context";
 import { useLike } from "context/like-context/like-context";
+import { useWatchLater } from "context/watch-context/watch-context";
 
 export const VideoDetail = () => {
   const [singleVideoDetail, setSingleVideoDetail] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
+  const [isWatchLater, setIsWatchLater] = useState(false);
 
   const { likedVideos, setLikedVideos } = useLike();
+  const { watchLaterVideos, setWatchLaterVideos } = useWatchLater();
+
   const { auth } = useAuth();
-
   const { videoId } = useParams();
-
   const { title, views, description, thumbnail, duration, _id, creator } =
     singleVideoDetail ?? {};
 
   useEffect(() => {
     setIsLiked(likedVideos.find((video) => video._id === videoId));
   }, [videoId, likedVideos]);
+
+  useEffect(() => {
+    setIsWatchLater(watchLaterVideos.some((video) => video._id === videoId));
+  }, [videoId, watchLaterVideos]);
 
   useEffect(() => {
     (async () => {
@@ -59,9 +67,32 @@ export const VideoDetail = () => {
     })();
   };
 
+  const watchLater = async () => {
+    setIsWatchLater(true);
+    try {
+      await axios({
+        method: "post",
+        url: "/api/user/watchlater",
+        headers: { authorization: auth.token },
+        data: { video: singleVideoDetail },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const removeWatchLater = (_id) => {
+    setIsWatchLater(false);
+    (async () => {
+      const response = await axios.delete(`/api/user/watchlater/${_id}`, {
+        headers: { authorization: auth.token },
+      });
+      setWatchLaterVideos(response.data.watchlater);
+    })();
+  };
+
   return (
     <div className="video-detail">
-    
       {singleVideoDetail && (
         <div className="video-container">
           <iframe
@@ -82,8 +113,8 @@ export const VideoDetail = () => {
             </div>
             {isLiked ? (
               <div className="video-like video">
-                <BiLike
-                  className="video-icons"
+                <AiFillLike
+                  className="video-icons icon-color"
                   onClick={() => unLikeVideo(_id)}
                 />
                 <span className="video-icon-title">liked</span>
@@ -94,11 +125,21 @@ export const VideoDetail = () => {
                 <span className="video-icon-title">like</span>
               </div>
             )}
+            {isWatchLater ? (
+              <div className="video-later video">
+                <MdWatchLater
+                  className="video-icons"
+                  onClick={() => removeWatchLater(_id)}
+                />
+                <span className="video-icon-title">added</span>
+              </div>
+            ) : (
+              <div className="video-later video">
+                <MdOutlineWatchLater className="video-icons" onClick={watchLater} />
+                <span className="video-icon-title">watch later</span>
+              </div>
+            )}
 
-            <div className="video-later video">
-              <CgTimer className="video-icons" />
-              <span className="video-icon-title">watch later</span>
-            </div>
             <div className="video-playlist video">
               <BiPlayCircle className="video-icons" />{" "}
               <span className="video-icon-title">add to playlist</span>

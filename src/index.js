@@ -11,6 +11,7 @@ import {
   ThemeProvider,
   AuthProvider,
   LikeProvider,
+  WatchLaterProvider,
 } from "./context/index";
 // Call make Server
 makeServer();
@@ -23,7 +24,9 @@ root.render(
         <ThemeProvider>
           <LikeProvider>
             <VideoProvider>
-              <App />
+              <WatchLaterProvider>
+                <App />
+              </WatchLaterProvider>
             </VideoProvider>
           </LikeProvider>
         </ThemeProvider>
