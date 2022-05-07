@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./VideoDetail.css";
 
 import { BiLike, BiPlayCircle, BiTime } from "react-icons/bi";
-import {MdOutlineWatchLater, MdWatchLater} from 'react-icons/md'
+import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
 
 import { useAuth } from "context/auth-context/auth-context";
@@ -21,6 +21,7 @@ export const VideoDetail = () => {
 
   const { auth } = useAuth();
   const { videoId } = useParams();
+  const navigate = useNavigate();
   const { title, views, description, thumbnail, duration, _id, creator } =
     singleVideoDetail ?? {};
 
@@ -44,16 +45,21 @@ export const VideoDetail = () => {
   }, [videoId]);
 
   const likeVideo = async () => {
-    try {
-      setIsLiked(true);
-      await axios({
-        method: "post",
-        url: "/api/user/likes",
-        headers: { authorization: auth.token },
-        data: { video: singleVideoDetail },
-      });
-    } catch (err) {
-      console.log(err);
+    if (!auth.user) {
+      navigate("/login");
+    } else {
+      try {
+        setIsLiked(true);
+        const response = await axios({
+          method: "post",
+          url: "/api/user/likes",
+          headers: { authorization: auth.token },
+          data: { video: singleVideoDetail },
+        });
+        setLikedVideos(response.data.likes);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -67,21 +73,26 @@ export const VideoDetail = () => {
     })();
   };
 
-  const watchLater = async () => {
-    setIsWatchLater(true);
-    try {
-      await axios({
-        method: "post",
-        url: "/api/user/watchlater",
-        headers: { authorization: auth.token },
-        data: { video: singleVideoDetail },
-      });
-    } catch (err) {
-      console.log(err);
+  const addToWatchLater = async () => {
+    if (!auth.user) {
+      navigate("/login");
+    } else {
+      setIsWatchLater(true);
+      try {
+        const response = await axios({
+          method: "post",
+          url: "/api/user/watchlater",
+          headers: { authorization: auth.token },
+          data: { video: singleVideoDetail },
+        });
+        setWatchLaterVideos(response.data.watchlater);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
-  const removeWatchLater = (_id) => {
+  const removeFromWatchLater = (_id) => {
     setIsWatchLater(false);
     (async () => {
       const response = await axios.delete(`/api/user/watchlater/${_id}`, {
@@ -114,7 +125,7 @@ export const VideoDetail = () => {
             {isLiked ? (
               <div className="video-like video">
                 <AiFillLike
-                  className="video-icons icon-color"
+                  className="video-icons"
                   onClick={() => unLikeVideo(_id)}
                 />
                 <span className="video-icon-title">liked</span>
@@ -129,13 +140,16 @@ export const VideoDetail = () => {
               <div className="video-later video">
                 <MdWatchLater
                   className="video-icons"
-                  onClick={() => removeWatchLater(_id)}
+                  onClick={() => removeFromWatchLater(_id)}
                 />
-                <span className="video-icon-title">added</span>
+                <span className="video-icon-title">watch later</span>
               </div>
             ) : (
               <div className="video-later video">
-                <MdOutlineWatchLater className="video-icons" onClick={watchLater} />
+                <MdOutlineWatchLater
+                  className="video-icons"
+                  onClick={addToWatchLater}
+                />
                 <span className="video-icon-title">watch later</span>
               </div>
             )}
