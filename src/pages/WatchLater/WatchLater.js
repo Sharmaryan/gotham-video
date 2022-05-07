@@ -1,7 +1,10 @@
-import React from 'react'
-
+import React from 'react';
+import './WatchLater.css';
+import { VideoWatchLater } from 'components/VideoWatchLater/VideoWatchLater';
 export const WatchLater = () => {
   return (
-    <div>WatchLater</div>
+    <div className='watch-later'>
+      <VideoWatchLater/>
+    </div>
   )
 }

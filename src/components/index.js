@@ -11,3 +11,4 @@ export {Login} from './Login/Login';
 export {RequiresAuth} from './RequiresAuth/RequiresAuth';
 export {Signup} from './Signup/Signup';
 export {VideoLike} from './VideoLike/VideoLike';
+export {VideoWatchLater} from './VideoWatchLater/VideoWatchLater';
