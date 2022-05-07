@@ -1,7 +1,8 @@
 import React from 'react'
-
+import './History.css';
+import { VideoHistory } from 'components';
 export const History = () => {
   return (
-    <div>History</div>
+    <div className='history'><VideoHistory/></div>
   )
 }
