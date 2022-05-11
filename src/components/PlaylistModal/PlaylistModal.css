@@ -1,0 +1,32 @@
+.playlist-modal{
+    position: fixed;
+    border: 2px solid var(--secondary-color);
+    top: 18rem;
+    left: 36rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 10rem;
+    width: 15rem;
+    background-color: var(--primary-color);
+}
+.modal-close{
+    padding: 2px 4px;
+    color: var(--secondary-color);
+}
+.playlist-btn{
+    border: none;
+    padding:8px 5px;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.playlists-title{
+    color: var(--secondary-color);
+    margin: 8px;
+    font-size: 1.2rem;
+}
+.playlist-input{
+    border: 1px solid var(--secondary-color);
+    width: 100%;
+    padding: 8px 0;
+}

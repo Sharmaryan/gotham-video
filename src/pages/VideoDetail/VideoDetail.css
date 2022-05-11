@@ -1,13 +1,12 @@
 .video-detail {
+  margin-top: 4rem;
+  display: flex;
   position: relative;
-  top: 5rem;
-  width: 80%;
-  left: 13.4rem;
-  right: 0;
 }
 .video-container {
+  width: 70%;
   position: absolute;
-  width: 90%;
+  right: 0;
   top: 1.3rem;
 }
 .video-title {

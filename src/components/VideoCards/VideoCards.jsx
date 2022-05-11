@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { VideoCard } from "components/VideoCard/VideoCard";
 import { useVideo } from "context/video-context/video-context";
-import {selectCategory} from "utils/selectCategory";
+import { category } from "services";
 
 import "./VideoCards.css";
 
@@ -19,7 +19,7 @@ export const VideoCards = () => {
     })();
   }, []);
 
-  const selectedCategory = selectCategory(videos, categories);
+  const selectedCategory = category(videos, categories);
 
   return (
     <div className="videos">

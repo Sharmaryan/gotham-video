@@ -1,10 +1,11 @@
-import React from 'react';
-import './WatchLater.css';
-import { VideoWatchLater } from 'components/VideoWatchLater/VideoWatchLater';
+import React from "react";
+import "./WatchLater.css";
+import { VideoWatchLater, Sidebar } from "components";
 export const WatchLater = () => {
   return (
-    <div className='watch-later'>
-      <VideoWatchLater/>
+    <div className="watch-later">
+      <Sidebar />
+      <VideoWatchLater />
     </div>
-  )
-}
+  );
+};

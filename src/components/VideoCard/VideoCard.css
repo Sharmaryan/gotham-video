@@ -1,3 +1,7 @@
+.videocard{
+  position: relative;
+}
+
 .videocard-main {
   display: flex;
 }

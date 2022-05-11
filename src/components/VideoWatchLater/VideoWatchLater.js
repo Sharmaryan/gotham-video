@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import "./VideoWatchLater.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useAuth } from "context/auth-context/auth-context";
-import { useWatchLater } from "context/watch-context/watch-context";
+import { useAuth, useWatchLater } from "context";
 
 export const VideoWatchLater = () => {
   const { watchLaterVideos, setWatchLaterVideos } = useWatchLater();
