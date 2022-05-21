@@ -24,3 +24,6 @@
 .text-white{
   text-decoration: none;
 }
+.img{
+  object-fit: fill;
+}
