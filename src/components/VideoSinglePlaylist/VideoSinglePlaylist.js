@@ -23,14 +23,15 @@ export const VideoSinglePlaylist = () => {
     })();
   }, [playlistId, auth.token, setSinglePlayList]);
 
-  const clearSinglePlaylist = () => {
-    (async () => {
-      const response = await axios.delete(`/api/user/playlists/${playlistId}`, {
-        headers: { authorization: auth.token },
-      });
-      setSinglePlayList(response.data.playlists);
-    })();
-  };
+  // onst clearSinglePlaylist = () => {
+  //   (async () => {
+  //     const response = await axios.delete(`/api/user/playlists/${playlistId}`, {
+  //       headers: { authorization: auth.token },
+  //     });
+      
+  //     setSinglePlayList(response.data.playlists);
+  //   })();
+  // };c
 
   return (
     <div className="video-liked ">
@@ -43,7 +44,7 @@ export const VideoSinglePlaylist = () => {
         </div>
       )}
       {singlePlayList.length > 0 && (
-        <button className="btn btn-success" onClick={clearSinglePlaylist}>
+        <button className="btn btn-success" >
           Clear All
         </button>
       )}
