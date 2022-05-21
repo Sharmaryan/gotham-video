@@ -17,10 +17,9 @@ const hanldlePlaylistTitleInput = (e, _id, singleVideoDetail,auth) => {
   } else {
     (async () => {
       try {
-        const response = await axios.delete(`/api/user/playlists/${_id}`, {
+        await axios.delete(`/api/user/playlists/${_id}`, {
           headers: { authorization: auth.token },
         });
-        console.log(response);
       } catch (err) {
         console.log(err);
       }
