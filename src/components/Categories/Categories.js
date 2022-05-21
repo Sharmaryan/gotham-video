@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import {useVideo} from 'context/video-context/video-context';
+import { useVideo } from "context/video-context/video-context";
 
 export const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -27,18 +27,16 @@ export const Categories = () => {
         {categories.map(({ image, altText, title, id, dispatch }) => {
           return (
             <div className="category" key={id}>
-              <img src={image} className="category-image" alt={altText} />
-              <p className="category-title">
-                <Link
-                  to="/explore"
-                  className="text-decorations text-white title"
-                  onClick={() => {
-                    videoDispatch({ type: dispatch });
-                  }}
-                >
-                  {title}
-                </Link>
-              </p>
+              <Link
+                to="/explore"
+                className="text-decorations text-white title"
+                onClick={() => {
+                  videoDispatch({ type: dispatch });
+                }}
+              >
+                <img src={image} className="category-image" alt={altText} />
+                <p className="category-title">{title}</p>
+              </Link>
             </div>
           );
         })}
