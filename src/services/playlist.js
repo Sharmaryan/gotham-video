@@ -1,5 +1,5 @@
 import axios from "axios";
-const hanldlePlaylistTitleInput = (e, _id, singleVideoDetail,auth) => {
+const hanldlePlaylistTitleInput = (e, _id, singleVideoDetail, auth) => {
   if (e.target.checked) {
     (async () => {
       try {
@@ -27,12 +27,11 @@ const hanldlePlaylistTitleInput = (e, _id, singleVideoDetail,auth) => {
   }
 };
 
-
-
-  const createPlaylist = async (auth, playListTitle, setPlayLists, navigate) => {
-    if (!auth.user) {
-      navigate("/login");
-    } else {
+const createPlaylist = async (auth, playListTitle, setPlayLists, navigate) => {
+  if (!auth.user) {
+    navigate("/login");
+  } else {
+    if (playListTitle.length !== 0) {
       try {
         const response = await axios({
           method: "post",
@@ -45,20 +44,20 @@ const hanldlePlaylistTitleInput = (e, _id, singleVideoDetail,auth) => {
         console.log(err);
       }
     }
-  };
+  }
+};
 
+const removeFromPlaylist = (_id, auth, setSinglePlayList, playlistId) => {
+  (async () => {
+    const response = await axios.delete(
+      `/api/user/playlists/${playlistId}/${_id}`,
+      {
+        headers: { authorization: auth.token },
+      }
+    );
 
-    const removeFromPlaylist = (_id, auth, setSinglePlayList, playlistId) => {
-      (async () => {
-        const response = await axios.delete(
-          `/api/user/playlists/${playlistId}/${_id}`,
-          {
-            headers: { authorization: auth.token },
-          }
-        );
+    setSinglePlayList(response.data.playlist.videos);
+  })();
+};
 
-        setSinglePlayList(response.data.playlist.videos);
-      })();
-    };
-
-export {hanldlePlaylistTitleInput, createPlaylist, removeFromPlaylist}
+export { hanldlePlaylistTitleInput, createPlaylist, removeFromPlaylist };
