@@ -4,7 +4,12 @@
   right: 0;
   top: 1.3rem;
 }
-
+.video-history-card{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
 .history-title {
   font-size: 1rem;
   overflow: hidden;
@@ -16,4 +21,9 @@
 .history-remove {
   background-color: var(--secondary-color);
   color: var(--primary-color);
+  width: 100%;
+  margin: 0;
+}
+.btn-explore{ 
+  color: var(--secondary-color);
 }

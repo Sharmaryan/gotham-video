@@ -21,32 +21,56 @@ export const VideoHistory = () => {
   }, [auth.token, setHistory]);
 
   const removeFromHistory = (_id) => {
-        (async () => {
-          const response = await axios.delete(`/api/user/history/${_id}`, {
-            headers: { authorization: auth.token },
-          });
-          setHistory(response.data.history);
-        })();
-  }
-  
+    (async () => {
+      const response = await axios.delete(`/api/user/history/${_id}`, {
+        headers: { authorization: auth.token },
+      });
+      setHistory(response.data.history);
+    })();
+  };
 
-  return <div className="video-history">
+  const clearAllHistory = () => {
+    (async () => {
+      const response = await axios.delete("/api/user/history/all", {
+        headers: { authorization: auth.token },
+      });
+      setHistory(response.data.history);
+    })();
+  };
+  return (
+    <div className="video-history">
+      {history.length > 0 && (
+        <button className="btn btn-success" onClick={clearAllHistory}>
+          Clear All
+        </button>
+      )}
+      {history.length === 0 && (
+        <div>
+          There is no videos here{" "}
+          <Link to="/explore" className="btn btn-explore">
+            Explore Videos
+          </Link>
+        </div>
+      )}
+      <div className="video-history-card">
         {history.length > 0 &&
-        history.map(({ thumbnail, title, _id }) => {
-          return (
-            <div className="card card-image" key={_id}>
-              <Link to={`/video/${_id}`}>
-                <img src={thumbnail} alt={title} className="card-logo" />
-              </Link>
-              <p className="card-title history-title">{title}</p>
-              <button
-                className="btn btn-success history-remove"
-                onClick={() => removeFromHistory(_id)}
-              >
-                remove
-              </button>
-            </div>
-          );
-        })}
-  </div>;
+          history.map(({ thumbnail, title, _id }) => {
+            return (
+              <div className="card card-image" key={_id}>
+                <Link to={`/video/${_id}`}>
+                  <img src={thumbnail} alt={title} className="card-logo" />
+                </Link>
+                <p className="card-title history-title">{title}</p>
+                <button
+                  className="btn btn-success history-remove"
+                  onClick={() => removeFromHistory(_id)}
+                >
+                  remove
+                </button>
+              </div>
+            );
+          })}
+      </div>
+    </div>
+  );
 };
