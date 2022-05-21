@@ -30,6 +30,14 @@ export const VideoWatchLater = () => {
 
   return (
     <div className="video-watch-later">
+      {watchLaterVideos.length === 0 && (
+        <div>
+          There is no videos here{" "}
+          <Link to="/explore" className="btn btn-explore">
+            Explore Videos
+          </Link>
+        </div>
+      )}
       {watchLaterVideos.length > 0 &&
         watchLaterVideos.map(({ thumbnail, title, _id }) => {
           return (

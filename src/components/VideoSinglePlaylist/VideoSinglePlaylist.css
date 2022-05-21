@@ -2,5 +2,9 @@
    width: 70%;
   position: absolute;
   right: 0;
-  top: 1.3rem;
+}
+.video-liked-card{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
 }

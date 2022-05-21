@@ -31,6 +31,14 @@ export const VideoLike = () => {
 
   return (
     <div className="video-liked ">
+      {likedVideos.length === 0 && (
+        <div>
+          There is no videos here{" "}
+          <Link to="/explore" className="btn btn-explore">
+            Explore Videos
+          </Link>
+        </div>
+      )}
       {likedVideos.length > 0 &&
         likedVideos.map(({ thumbnail, title, description, _id }) => {
           return (
