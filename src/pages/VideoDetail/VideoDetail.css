@@ -40,6 +40,11 @@
 .video {
   display: flex;
 }
+.video-like,
+.video-later,
+.video-playlist {
+  cursor: pointer;
+}
 .video-avatar-creator {
   display: flex;
   align-items: center;

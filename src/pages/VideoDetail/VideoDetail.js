@@ -50,10 +50,15 @@ export const VideoDetail = () => {
 
   return (
     <div className="video-detail">
-    <Sidebar/>
+      <Sidebar />
       {singleVideoDetail && (
         <div className="video-container">
-          {showModal && <PlaylistModal singleVideoDetail={singleVideoDetail} setShowModal={setShowModal}/>}
+          {showModal && (
+            <PlaylistModal
+              singleVideoDetail={singleVideoDetail}
+              setShowModal={setShowModal}
+            />
+          )}
           <iframe
             className="video-player"
             src={`https://www.youtube.com/embed/${_id}`}
@@ -71,68 +76,71 @@ export const VideoDetail = () => {
               <span className="video-icon-title"> {duration}</span>
             </div>
             {isLiked ? (
-              <div className="video-like video">
-                <AiFillLike
-                  className="video-icons"
-                  onClick={() =>
-                    unLikeVideo(_id, setIsLiked, setLikedVideos, auth)
-                  }
-                />
+              <div
+                className="video-like video"
+                onClick={() =>
+                  unLikeVideo(_id, setIsLiked, setLikedVideos, auth)
+                }
+              >
+                <AiFillLike className="video-icons" />
                 <span className="video-icon-title">liked</span>
               </div>
             ) : (
-              <div className="video-like video">
-                <BiLike
-                  className="video-icons"
-                  onClick={() =>
-                    likeVideo(
-                      auth,
-                      navigate,
-                      setIsLiked,
-                      singleVideoDetail,
-                      setLikedVideos
-                    )
-                  }
-                />
+              <div
+                className="video-like video"
+                onClick={() =>
+                  likeVideo(
+                    auth,
+                    navigate,
+                    setIsLiked,
+                    singleVideoDetail,
+                    setLikedVideos
+                  )
+                }
+              >
+                <BiLike className="video-icons" />
                 <span className="video-icon-title">like</span>
               </div>
             )}
             {isWatchLater ? (
-              <div className="video-later video">
-                <MdWatchLater
-                  className="video-icons"
-                  onClick={() =>
-                    removeFromWatchLater(
-                      _id,
-                      setIsWatchLater,
-                      setWatchLaterVideos,
-                      auth
-                    )
-                  }
-                />
+              <div
+                className="video-later video"
+                onClick={() =>
+                  removeFromWatchLater(
+                    _id,
+                    setIsWatchLater,
+                    setWatchLaterVideos,
+                    auth
+                  )
+                }
+              >
+                <MdWatchLater className="video-icons" />
                 <span className="video-icon-title">watch later</span>
               </div>
             ) : (
-              <div className="video-later video">
-                <MdOutlineWatchLater
-                  className="video-icons"
-                  onClick={() =>
-                    addToWatchLater(
-                      auth,
-                      navigate,
-                      setIsWatchLater,
-                      setWatchLaterVideos,
-                      singleVideoDetail
-                    )
-                  }
-                />
+              <div
+                className="video-later video"
+                onClick={() =>
+                  addToWatchLater(
+                    auth,
+                    navigate,
+                    setIsWatchLater,
+                    setWatchLaterVideos,
+                    singleVideoDetail
+                  )
+                }
+              >
+                <MdOutlineWatchLater className="video-icons" />
                 <span className="video-icon-title">watch later</span>
               </div>
             )}
 
-            <div className="video-playlist video">
-              <BiPlayCircle className="video-icons" onClick={() => setShowModal(true)} />{" "}
-              <span className="video-icon-title"  >add to playlist</span>
+            <div
+              className="video-playlist video"
+              onClick={() => setShowModal(true)}
+            >
+              <BiPlayCircle className="video-icons" />{" "}
+              <span className="video-icon-title">add to playlist</span>
             </div>
           </div>
           <div className="video-avatar-creator">
