@@ -1,7 +1,9 @@
 import React from 'react'
-
+import './Playlists.css';
+import { VideosPlaylists, Sidebar } from 'components';
 export const Playlists = () => {
   return (
-    <div>Playlists</div>
+    <div className='playlists'> <Sidebar/>  <VideosPlaylists/></div>
   )
 }
+

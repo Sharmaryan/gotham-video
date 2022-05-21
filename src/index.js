@@ -8,11 +8,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import {
   VideoProvider,
-  ThemeProvider,
   AuthProvider,
   LikeProvider,
   WatchLaterProvider,
   HistoryProvider,
+  PlaylistProvider,
+  SinglePlaylistProvider
 } from "./context/index";
 // Call make Server
 makeServer();
@@ -22,17 +23,20 @@ root.render(
   <StrictMode>
     <Router>
       <AuthProvider>
-        <ThemeProvider>
-          <LikeProvider>
-            <VideoProvider>
-              <WatchLaterProvider>
-                <HistoryProvider>
+        <LikeProvider>
+          <VideoProvider>
+            <WatchLaterProvider>
+              <HistoryProvider>
+                <PlaylistProvider>
+                <SinglePlaylistProvider>
+
                   <App />
-                </HistoryProvider>
-              </WatchLaterProvider>
-            </VideoProvider>
-          </LikeProvider>
-        </ThemeProvider>
+                </SinglePlaylistProvider>
+                </PlaylistProvider>
+              </HistoryProvider>
+            </WatchLaterProvider>
+          </VideoProvider>
+        </LikeProvider>
       </AuthProvider>
     </Router>
   </StrictMode>

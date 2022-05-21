@@ -1,6 +1,12 @@
-.video-container{
-    position: relative;
-    top: 5rem;
-    right: 0;
-    z-index: -1;
+.explore-container {
+  margin-top: 4rem;
+  display: flex;
+  position: relative;
+}
+.explore-main {
+  width: 70%;
+  position: absolute;
+  right: 0;
+  top: 1.3rem;
+
 }

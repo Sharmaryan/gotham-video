@@ -13,3 +13,6 @@ export {Signup} from './Signup/Signup';
 export {VideoLike} from './VideoLike/VideoLike';
 export {VideoWatchLater} from './VideoWatchLater/VideoWatchLater';
 export {VideoHistory} from './VideoHistory/VideoHistory';
+export {PlaylistModal} from './PlaylistModal/PlaylistModal';
+export {VideosPlaylists} from './VideosPlaylists/VideosPlaylists';
+export {VideoSinglePlaylist} from './VideoSinglePlaylist/VideoSinglePlaylist';

@@ -1,4 +1,4 @@
-export const selectCategory = (videos, categories) => {
+export const category = (videos, categories) => {
   const { spiderman, drStrange, blackPanther, hulk, all } = categories;
 
   if (spiderman) {

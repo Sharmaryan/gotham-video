@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import "./VideoWatchLater.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useAuth } from "context/auth-context/auth-context";
-import { useWatchLater } from "context/watch-context/watch-context";
+import { useAuth, useWatchLater } from "context";
 
 export const VideoWatchLater = () => {
   const { watchLaterVideos, setWatchLaterVideos } = useWatchLater();
@@ -31,6 +30,14 @@ export const VideoWatchLater = () => {
 
   return (
     <div className="video-watch-later">
+      {watchLaterVideos.length === 0 && (
+        <div>
+          There is no videos here{" "}
+          <Link to="/explore" className="btn btn-explore">
+            Explore Videos
+          </Link>
+        </div>
+      )}
       {watchLaterVideos.length > 0 &&
         watchLaterVideos.map(({ thumbnail, title, _id }) => {
           return (

@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import "./VideoDetail.css";
-
 import { BiLike, BiPlayCircle, BiTime } from "react-icons/bi";
 import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
-
-import { useAuth } from "context/auth-context/auth-context";
-import { useLike } from "context/like-context/like-context";
-import { useWatchLater } from "context/watch-context/watch-context";
+import { PlaylistModal, Sidebar } from "components";
+import { useAuth, useLike, useWatchLater } from "context";
+import {
+  likeVideo,
+  unLikeVideo,
+  addToWatchLater,
+  removeFromWatchLater,
+} from "services";
+import axios from "axios";
+import "./VideoDetail.css";
 
 export const VideoDetail = () => {
   const [singleVideoDetail, setSingleVideoDetail] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [isWatchLater, setIsWatchLater] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const { likedVideos, setLikedVideos } = useLike();
   const { watchLaterVideos, setWatchLaterVideos } = useWatchLater();
@@ -44,68 +48,17 @@ export const VideoDetail = () => {
     })();
   }, [videoId]);
 
-  const likeVideo = async () => {
-    if (!auth.user) {
-      navigate("/login");
-    } else {
-      try {
-        setIsLiked(true);
-        const response = await axios({
-          method: "post",
-          url: "/api/user/likes",
-          headers: { authorization: auth.token },
-          data: { video: singleVideoDetail },
-        });
-        setLikedVideos(response.data.likes);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-
-  const unLikeVideo = (_id) => {
-    setIsLiked(false);
-    (async () => {
-      const response = await axios.delete(`/api/user/likes/${_id}`, {
-        headers: { authorization: auth.token },
-      });
-      setLikedVideos(response.data.likes);
-    })();
-  };
-
-  const addToWatchLater = async () => {
-    if (!auth.user) {
-      navigate("/login");
-    } else {
-      setIsWatchLater(true);
-      try {
-        const response = await axios({
-          method: "post",
-          url: "/api/user/watchlater",
-          headers: { authorization: auth.token },
-          data: { video: singleVideoDetail },
-        });
-        setWatchLaterVideos(response.data.watchlater);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-
-  const removeFromWatchLater = (_id) => {
-    setIsWatchLater(false);
-    (async () => {
-      const response = await axios.delete(`/api/user/watchlater/${_id}`, {
-        headers: { authorization: auth.token },
-      });
-      setWatchLaterVideos(response.data.watchlater);
-    })();
-  };
-
   return (
     <div className="video-detail">
+      <Sidebar />
       {singleVideoDetail && (
         <div className="video-container">
+          {showModal && (
+            <PlaylistModal
+              singleVideoDetail={singleVideoDetail}
+              setShowModal={setShowModal}
+            />
+          )}
           <iframe
             className="video-player"
             src={`https://www.youtube.com/embed/${_id}`}
@@ -123,38 +76,69 @@ export const VideoDetail = () => {
               <span className="video-icon-title"> {duration}</span>
             </div>
             {isLiked ? (
-              <div className="video-like video">
-                <AiFillLike
-                  className="video-icons"
-                  onClick={() => unLikeVideo(_id)}
-                />
+              <div
+                className="video-like video"
+                onClick={() =>
+                  unLikeVideo(_id, setIsLiked, setLikedVideos, auth)
+                }
+              >
+                <AiFillLike className="video-icons" />
                 <span className="video-icon-title">liked</span>
               </div>
             ) : (
-              <div className="video-like video">
-                <BiLike className="video-icons" onClick={likeVideo} />
+              <div
+                className="video-like video"
+                onClick={() =>
+                  likeVideo(
+                    auth,
+                    navigate,
+                    setIsLiked,
+                    singleVideoDetail,
+                    setLikedVideos
+                  )
+                }
+              >
+                <BiLike className="video-icons" />
                 <span className="video-icon-title">like</span>
               </div>
             )}
             {isWatchLater ? (
-              <div className="video-later video">
-                <MdWatchLater
-                  className="video-icons"
-                  onClick={() => removeFromWatchLater(_id)}
-                />
+              <div
+                className="video-later video"
+                onClick={() =>
+                  removeFromWatchLater(
+                    _id,
+                    setIsWatchLater,
+                    setWatchLaterVideos,
+                    auth
+                  )
+                }
+              >
+                <MdWatchLater className="video-icons" />
                 <span className="video-icon-title">watch later</span>
               </div>
             ) : (
-              <div className="video-later video">
-                <MdOutlineWatchLater
-                  className="video-icons"
-                  onClick={addToWatchLater}
-                />
+              <div
+                className="video-later video"
+                onClick={() =>
+                  addToWatchLater(
+                    auth,
+                    navigate,
+                    setIsWatchLater,
+                    setWatchLaterVideos,
+                    singleVideoDetail
+                  )
+                }
+              >
+                <MdOutlineWatchLater className="video-icons" />
                 <span className="video-icon-title">watch later</span>
               </div>
             )}
 
-            <div className="video-playlist video">
+            <div
+              className="video-playlist video"
+              onClick={() => setShowModal(true)}
+            >
               <BiPlayCircle className="video-icons" />{" "}
               <span className="video-icon-title">add to playlist</span>
             </div>
