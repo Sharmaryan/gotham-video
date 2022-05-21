@@ -1,5 +1,5 @@
 import axios from "axios";
-const hanldlePlaylistTitleInput = (e, _id, singleVideoDetail, auth) => {
+const addAndDeleteFromPlaylist = (e, _id, singleVideoDetail, auth) => {
   if (e.target.checked) {
     (async () => {
       try {
@@ -60,4 +60,4 @@ const removeFromPlaylist = (_id, auth, setSinglePlayList, playlistId) => {
   })();
 };
 
-export { hanldlePlaylistTitleInput, createPlaylist, removeFromPlaylist };
+export { addAndDeleteFromPlaylist, createPlaylist, removeFromPlaylist };

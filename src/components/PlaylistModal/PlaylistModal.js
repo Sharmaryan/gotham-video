@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth, usePlayList } from "context";
-import { hanldlePlaylistTitleInput, createPlaylist } from "services";
+import { addAndDeleteFromPlaylist, createPlaylist } from "services";
 import "./PlaylistModal.css";
 
 export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
@@ -23,7 +23,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
             <input
               type="checkbox"
               onChange={(e) =>
-                hanldlePlaylistTitleInput(e, _id, singleVideoDetail, auth)
+                addAndDeleteFromPlaylist(e, _id, singleVideoDetail, auth)
               }
             />
             <span className="playlists-title">{title}</span>
