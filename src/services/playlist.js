@@ -1,5 +1,5 @@
 import axios from "axios";
-const addAndDeleteFromPlaylist = (e, _id, singleVideoDetail, auth) => {
+const addAndDeleteFromPlaylist = (e, _id, singleVideoDetail, auth, toast) => {
   if (e.target.checked) {
     (async () => {
       try {
@@ -10,8 +10,9 @@ const addAndDeleteFromPlaylist = (e, _id, singleVideoDetail, auth) => {
             headers: { authorization: auth.token },
           }
         );
+        toast.success("Added to playlist");
       } catch (err) {
-        console.log(err);
+        toast.error("Something went wrong");
       }
     })();
   } else {
@@ -20,14 +21,21 @@ const addAndDeleteFromPlaylist = (e, _id, singleVideoDetail, auth) => {
         await axios.delete(`/api/user/playlists/${_id}`, {
           headers: { authorization: auth.token },
         });
+        toast.warn("Removed from playlist");
       } catch (err) {
-        console.log(err);
+        toast.error("Something went wrong");
       }
     })();
   }
 };
 
-const createPlaylist = async (auth, playListTitle, setPlayLists, navigate) => {
+const createPlaylist = async (
+  auth,
+  playListTitle,
+  setPlayLists,
+  navigate,
+  toast
+) => {
   if (!auth.user) {
     navigate("/login");
   } else {
@@ -40,14 +48,21 @@ const createPlaylist = async (auth, playListTitle, setPlayLists, navigate) => {
           data: { playlist: { title: playListTitle } },
         });
         setPlayLists(response.data.playlists);
+        toast.success("Playlist created");
       } catch (err) {
-        console.log(err);
+        toast.error("Something went wrong");
       }
     }
   }
 };
 
-const removeFromPlaylist = (_id, auth, setSinglePlayList, playlistId) => {
+const removeFromPlaylist = (
+  _id,
+  auth,
+  setSinglePlayList,
+  playlistId,
+  toast
+) => {
   (async () => {
     const response = await axios.delete(
       `/api/user/playlists/${playlistId}/${_id}`,
@@ -55,7 +70,7 @@ const removeFromPlaylist = (_id, auth, setSinglePlayList, playlistId) => {
         headers: { authorization: auth.token },
       }
     );
-
+    toast.warn("Removed from playlist");
     setSinglePlayList(response.data.playlist.videos);
   })();
 };

@@ -3,7 +3,7 @@ import "./VideoWatchLater.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth, useWatchLater } from "context";
-
+import { toast } from "react-toastify";
 export const VideoWatchLater = () => {
   const { watchLaterVideos, setWatchLaterVideos } = useWatchLater();
 
@@ -25,6 +25,7 @@ export const VideoWatchLater = () => {
         headers: { authorization: auth.token },
       });
       setWatchLaterVideos(response.data.watchlater);
+      toast.warn("Removed from watch later");
     })();
   };
 

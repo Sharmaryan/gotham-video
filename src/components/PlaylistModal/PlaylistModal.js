@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth, usePlayList } from "context";
 import { addAndDeleteFromPlaylist, createPlaylist } from "services";
 import "./PlaylistModal.css";
-
+import { toast } from "react-toastify";
 export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
   const { auth } = useAuth();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
             <input
               type="checkbox"
               onChange={(e) =>
-                addAndDeleteFromPlaylist(e, _id, singleVideoDetail, auth)
+                addAndDeleteFromPlaylist(e, _id, singleVideoDetail, auth, toast)
               }
             />
             <span className="playlists-title">{title}</span>
@@ -42,7 +42,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
       <button
         className="playlist-btn"
         onClick={() =>
-          createPlaylist(auth, playListTitle, setPlayLists, navigate)
+          createPlaylist(auth, playListTitle, setPlayLists, navigate, toast)
         }
       >
         create

@@ -4,7 +4,7 @@ import { useAuth } from "context/auth-context/auth-context";
 import { Link } from "react-router-dom";
 import { useLike } from "context/like-context/like-context";
 import "./VideoLike.css";
-
+import { toast } from "react-toastify";
 export const VideoLike = () => {
   const { likedVideos, setLikedVideos } = useLike();
 
@@ -26,6 +26,7 @@ export const VideoLike = () => {
         headers: { authorization: auth.token },
       });
       setLikedVideos(response.data.likes);
+      toast.warn("Removed from liked videos");
     })();
   };
 

@@ -1,14 +1,15 @@
 import { useAuth } from "context";
 import React from "react";
 import { Link } from "react-router-dom";
-
 import "./Navbar.css";
+import { toast } from "react-toastify";
 
 export const Navbar = () => {
-   const {auth, setAuth} = useAuth();
-   const logout = () => {
-     setAuth({ ...auth, user: null, token: "", auth: false });
-   }
+  const { auth, setAuth } = useAuth();
+  const logout = () => {
+    setAuth({ ...auth, user: null, token: "", auth: false });
+    toast.warn("Successfully logged out!");
+  };
 
   return (
     <nav className="nav-menu navbar">
@@ -47,7 +48,6 @@ export const Navbar = () => {
                 login
               </Link>
             )}
-          
           </li>
         </ul>
       </div>

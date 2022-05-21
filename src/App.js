@@ -13,6 +13,7 @@ import {
   VideoDetail,
   Playlist,
 } from "./pages/index";
+ import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -66,7 +67,9 @@ function App() {
           }
         />
       </Routes>
+      <ToastContainer />
     </div>
+
   );
 }
 

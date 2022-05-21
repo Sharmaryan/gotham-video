@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { toast } from "react-toastify";
 const addToWatchLater = async (
   auth,
   navigate,
@@ -19,8 +19,9 @@ const addToWatchLater = async (
         data: { video: singleVideoDetail },
       });
       setWatchLaterVideos(response.data.watchlater);
+      toast.success("Added to watch later");
     } catch (err) {
-      console.log(err);
+      toast.error('Something went wrong');
     }
   }
 };
@@ -37,6 +38,7 @@ const removeFromWatchLater = (
       headers: { authorization: auth.token },
     });
     setWatchLaterVideos(response.data.watchlater);
+    toast.warn("Removed from watch later");
   })();
 };
 

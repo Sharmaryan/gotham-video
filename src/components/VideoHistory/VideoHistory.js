@@ -4,7 +4,7 @@ import { useAuth } from "context/auth-context/auth-context";
 import { useHistory } from "context/history-context/history-context";
 import { Link } from "react-router-dom";
 import "./VideoHistory.css";
-
+import { toast } from "react-toastify";
 export const VideoHistory = () => {
   const { auth } = useAuth();
   const { history, setHistory } = useHistory();
@@ -26,6 +26,7 @@ export const VideoHistory = () => {
         headers: { authorization: auth.token },
       });
       setHistory(response.data.history);
+      toast.warn("Removed from history");
     })();
   };
 
@@ -35,6 +36,7 @@ export const VideoHistory = () => {
         headers: { authorization: auth.token },
       });
       setHistory(response.data.history);
+      toast.warn("History cleared");
     })();
   };
   return (

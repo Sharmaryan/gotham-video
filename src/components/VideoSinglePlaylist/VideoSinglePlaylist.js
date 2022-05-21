@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { useSinglePlayList, useAuth } from "context";
 import axios from "axios";
 import { removeFromPlaylist } from "services";
-
+import { toast } from "react-toastify";
 export const VideoSinglePlaylist = () => {
   const { playlistId } = useParams();
   const { auth } = useAuth();
@@ -55,7 +55,7 @@ export const VideoSinglePlaylist = () => {
               <span
                 className="remove-liked"
                 onClick={() =>
-                  removeFromPlaylist(_id, auth, setSinglePlayList, playlistId)
+                  removeFromPlaylist(_id, auth, setSinglePlayList, playlistId, toast)
                 }
               >
                 x
