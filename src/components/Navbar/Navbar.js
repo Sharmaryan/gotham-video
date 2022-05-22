@@ -2,14 +2,10 @@ import { useAuth } from "context";
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import { toast } from "react-toastify";
-
+import { FaUserCircle } from "react-icons/fa";
 export const Navbar = () => {
-  const { auth, setAuth } = useAuth();
-  const logout = () => {
-    setAuth({ ...auth, user: null, token: "", auth: false });
-    toast.warn("Successfully logged out!");
-  };
+  const { auth} = useAuth();
+ 
 
   return (
     <nav className="nav-menu navbar">
@@ -40,9 +36,9 @@ export const Navbar = () => {
         <ul>
           <li className="menu-items">
             {auth.user ? (
-              <p className="text-decorations text-white" onClick={logout}>
-                logout
-              </p>
+              <Link to='/profile' className="text-decorations text-white" >
+                <FaUserCircle/>
+              </Link>
             ) : (
               <Link to="/login" className="text-decorations text-white">
                 login

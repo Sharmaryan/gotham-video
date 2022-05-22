@@ -12,6 +12,7 @@ import {
   SignupPage,
   VideoDetail,
   Playlist,
+  Profile
 } from "./pages/index";
  import { ToastContainer } from 'react-toastify';
 
@@ -63,6 +64,14 @@ function App() {
           element={
             <RequiresAuth>
               <WatchLater />
+            </RequiresAuth>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <RequiresAuth>
+              <Profile />
             </RequiresAuth>
           }
         />
