@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const addAndDeleteFromPlaylist = async (
   e,
   _id,
@@ -21,7 +22,7 @@ const addAndDeleteFromPlaylist = async (
     }
   } else {
     try {
-      await axios.delete(`/api/user/playlists/${_id}`, {
+      await axios.delete(`/api/user/playlists/${_id}/${singleVideoDetail._id}`, {
         headers: { authorization: auth.token },
       });
       toast.warn("Removed from playlist");

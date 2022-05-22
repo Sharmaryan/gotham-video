@@ -5,8 +5,8 @@ import { addAndDeleteFromPlaylist, createPlaylist } from "services";
 import "./PlaylistModal.css";
 import { toast } from "react-toastify";
 export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
-  const { auth } = useAuth();
   const navigate = useNavigate();
+  const { auth } = useAuth();
   const { playLists, setPlayLists } = usePlayList();
   const [playListTitle, setPlayListTitle] = useState("");
   
