@@ -17,16 +17,26 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
       <div className="modal-close" onClick={() => setShowModal(false)}>
         X
       </div>
-      {playLists?.map(({ title, _id }) => (
-        <div key={_id}>
+      {playLists?.map((item) => (
+        
+        <div key={item._id}>
           <label htmlFor="playlist-title">
             <input
               type="checkbox"
+              checked={item.videos?.some((el) => el._id === singleVideoDetail._id  )}
               onChange={(e) =>
-                addAndDeleteFromPlaylist(e, _id, singleVideoDetail, auth, toast)
+                addAndDeleteFromPlaylist(
+                  e,
+                  item._id,
+                  singleVideoDetail,
+                  auth,
+                  toast,
+                  setPlayLists,
+                  playLists
+                )
               }
             />
-            <span className="playlists-title">{title}</span>
+            <span className="playlists-title">{item.title}</span>
           </label>
         </div>
       ))}

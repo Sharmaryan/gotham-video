@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import "./VideoSinglePlaylist.css";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useSinglePlayList, useAuth } from "context";
 import axios from "axios";
 import { removeFromPlaylist } from "services";
 import { toast } from "react-toastify";
+
 export const VideoSinglePlaylist = () => {
   const { playlistId } = useParams();
+  const navigate = useNavigate();
   const { auth } = useAuth();
   const { singlePlayList, setSinglePlayList } = useSinglePlayList();
 
@@ -23,15 +25,14 @@ export const VideoSinglePlaylist = () => {
     })();
   }, [playlistId, auth.token, setSinglePlayList]);
 
-  // onst clearSinglePlaylist = () => {
-  //   (async () => {
-  //     const response = await axios.delete(`/api/user/playlists/${playlistId}`, {
-  //       headers: { authorization: auth.token },
-  //     });
-      
-  //     setSinglePlayList(response.data.playlists);
-  //   })();
-  // };c
+  const clearSinglePlaylist = async () => {
+    const response = await axios.delete(`/api/user/playlists/${playlistId}`, {
+      headers: { authorization: auth.token },
+    });
+    setSinglePlayList(response.data.playlists);
+    navigate("/playlists");
+    toast.warn("Playlist removed");
+  };
 
   return (
     <div className="video-liked ">
@@ -44,7 +45,7 @@ export const VideoSinglePlaylist = () => {
         </div>
       )}
       {singlePlayList.length > 0 && (
-        <button className="btn btn-success" >
+        <button className="btn btn-success" onClick={clearSinglePlaylist}>
           Clear All
         </button>
       )}
@@ -55,7 +56,13 @@ export const VideoSinglePlaylist = () => {
               <span
                 className="remove-liked"
                 onClick={() =>
-                  removeFromPlaylist(_id, auth, setSinglePlayList, playlistId, toast)
+                  removeFromPlaylist(
+                    _id,
+                    auth,
+                    setSinglePlayList,
+                    playlistId,
+                    toast
+                  )
                 }
               >
                 x

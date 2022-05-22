@@ -5,26 +5,39 @@ const addAndDeleteFromPlaylist = async (
   _id,
   singleVideoDetail,
   auth,
-  toast
+  toast,
+  setPlayLists,
+  playLists
 ) => {
   if (e.target.checked) {
     try {
-      await axios.post(
+      const response = await axios.post(
         `/api/user/playlists/${_id}`,
         { video: singleVideoDetail },
         {
           headers: { authorization: auth.token },
         }
       );
+      setPlayLists([...playLists].map((item) =>  (item._id === response.data.playlist._id ) ? response.data.playlist : item));
       toast.success("Added to playlist");
     } catch (err) {
       toast.error("Something went wrong");
     }
   } else {
     try {
-      await axios.delete(`/api/user/playlists/${_id}/${singleVideoDetail._id}`, {
-        headers: { authorization: auth.token },
-      });
+  const response =   await axios.delete(
+        `/api/user/playlists/${_id}/${singleVideoDetail._id}`,
+        {
+          headers: { authorization: auth.token },
+        }
+      );
+      setPlayLists(
+        [...playLists].map((item) =>
+          item._id === response.data.playlist._id
+            ? response.data.playlist
+            : item
+        )
+      );
       toast.warn("Removed from playlist");
     } catch (err) {
       toast.error("Something went wrong");
