@@ -1,31 +1,33 @@
 import axios from "axios";
-const addAndDeleteFromPlaylist = (e, _id, singleVideoDetail, auth, toast) => {
+const addAndDeleteFromPlaylist = async (
+  e,
+  _id,
+  singleVideoDetail,
+  auth,
+  toast
+) => {
   if (e.target.checked) {
-    (async () => {
-      try {
-        await axios.post(
-          `/api/user/playlists/${_id}`,
-          { video: singleVideoDetail },
-          {
-            headers: { authorization: auth.token },
-          }
-        );
-        toast.success("Added to playlist");
-      } catch (err) {
-        toast.error("Something went wrong");
-      }
-    })();
-  } else {
-    (async () => {
-      try {
-        await axios.delete(`/api/user/playlists/${_id}`, {
+    try {
+      await axios.post(
+        `/api/user/playlists/${_id}`,
+        { video: singleVideoDetail },
+        {
           headers: { authorization: auth.token },
-        });
-        toast.warn("Removed from playlist");
-      } catch (err) {
-        toast.error("Something went wrong");
-      }
-    })();
+        }
+      );
+      toast.success("Added to playlist");
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
+  } else {
+    try {
+      await axios.delete(`/api/user/playlists/${_id}`, {
+        headers: { authorization: auth.token },
+      });
+      toast.warn("Removed from playlist");
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
   }
 };
 
@@ -56,23 +58,21 @@ const createPlaylist = async (
   }
 };
 
-const removeFromPlaylist = (
+const removeFromPlaylist = async (
   _id,
   auth,
   setSinglePlayList,
   playlistId,
   toast
 ) => {
-  (async () => {
-    const response = await axios.delete(
-      `/api/user/playlists/${playlistId}/${_id}`,
-      {
-        headers: { authorization: auth.token },
-      }
-    );
-    toast.warn("Removed from playlist");
-    setSinglePlayList(response.data.playlist.videos);
-  })();
+  const response = await axios.delete(
+    `/api/user/playlists/${playlistId}/${_id}`,
+    {
+      headers: { authorization: auth.token },
+    }
+  );
+  toast.warn("Removed from playlist");
+  setSinglePlayList(response.data.playlist.videos);
 };
 
 export { addAndDeleteFromPlaylist, createPlaylist, removeFromPlaylist };

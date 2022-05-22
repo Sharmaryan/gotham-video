@@ -19,22 +19,20 @@ const likeVideo = async (
         data: { video: singleVideoDetail },
       });
       setLikedVideos(response.data.likes);
-      toast.success('Added to liked videos');
+      toast.success("Added to liked videos");
     } catch (err) {
       toast.error("Something went wrong");
     }
   }
 };
 
-const unLikeVideo = (_id, setIsLiked, setLikedVideos, auth) => {
+const unLikeVideo = async (_id, setIsLiked, setLikedVideos, auth) => {
   setIsLiked(false);
-  (async () => {
-    const response = await axios.delete(`/api/user/likes/${_id}`, {
-      headers: { authorization: auth.token },
-    });
-    setLikedVideos(response.data.likes);
-    toast.warn("Removed from liked videos");
-  })();
+  const response = await axios.delete(`/api/user/likes/${_id}`, {
+    headers: { authorization: auth.token },
+  });
+  setLikedVideos(response.data.likes);
+  toast.warn("Removed from liked videos");
 };
 
 export { likeVideo, unLikeVideo };
