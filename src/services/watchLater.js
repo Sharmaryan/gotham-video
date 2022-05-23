@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { toast } from "react-toastify";
 const addToWatchLater = async (
   auth,
   navigate,
@@ -19,25 +19,35 @@ const addToWatchLater = async (
         data: { video: singleVideoDetail },
       });
       setWatchLaterVideos(response.data.watchlater);
+      toast.success("Added to watch later");
     } catch (err) {
-      console.log(err);
+      toast.error("Something went wrong");
     }
   }
 };
 
-const removeFromWatchLater = (
+const removeFromWatchLater = async (
   _id,
   setIsWatchLater,
   setWatchLaterVideos,
   auth
 ) => {
   setIsWatchLater(false);
-  (async () => {
-    const response = await axios.delete(`/api/user/watchlater/${_id}`, {
-      headers: { authorization: auth.token },
-    });
-    setWatchLaterVideos(response.data.watchlater);
-  })();
+  const response = await axios.delete(`/api/user/watchlater/${_id}`, {
+    headers: { authorization: auth.token },
+  });
+  setWatchLaterVideos(response.data.watchlater);
+  toast.warn("Removed from watch later");
 };
 
-export { removeFromWatchLater, addToWatchLater };
+  const removeWatchLater = (_id, auth, setWatchLaterVideos) => {
+    (async () => {
+      const response = await axios.delete(`/api/user/watchlater/${_id}`, {
+        headers: { authorization: auth.token },
+      });
+      setWatchLaterVideos(response.data.watchlater);
+      toast.warn("Removed from watch later");
+    })();
+  };
+
+export { removeFromWatchLater, removeWatchLater, addToWatchLater };

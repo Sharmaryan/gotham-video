@@ -5,7 +5,7 @@ import axios from "axios";
 import { useAuth } from "context/auth-context/auth-context";
 import { loginReducer } from "reducer/login-reducer";
 import { BiShow, BiHide } from "react-icons/bi";
-
+import { toast } from "react-toastify";
 export const Login = () => {
   const { auth, setAuth } = useAuth();
   const [{ email, password, passwordType }, dispatch] = useReducer(loginReducer, {
@@ -36,9 +36,11 @@ export const Login = () => {
         setAuth({ ...auth, auth: true, user: foundUser, token: encodedToken });
         localStorage.setItem("token", encodedToken);
         navigate(from, { replace: true });
+        toast.success("Successfully logged In");
       }
     } catch (error) {
-      console.log(error);
+      
+      toast.error('Something went wrong')
     }
   };
 
@@ -59,9 +61,10 @@ export const Login = () => {
       setAuth({ ...auth, auth: true, user: foundUser, token: encodedToken });
       localStorage.setItem("token", encodedToken);
       navigate(from, { replace: true });
+      toast.success("Successfully logged In");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong");
     }
   };
   return (

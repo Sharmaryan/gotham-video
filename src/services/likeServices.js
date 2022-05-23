@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { toast } from "react-toastify";
 const likeVideo = async (
   auth,
   navigate,
@@ -19,20 +19,30 @@ const likeVideo = async (
         data: { video: singleVideoDetail },
       });
       setLikedVideos(response.data.likes);
+      toast.success("Added to liked videos");
     } catch (err) {
-      console.log(err);
+      toast.error("Something went wrong");
     }
   }
 };
 
-const unLikeVideo = (_id, setIsLiked, setLikedVideos, auth) => {
+const unLikeVideo = async (_id, setIsLiked, setLikedVideos, auth) => {
   setIsLiked(false);
-  (async () => {
-    const response = await axios.delete(`/api/user/likes/${_id}`, {
-      headers: { authorization: auth.token },
-    });
-    setLikedVideos(response.data.likes);
-  })();
+  const response = await axios.delete(`/api/user/likes/${_id}`, {
+    headers: { authorization: auth.token },
+  });
+  setLikedVideos(response.data.likes);
+  toast.warn("Removed from liked videos");
 };
 
-export { likeVideo, unLikeVideo };
+ const removeLikedVideo = (_id, auth, setLikedVideos) => {
+   (async () => {
+     const response = await axios.delete(`/api/user/likes/${_id}`, {
+       headers: { authorization: auth.token },
+     });
+     setLikedVideos(response.data.likes);
+     toast.warn("Removed from liked videos");
+   })();
+ };
+
+export { likeVideo, unLikeVideo, removeLikedVideo };

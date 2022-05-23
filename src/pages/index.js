@@ -8,3 +8,4 @@ export { LoginPage } from "./LoginPage/LoginPage";
 export { SignupPage } from "./SignupPage/SignupPage";
 export {VideoDetail} from './VideoDetail/VideoDetail';
 export {Playlist} from './Playlist/Playlist';
+export {Profile} from './Profile/Profile';

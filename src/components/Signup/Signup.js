@@ -5,6 +5,7 @@ import { useAuth } from "context/auth-context/auth-context";
 import { BiShow, BiHide } from "react-icons/bi";
 import axios from "axios";
 import "./Signup.css";
+import { toast } from "react-toastify";
 
 export const Signup = () => {
   const [{ firstName, lastName, email, password, passwordType }, dispatch] =
@@ -28,7 +29,6 @@ export const Signup = () => {
         email,
         password,
       });
-      console.log(response);
       const {
         status,
         data: { encodedToken, createdUser },
@@ -43,9 +43,10 @@ export const Signup = () => {
         });
         localStorage.setItem("token", encodedToken);
         navigate("/");
+        toast.success("Successfully logged In");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong");
     }
   };
 

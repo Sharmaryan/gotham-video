@@ -1,7 +1,7 @@
 import React from "react";
 import { Link} from "react-router-dom";
 import { useAuth, useHistory } from "context";
-import { addVideoToHistory } from "services/addVideoToHistory";
+import {addVideoToHistory} from '../../services'
 import "./VideoCard.css";
 
 export const VideoCard = ({ ...video }) => {

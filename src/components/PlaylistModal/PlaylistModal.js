@@ -5,8 +5,8 @@ import { addAndDeleteFromPlaylist, createPlaylist } from "services";
 import "./PlaylistModal.css";
 
 export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
-  const { auth } = useAuth();
   const navigate = useNavigate();
+  const { auth } = useAuth();
   const { playLists, setPlayLists } = usePlayList();
   const [playListTitle, setPlayListTitle] = useState("");
   
@@ -17,16 +17,26 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
       <div className="modal-close" onClick={() => setShowModal(false)}>
         X
       </div>
-      {playLists?.map(({ title, _id }) => (
-        <div key={_id}>
+      {playLists?.map((item) => (
+        
+        <div key={item._id}>
           <label htmlFor="playlist-title">
             <input
               type="checkbox"
+              checked={item.videos?.some((el) => el._id === singleVideoDetail._id  )}
               onChange={(e) =>
-                addAndDeleteFromPlaylist(e, _id, singleVideoDetail, auth)
+                addAndDeleteFromPlaylist(
+                  e,
+                  item._id,
+                  singleVideoDetail,
+                  auth,
+                  
+                  setPlayLists,
+                  playLists
+                )
               }
             />
-            <span className="playlists-title">{title}</span>
+            <span className="playlists-title">{item.title}</span>
           </label>
         </div>
       ))}

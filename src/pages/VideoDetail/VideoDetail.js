@@ -12,16 +12,17 @@ import {
   removeFromWatchLater,
 } from "services";
 import axios from "axios";
-import "./VideoDetail.css";
+import "react-toastify/dist/ReactToastify.css";
+import "./VideoDetail.css"
 
 export const VideoDetail = () => {
   const [singleVideoDetail, setSingleVideoDetail] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [isWatchLater, setIsWatchLater] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
   const { likedVideos, setLikedVideos } = useLike();
   const { watchLaterVideos, setWatchLaterVideos } = useWatchLater();
+  
 
   const { auth } = useAuth();
   const { videoId } = useParams();

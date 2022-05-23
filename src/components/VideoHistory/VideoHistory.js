@@ -3,8 +3,8 @@ import axios from "axios";
 import { useAuth } from "context/auth-context/auth-context";
 import { useHistory } from "context/history-context/history-context";
 import { Link } from "react-router-dom";
+import { clearAllHistory, removeFromHistory } from "services";
 import "./VideoHistory.css";
-
 export const VideoHistory = () => {
   const { auth } = useAuth();
   const { history, setHistory } = useHistory();
@@ -20,27 +20,15 @@ export const VideoHistory = () => {
     })();
   }, [auth.token, setHistory]);
 
-  const removeFromHistory = (_id) => {
-    (async () => {
-      const response = await axios.delete(`/api/user/history/${_id}`, {
-        headers: { authorization: auth.token },
-      });
-      setHistory(response.data.history);
-    })();
-  };
 
-  const clearAllHistory = () => {
-    (async () => {
-      const response = await axios.delete("/api/user/history/all", {
-        headers: { authorization: auth.token },
-      });
-      setHistory(response.data.history);
-    })();
-  };
+
   return (
     <div className="video-history">
       {history.length > 0 && (
-        <button className="btn btn-success" onClick={clearAllHistory}>
+        <button
+          className="btn btn-success"
+          onClick={() => clearAllHistory(setHistory, auth)}
+        >
           Clear All
         </button>
       )}
@@ -63,7 +51,7 @@ export const VideoHistory = () => {
                 <p className="card-title history-title">{title}</p>
                 <button
                   className="btn btn-success history-remove"
-                  onClick={() => removeFromHistory(_id)}
+                  onClick={() => removeFromHistory(_id, auth, setHistory)}
                 >
                   remove
                 </button>

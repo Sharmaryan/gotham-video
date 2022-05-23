@@ -38,7 +38,6 @@ export const VideosPlaylists = () => {
         return (
           <div className="playlist-card" key={_id}>
             <Link to={`/playlists/${_id}`}>
-              {console.log(playlist.videos[0]?.thumbnail)}
               <img
                 className="playlist-image"
                 src={
