@@ -7,4 +7,4 @@ export {
   createPlaylist,
   removeFromPlaylist, clearSinglePlaylist
 } from "./playlist";
-export { signupHandler } from './inputs';
+export { signupHandler, loginHandler, guestLoginHandler } from './inputs';
