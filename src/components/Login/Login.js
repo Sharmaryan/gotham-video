@@ -5,72 +5,31 @@ import axios from "axios";
 import { useAuth } from "context/auth-context/auth-context";
 import { loginReducer } from "reducer/login-reducer";
 import { BiShow, BiHide } from "react-icons/bi";
-import { toast } from "react-toastify";
+import { loginHandler, guestLoginHandler } from "services";
+
 export const Login = () => {
   const { auth, setAuth } = useAuth();
-  const [{ email, password, passwordType }, dispatch] = useReducer(loginReducer, {
-    email: "",
-    password: "",
-    passwordType:'password'
-  });
+  const [{ email, password, passwordType }, dispatch] = useReducer(
+    loginReducer,
+    {
+      email: "",
+      password: "",
+      passwordType: "password",
+    }
+  );
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const loginHandler = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post(`/api/auth/login`, {
-        email,
-        password,
-      });
-
-      const {
-        status,
-        data: { encodedToken, foundUser },
-      } = response;
-
-      if (status >= 200 && status <= 299) {
-        setAuth({ ...auth, auth: true, user: foundUser, token: encodedToken });
-        localStorage.setItem("token", encodedToken);
-        navigate(from, { replace: true });
-        toast.success("Successfully logged In");
-      }
-    } catch (error) {
-      
-      toast.error('Something went wrong')
-    }
-  };
-
-  const guestLoginHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`/api/auth/login`, {
-        email: "adarshbalika@gmail.com",
-        password: "adarshBalika123",
-      });
-
-      const {
-        status,
-        data: { encodedToken, foundUser },
-      } = response;
-
-      if (status >= 200 && status <= 299) {
-      setAuth({ ...auth, auth: true, user: foundUser, token: encodedToken });
-      localStorage.setItem("token", encodedToken);
-      navigate(from, { replace: true });
-      toast.success("Successfully logged In");
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-    }
-  };
   return (
     <div className="login-form">
       <h2 className="login-title">login</h2>
-      <form>
+      <form
+        onSubmit={(e) =>
+          loginHandler(e, email, password, axios, auth, setAuth, navigate, from)
+        }
+      >
         <label htmlFor="email">
           Email
           <input
@@ -82,6 +41,7 @@ export const Login = () => {
               dispatch({ type: "EMAIL", payload: e.target.value })
             }
             value={email}
+            required
           />
         </label>
         <label htmlFor="password">
@@ -96,6 +56,7 @@ export const Login = () => {
                 dispatch({ type: "PASSWORD", payload: e.target.value })
               }
               value={password}
+              required
             />
             {passwordType === "password" ? (
               <BiShow
@@ -118,19 +79,13 @@ export const Login = () => {
           </div>
         </label>
 
-        <div className="password">
-          <label htmlFor="remember">
-            <input name="checkbox" id="remember" type="checkbox" />
-            Remember Me
-          </label>
-          <Link to="#" className="text-decorations password-forgot">
-            forgot your password?
-          </Link>
-        </div>
-        <button className="login-btn" onClick={loginHandler}>
-          login
-        </button>
-        <button className="login-btn" onClick={guestLoginHandler}>
+        <button className="login-btn">login</button>
+        <button
+          className="login-btn"
+          onClick={(e) =>
+            guestLoginHandler(e, axios, setAuth, auth, from, navigate)
+          }
+        >
           login with guest credentials
         </button>
         <div className="new-account">

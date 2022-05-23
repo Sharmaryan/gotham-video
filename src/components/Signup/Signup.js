@@ -5,56 +5,52 @@ import { useAuth } from "context/auth-context/auth-context";
 import { BiShow, BiHide } from "react-icons/bi";
 import axios from "axios";
 import "./Signup.css";
-import { toast } from "react-toastify";
-
+import { signupHandler } from "services";
 export const Signup = () => {
-  const [{ firstName, lastName, email, password, passwordType }, dispatch] =
-    useReducer(signupReducer, {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      passwordType: "password",
-    });
+  const [
+    {
+      firstName,
+      lastName,
+      email,
+      password,
+      passwordType,
+      confirmPassword,
+      confirmPasswordType,
+    },
+    dispatch,
+  ] = useReducer(signupReducer, {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    passwordType: "password",
+    confirmPassword: "",
+    confirmPasswordType: "password",
+  });
 
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
-
-  const signupHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`/api/auth/signup`, {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-      const {
-        status,
-        data: { encodedToken, createdUser },
-      } = response;
-
-      if (status >= 200 && status <= 299) {
-        setAuth({
-          ...auth,
-          auth: true,
-          user: createdUser,
-          token: encodedToken,
-        });
-        localStorage.setItem("token", encodedToken);
-        navigate("/");
-        toast.success("Successfully logged In");
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-    }
-  };
 
   return (
     <div className="signup-section">
       <div className="signup-form">
         <h2 className="signup-form-title">signup</h2>
-        <form>
+        <form
+          onSubmit={(e) =>
+            signupHandler(
+              e,
+              axios,
+              password,
+              confirmPassword,
+              firstName,
+              lastName,
+              email,
+              auth,
+              setAuth,
+              navigate
+            )
+          }
+        >
           <label className="label" htmlFor="fname">
             first name
             <input
@@ -69,6 +65,7 @@ export const Signup = () => {
               placeholder="enter your first name"
               className="input"
               value={firstName}
+              required
             />
           </label>
           <label className="label" htmlFor="lname">
@@ -85,6 +82,7 @@ export const Signup = () => {
               placeholder="enter your last name"
               className="input"
               value={lastName}
+              required
             />
           </label>
           <label className="label" htmlFor="email">
@@ -101,6 +99,7 @@ export const Signup = () => {
               placeholder="xyz@gmail.com"
               className="input"
               value={email}
+              required
             />
           </label>
           <label className="label" htmlFor="password">
@@ -118,6 +117,7 @@ export const Signup = () => {
                 placeholder="*********"
                 className="input "
                 value={password}
+                required
               />
               {passwordType === "password" ? (
                 <BiShow
@@ -139,17 +139,56 @@ export const Signup = () => {
               )}
             </div>
           </label>
-         
+
+          <label className="label" htmlFor="c-password">
+            Confirm Password
+            <div className="password-input">
+              <input
+                onChange={(e) =>
+                  dispatch({
+                    type: "CONFIRM_PASSWORD",
+                    payload: e.target.value,
+                  })
+                }
+                type={confirmPasswordType}
+                id="c-password"
+                placeholder="*********"
+                className="input "
+                value={confirmPassword}
+                required
+              />
+              {confirmPasswordType === "password" ? (
+                <BiShow
+                  className="password-icons"
+                  onClick={() =>
+                    dispatch({
+                      type: "CONFIRM_PASSWORD_VISIBILITY",
+                      payload: "text",
+                    })
+                  }
+                />
+              ) : (
+                <BiHide
+                  className="password-icons"
+                  onClick={() =>
+                    dispatch({
+                      type: "CONFIRM_PASSWORD_VISIBILITY",
+                      payload: "password",
+                    })
+                  }
+                />
+              )}
+            </div>
+          </label>
 
           <div className="t-and-c">
             <label className="label" htmlFor="t&c">
-              <input name="t&c" id="t&c" type="checkbox" />I accept terms and
-              condition
+              <input name="t&c" id="t&c" type="checkbox" required />I accept
+              terms and condition
             </label>
           </div>
-          <button className="signup-btn" onClick={signupHandler}>
-            create new account
-          </button>
+
+          <button className="signup-btn">create new account</button>
           <div className="have-account">
             <Link to="/login" className="text-decorations account">
               already have an account

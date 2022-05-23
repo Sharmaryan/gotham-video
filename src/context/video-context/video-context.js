@@ -3,7 +3,7 @@ import { videoReducer } from "../../reducer/videos-reducer";
 const VideoContext = createContext();
 
 const VideoProvider = ({ children }) => {
-  const [{ categories }, videoDispatch] = useReducer(videoReducer, {
+  const [{ categories, search }, videoDispatch] = useReducer(videoReducer, {
     categories: {
       all: null,
       spiderman: null,
@@ -11,10 +11,11 @@ const VideoProvider = ({ children }) => {
       drStrange: null,
       hulk: null,
     },
+    search: '',
   });
 
   return (
-    <VideoContext.Provider value={{ videoDispatch, categories }}>
+    <VideoContext.Provider value={{ videoDispatch, categories, search }}>
       {children}
     </VideoContext.Provider>
   );
