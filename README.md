@@ -46,5 +46,13 @@ This app is similar to YouTube.
 - User can visit single video page by clicking on the video card
 - User can visit profile page
 
+## Technology/Language Used
+- [Gotham UI](https://gothamui-temp.netlify.app/)
+- CSS
+- React JS
+- React Router v6
+- [Mockbee](https://mockbee.netlify.app/)
 
-
+## How to run Locally
+- Use the following command in your CLI
+```git clone https://github.com/Sharmaryan/gotham-video.git ```
