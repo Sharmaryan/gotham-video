@@ -44,6 +44,7 @@ This app is similar to YouTube.
 
 - User can check history
 - User can visit single video page by clicking on the video card
+- User can visit profile page
 
 
 
