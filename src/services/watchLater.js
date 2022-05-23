@@ -40,4 +40,14 @@ const removeFromWatchLater = async (
   toast.warn("Removed from watch later");
 };
 
-export { removeFromWatchLater, addToWatchLater };
+  const removeWatchLater = (_id, auth, setWatchLaterVideos) => {
+    (async () => {
+      const response = await axios.delete(`/api/user/watchlater/${_id}`, {
+        headers: { authorization: auth.token },
+      });
+      setWatchLaterVideos(response.data.watchlater);
+      toast.warn("Removed from watch later");
+    })();
+  };
+
+export { removeFromWatchLater, removeWatchLater, addToWatchLater };

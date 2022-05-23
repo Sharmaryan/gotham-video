@@ -1,5 +1,6 @@
 import axios from "axios";
-export const addToVideoHistory = async (video, auth, setHistory) => {
+import { toast } from "react-toastify";
+const addVideoToHistory = async (video, auth, setHistory) => {
   try {
     const response = await axios({
       method: "post",
@@ -12,3 +13,24 @@ export const addToVideoHistory = async (video, auth, setHistory) => {
     console.log(err);
   }
 };
+
+  const clearAllHistory = (setHistory, auth) => {
+    (async () => {
+      const response = await axios.delete("/api/user/history/all", {
+        headers: { authorization: auth.token },
+      });
+      setHistory(response.data.history);
+      toast.warn("History cleared");
+    })();
+  };
+
+    const removeFromHistory = (_id, auth, setHistory) => {
+      (async () => {
+        const response = await axios.delete(`/api/user/history/${_id}`, {
+          headers: { authorization: auth.token },
+        });
+        setHistory(response.data.history);
+        toast.warn("Removed from history");
+      })();
+    };
+  export {clearAllHistory, addVideoToHistory, removeFromHistory}

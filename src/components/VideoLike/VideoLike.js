@@ -4,7 +4,7 @@ import { useAuth } from "context/auth-context/auth-context";
 import { Link } from "react-router-dom";
 import { useLike } from "context/like-context/like-context";
 import "./VideoLike.css";
-import { toast } from "react-toastify";
+import { removeLikedVideo } from "services";
 export const VideoLike = () => {
   const { likedVideos, setLikedVideos } = useLike();
 
@@ -20,15 +20,6 @@ export const VideoLike = () => {
     })();
   }, [auth.token, setLikedVideos]);
 
-  const removeLikedVideo = (_id) => {
-    (async () => {
-      const response = await axios.delete(`/api/user/likes/${_id}`, {
-        headers: { authorization: auth.token },
-      });
-      setLikedVideos(response.data.likes);
-      toast.warn("Removed from liked videos");
-    })();
-  };
 
   return (
     <div className="video-liked ">
@@ -46,7 +37,7 @@ export const VideoLike = () => {
             <div className="card card-horizontal card-video-like" key={_id}>
               <span
                 className="remove-liked"
-                onClick={() => removeLikedVideo(_id)}
+                onClick={() => removeLikedVideo(_id, auth, setLikedVideos)}
               >
                 x
               </span>
@@ -59,7 +50,6 @@ export const VideoLike = () => {
               </Link>
               <div className="card-horizontal-content">
                 <p className="card-title limit-text ">{title}</p>
-
                 <p className="card-desc limit-text">{description}</p>
               </div>
             </div>

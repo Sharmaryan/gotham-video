@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth, usePlayList } from "context";
 import { addAndDeleteFromPlaylist, createPlaylist } from "services";
 import "./PlaylistModal.css";
-import { toast } from "react-toastify";
+
 export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
   const navigate = useNavigate();
   const { auth } = useAuth();
@@ -30,7 +30,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
                   item._id,
                   singleVideoDetail,
                   auth,
-                  toast,
+                  
                   setPlayLists,
                   playLists
                 )
@@ -52,7 +52,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
       <button
         className="playlist-btn"
         onClick={() =>
-          createPlaylist(auth, playListTitle, setPlayLists, navigate, toast)
+          createPlaylist(auth, playListTitle, setPlayLists, navigate)
         }
       >
         create

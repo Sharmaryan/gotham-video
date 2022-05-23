@@ -35,4 +35,14 @@ const unLikeVideo = async (_id, setIsLiked, setLikedVideos, auth) => {
   toast.warn("Removed from liked videos");
 };
 
-export { likeVideo, unLikeVideo };
+ const removeLikedVideo = (_id, auth, setLikedVideos) => {
+   (async () => {
+     const response = await axios.delete(`/api/user/likes/${_id}`, {
+       headers: { authorization: auth.token },
+     });
+     setLikedVideos(response.data.likes);
+     toast.warn("Removed from liked videos");
+   })();
+ };
+
+export { likeVideo, unLikeVideo, removeLikedVideo };

@@ -1,11 +1,10 @@
 import axios from "axios";
-
+import { toast } from "react-toastify";
 const addAndDeleteFromPlaylist = async (
   e,
   _id,
   singleVideoDetail,
   auth,
-  toast,
   setPlayLists,
   playLists
 ) => {
@@ -50,7 +49,6 @@ const createPlaylist = async (
   playListTitle,
   setPlayLists,
   navigate,
-  toast
 ) => {
   if (!auth.user) {
     navigate("/login");
@@ -77,7 +75,6 @@ const removeFromPlaylist = async (
   auth,
   setSinglePlayList,
   playlistId,
-  toast
 ) => {
   const response = await axios.delete(
     `/api/user/playlists/${playlistId}/${_id}`,
@@ -89,4 +86,15 @@ const removeFromPlaylist = async (
   setSinglePlayList(response.data.playlist.videos);
 };
 
-export { addAndDeleteFromPlaylist, createPlaylist, removeFromPlaylist };
+const clearSinglePlaylist = async (playlistId, auth, setSinglePlayList, navigate) => {
+  const response = await axios.delete(`/api/user/playlists/${playlistId}`, {
+    headers: { authorization: auth.token },
+  });
+  setSinglePlayList(response.data.playlists);
+  navigate("/playlists");
+  toast.warn("Playlist removed");
+};
+
+
+
+export { addAndDeleteFromPlaylist, createPlaylist, removeFromPlaylist, clearSinglePlaylist };
