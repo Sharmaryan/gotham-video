@@ -60,6 +60,12 @@ export const videoReducer = (state, action) => {
           spiderman: false,
         },
       };
+    case "SEARCH_VIDEO":
+      return {
+        ...state,
+        search: action.payload,
+      };
+
     default:
       return { ...state };
   }
