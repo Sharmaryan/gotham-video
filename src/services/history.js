@@ -1,11 +1,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-const addVideoToHistory = async (video, auth, setHistory) => {
+const addVideoToHistory = async (video, token, setHistory) => {
   try {
     const response = await axios({
       method: "post",
       url: "/api/user/history",
-      headers: { authorization: auth.token },
+      headers: { authorization: token },
       data: { video },
     });
     setHistory(response.data.history);

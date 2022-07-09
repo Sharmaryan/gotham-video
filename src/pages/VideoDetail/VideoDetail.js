@@ -1,42 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { BiLike, BiPlayCircle, BiTime } from "react-icons/bi";
 import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
 import { PlaylistModal, Sidebar } from "components";
-import { useAuth, useLike, useWatchLater } from "context";
-import {
-  likeVideo,
-  unLikeVideo,
-  addToWatchLater,
-  removeFromWatchLater,
-} from "services";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-import "./VideoDetail.css"
+import "./VideoDetail.css";
+import {
+  likeVideo,
+  dislikeVideo,
+  removeWatchLater,
+  watchLater,
+} from "features/videosSlice";
 
 export const VideoDetail = () => {
   const [singleVideoDetail, setSingleVideoDetail] = useState(null);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isWatchLater, setIsWatchLater] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { likedVideos, setLikedVideos } = useLike();
-  const { watchLaterVideos, setWatchLaterVideos } = useWatchLater();
-  
-
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
+  const { likedVideos, watchLaterVideos } = useSelector(
+    (state) => state.videos
+  );
+  const dispatch = useDispatch();
   const { videoId } = useParams();
-  const navigate = useNavigate();
   const { title, views, description, thumbnail, duration, _id, creator } =
     singleVideoDetail ?? {};
-
-  useEffect(() => {
-    setIsLiked(likedVideos.find((video) => video._id === videoId));
-  }, [videoId, likedVideos]);
-
-  useEffect(() => {
-    setIsWatchLater(watchLaterVideos.some((video) => video._id === videoId));
-  }, [videoId, watchLaterVideos]);
 
   useEffect(() => {
     (async () => {
@@ -48,6 +37,20 @@ export const VideoDetail = () => {
       }
     })();
   }, [videoId]);
+
+  const likeVideosHandler = () => {
+    dispatch(likeVideo({ auth, singleVideoDetail }));
+  };
+  const unlikeVideosHandler = () => {
+    dispatch(dislikeVideo({ videoId, auth }));
+  };
+
+  const watchLaterHandler = () => {
+    dispatch(watchLater({ auth, singleVideoDetail }));
+  };
+  const removeWatchLaterHandler = () => {
+    dispatch(removeWatchLater({ videoId, auth }));
+  };
 
   return (
     <div className="video-detail">
@@ -76,61 +79,29 @@ export const VideoDetail = () => {
               <BiTime className="video-icons" />
               <span className="video-icon-title"> {duration}</span>
             </div>
-            {isLiked ? (
-              <div
-                className="video-like video"
-                onClick={() =>
-                  unLikeVideo(_id, setIsLiked, setLikedVideos, auth)
-                }
-              >
+
+            {likedVideos.some((video) => video._id === videoId) ? (
+              <div className="video-like video" onClick={unlikeVideosHandler}>
                 <AiFillLike className="video-icons" />
-                <span className="video-icon-title">liked</span>
+                <span className="video-icon-title">unlike</span>
               </div>
             ) : (
-              <div
-                className="video-like video"
-                onClick={() =>
-                  likeVideo(
-                    auth,
-                    navigate,
-                    setIsLiked,
-                    singleVideoDetail,
-                    setLikedVideos
-                  )
-                }
-              >
+              <div className="video-like video" onClick={likeVideosHandler}>
                 <BiLike className="video-icons" />
                 <span className="video-icon-title">like</span>
               </div>
             )}
-            {isWatchLater ? (
+
+            {watchLaterVideos.some((video) => video._id === videoId) ? (
               <div
                 className="video-later video"
-                onClick={() =>
-                  removeFromWatchLater(
-                    _id,
-                    setIsWatchLater,
-                    setWatchLaterVideos,
-                    auth
-                  )
-                }
+                onClick={removeWatchLaterHandler}
               >
                 <MdWatchLater className="video-icons" />
                 <span className="video-icon-title">watch later</span>
               </div>
             ) : (
-              <div
-                className="video-later video"
-                onClick={() =>
-                  addToWatchLater(
-                    auth,
-                    navigate,
-                    setIsWatchLater,
-                    setWatchLaterVideos,
-                    singleVideoDetail
-                  )
-                }
-              >
+              <div className="video-later video" onClick={watchLaterHandler}>
                 <MdOutlineWatchLater className="video-icons" />
                 <span className="video-icon-title">watch later</span>
               </div>

@@ -1,11 +1,11 @@
-import { useAuth } from "context";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { FaUserCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
-  const { auth } = useAuth();
+  const { user } = useSelector((state) => state.auth);
   const { pathname } = useLocation();
 
   return (
@@ -42,7 +42,7 @@ export const Navbar = () => {
       <div className="menu">
         <ul>
           <li className="menu-items">
-            {auth.user ? (
+            {user ? (
               <Link to="/profile" className="text-decorations text-white">
                 <FaUserCircle />
               </Link>

@@ -1,25 +1,13 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { useAuth } from "context/auth-context/auth-context";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useLike } from "context/like-context/like-context";
 import "./VideoLike.css";
-import { removeLikedVideo } from "services";
+import { useSelector, useDispatch } from "react-redux";
+import { dislikeVideo } from "features/videosSlice";
 export const VideoLike = () => {
-  const { likedVideos, setLikedVideos } = useLike();
 
-  const { auth } = useAuth();
-  useEffect(() => {
-    (async () => {
-      const response = await axios({
-        method: "get",
-        url: "/api/user/likes",
-        headers: { authorization: auth.token },
-      });
-      setLikedVideos(response.data.likes);
-    })();
-  }, [auth.token, setLikedVideos]);
-
+const {likedVideos} = useSelector((state) => state.videos);
+const auth = useSelector((state) => state.auth)
+const dispatch = useDispatch();
 
   return (
     <div className="video-liked ">
@@ -33,11 +21,12 @@ export const VideoLike = () => {
       )}
       {likedVideos.length > 0 &&
         likedVideos.map(({ thumbnail, title, description, _id }) => {
+          const videoId = _id;
           return (
             <div className="card card-horizontal card-video-like" key={_id}>
               <span
                 className="remove-liked"
-                onClick={() => removeLikedVideo(_id, auth, setLikedVideos)}
+                onClick={() => dispatch(dislikeVideo({videoId, auth}))}
               >
                 x
               </span>

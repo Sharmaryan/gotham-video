@@ -1,8 +1,8 @@
-import { useAuth } from "context/auth-context/auth-context";
+import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
 export const RequiresAuth = ({ children }) => {
-  const { auth:{auth:isLoggedIn} } = useAuth();
+  const {user:isLoggedIn}  = useSelector((state) => state.auth);
   const location = useLocation();
   return isLoggedIn ? children : <Navigate state={{from:location}} to="/login" replace />;
 };
