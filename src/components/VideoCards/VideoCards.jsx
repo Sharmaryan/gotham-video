@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import { VideoCard } from "components/VideoCard/VideoCard";
-import { useVideo } from "context/video-context/video-context";
 import { category } from "services";
-
+import { useSelector } from "react-redux";
 import "./VideoCards.css";
+
 
 export const VideoCards = () => {
   const [videos, setVideos] = useState([]);
-
-  const { categories } = useVideo();
+  const { categories } = useSelector((state) => state.filter);
 
   useEffect(() => {
     (async () => {

@@ -1,4 +1,5 @@
 export const category = (videos, categories) => {
+  
   const { spiderman, drStrange, blackPanther, hulk, all } = categories;
 
   if (spiderman) {
