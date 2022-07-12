@@ -7,11 +7,7 @@ import { store } from "store";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import {
-  VideoProvider,
-  PlaylistProvider,
-  SinglePlaylistProvider,
-} from "./context/index";
+import { VideoProvider } from "./context/index";
 // Call make Server
 makeServer();
 
@@ -20,13 +16,9 @@ root.render(
   <StrictMode>
     <Router>
       <VideoProvider>
-        <PlaylistProvider>
-          <SinglePlaylistProvider>
-            <Provider store={store}>
-              <App />
-            </Provider>
-          </SinglePlaylistProvider>
-        </PlaylistProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
       </VideoProvider>
     </Router>
   </StrictMode>

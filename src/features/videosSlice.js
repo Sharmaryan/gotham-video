@@ -6,10 +6,7 @@ const initialState = {
   watchLaterVideos: [],
   historyVideos: [],
   playlists: [],
-  playlist: [],
 };
-
-console.log(initialState.playlist)
 
 export const likeVideo = createAsyncThunk(
   "video/like",
@@ -120,7 +117,7 @@ export const clearAllVideosFromHistory = createAsyncThunk(
 );
 
 export const createPlaylists = createAsyncThunk(
-  "video/clearPlaylists",
+  "video/createPlaylists",
   async ({ auth, playListTitle }, { rejectWithValue }) => {
     try {
       const response = await axios({
@@ -129,7 +126,7 @@ export const createPlaylists = createAsyncThunk(
         headers: { authorization: auth.token },
         data: { playlist: { title: playListTitle } },
       });
-      return response.data;
+      return response.data.playlists;
     } catch (err) {
       return rejectWithValue("something went wrong");
     }
@@ -140,15 +137,16 @@ export const addVideosToPlaylists = createAsyncThunk(
   "video/addVideosToPlaylists",
   async ({ _id, singleVideoDetail, auth }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `/api/user/playlists/${_id}`,
+      const playlistId = _id;
+      const { data } = await axios.post(
+        `/api/user/playlists/${playlistId}`,
         { video: singleVideoDetail },
         {
           headers: { authorization: auth.token },
         }
       );
-      
-      return response.data;
+
+      return data;
     } catch (err) {
       return rejectWithValue("something went wrong");
     }
@@ -157,41 +155,30 @@ export const addVideosToPlaylists = createAsyncThunk(
 
 export const removeVideosFromPlaylists = createAsyncThunk(
   "video/removeVideosPlaylists",
-  async ({ _id, singleVideoDetail, auth }, { rejectWithValue }) => {
+  async ({ playlistId, singleVideoId, auth }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `/api/user/playlists/${_id}/${singleVideoDetail._id}`,
+      const { data } = await axios.delete(
+        `/api/user/playlists/${playlistId}/${singleVideoId}`,
         {
           headers: { authorization: auth.token },
         }
       );
-      return response.data;
+      console.log()
+      return data;
     } catch (err) {
       return rejectWithValue("something went wrong");
     }
   }
 );
 
-export const getSinglePlaylist = createAsyncThunk(
-  "video/getSinglePlaylist",
-  async ({ playlistId, auth }, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`/api/user/playlists/${playlistId}`, {
-        headers: { authorization: auth.token },
-      });
-      return response.data;
-    } catch (err) {
-      return rejectWithValue("something went wrong");
-    }
-  }
-);
 export const getPlaylists = createAsyncThunk(
   "video/getSinglePlaylist",
-  async ( auth , { rejectWithValue }) => {
+  async ({ auth }, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/api/user/playlists', {
+      const response = await axios.get("/api/user/playlists", {
         headers: { authorization: auth.token },
       });
+      // console.log(response.data)
       return response.data;
     } catch (err) {
       return rejectWithValue("something went wrong");
@@ -199,30 +186,14 @@ export const getPlaylists = createAsyncThunk(
   }
 );
 
-export const removeVideosFromSinglePlaylist = createAsyncThunk(
-  "video/removeVideosPlaylists",
-  async ({playlistId, _id, auth }, { rejectWithValue }) => {
-    try {
-      const response = await axios.delete(
-        `/api/user/playlists/${playlistId}/${_id}`,
-        {
-          headers: { authorization: auth.token },
-        }
-      );
-      return response.data;
-    } catch (err) {
-      return rejectWithValue("something went wrong");
-    }
-  }
-);
 
 export const clearAllVideosFromSinglePlaylist = createAsyncThunk(
   "video/clearAllVideosFromSinglePlaylist",
-  async ({playlistId, auth }, { rejectWithValue }) => {
+  async ({ playlistId, auth }, { rejectWithValue }) => {
     try {
- const response = await axios.delete(`/api/user/playlists/${playlistId}`, {
-   headers: { authorization: auth.token },
- });
+      const response = await axios.delete(`/api/user/playlists/${playlistId}`, {
+        headers: { authorization: auth.token },
+      });
       return response.data;
     } catch (err) {
       return rejectWithValue("something went wrong");
@@ -257,8 +228,9 @@ const videosSlice = createSlice({
       state.historyVideos = action.payload.history;
     },
     [createPlaylists.fulfilled]: (state, action) => {
-      state.playlists = action.payload.playlists;
+      state.playlists = action.payload;
     },
+
     [addVideosToPlaylists.fulfilled]: (state, action) => {
       state.playlists = state.playlists.map((item) =>
         item._id === action.payload.playlist._id
@@ -273,20 +245,20 @@ const videosSlice = createSlice({
           : item
       );
     },
-    // [getSinglePlaylist.fulfilled]: (state, action) => {
-    //   state.playlist = action.payload.playlist.videos;
-    // },
-    // [getPlaylists.fulfilled]: (state, action) => {
-    //   state.playlists = action.payload.playlist.videos;
-    // },
-    // [removeVideosFromSinglePlaylist.fulfilled]: (state, action) => {
-    //   state.playlist = action.payload.playlist.videos;
-    // },
-    // [clearAllVideosFromSinglePlaylist.fulfilled]: (state, action) => {
-    //   console.log(action.payload)
-    //   state.playlist = action.payload.playlists;
-    // },
+    [getPlaylists.fulfilled]: (state, action) => {
+      state.playlists = action.payload.playlists;
+    },
+ 
+    [clearAllVideosFromSinglePlaylist.fulfilled]: (state, action) => {
+      state.playlists = action.payload.playlists;
+    },
   },
 });
 
 export const videosReducer = videosSlice.reducer;
+
+
+
+
+
+

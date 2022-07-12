@@ -18,7 +18,9 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
     if (e.target.checked) {
       dispatch(addVideosToPlaylists({ _id, singleVideoDetail, auth }));
     } else {
-      dispatch(removeVideosFromPlaylists({ _id, singleVideoDetail, auth }));
+      const singleVideoId = singleVideoDetail._id;
+      const playlistId = _id;
+      dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth}));
     }
   };
 
@@ -33,7 +35,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
             <input
               type="checkbox"
               checked={item.videos?.some(
-                (item) => item._id === singleVideoDetail._id
+                (video) => video._id === singleVideoDetail._id
               )}
               onChange={(e) => playlistChangeHandler(e, item._id)}
             />

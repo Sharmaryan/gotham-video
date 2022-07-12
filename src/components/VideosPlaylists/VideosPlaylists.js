@@ -6,17 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPlaylists } from "features/videosSlice";
 
 export const VideosPlaylists = () => {
-  const { playlists } = useSelector((state) => state.videos);
+  const {playlists}  = useSelector((state) => state.videos);
+  
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getPlaylists(auth));
-  // }, [dispatch, auth]);
-// console.log(playlists)
+  useEffect(() => {
+    dispatch(getPlaylists({auth}));
+  }, [dispatch, auth]);
+
   return (
     <div className="videos-playlists">
-      {playlists.length === 0 && (
+      {playlists?.length === 0 && (
         <div>
           There is no videos here{" "}
           <Link to="/explore" className="btn btn-explore">
@@ -24,7 +25,7 @@ export const VideosPlaylists = () => {
           </Link>
         </div>
       )}
-      {playlists.map((playlist) => {
+      {playlists?.map((playlist) => {
         const { title, _id, videos } = playlist;
         return (
           <div className="playlist-card" key={_id}>
