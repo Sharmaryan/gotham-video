@@ -8,6 +8,7 @@ const initialState = {
     drStrange: null,
     hulk: null,
   },
+  search:''
 };
 
 const filterVideosSlice = createSlice({
@@ -49,10 +50,12 @@ const filterVideosSlice = createSlice({
       state.categories.drStrange = false;
       state.categories.hulk = true;
     },
-  
+    videoSearch:(state,{payload}) => {
+      state.search = payload;
+    }
   },
 });
 
 export const filterReducer = filterVideosSlice.reducer;
-export const { all, spiderman, blackPanther, drStrange, hulk } =
+export const { all, spiderman, blackPanther, drStrange, hulk, videoSearch } =
   filterVideosSlice.actions;

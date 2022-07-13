@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { VideoCard } from "components/VideoCard/VideoCard";
-import { category } from "services";
+import { category, searchVideo } from "services";
 import { useSelector } from "react-redux";
 import "./VideoCards.css";
 
 
 export const VideoCards = () => {
   const [videos, setVideos] = useState([]);
-  const { categories } = useSelector((state) => state.filter);
+  const { categories, search } = useSelector((state) => state.filter);
 
   useEffect(() => {
     (async () => {
@@ -18,10 +18,11 @@ export const VideoCards = () => {
   }, []);
 
   const selectedCategory = category(videos, categories);
+  const searchedVideo = searchVideo(selectedCategory, search);
 
   return (
     <div className="videos">
-      {selectedCategory.map((video) => {
+      {searchedVideo.map((video) => {
         const { id } = video;
 
         return (
