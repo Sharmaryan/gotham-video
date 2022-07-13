@@ -1,72 +1,45 @@
-import React, { useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
-import { useAuth } from "context/auth-context/auth-context";
-import { loginReducer } from "reducer/login-reducer";
-import { BiShow, BiHide } from "react-icons/bi";
+import { login } from "features/authSlice";
+// import { BiShow, BiHide } from "react-icons/bi";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { formChangeHandler } from "utils/formHandler";
 export const Login = () => {
-  const { auth, setAuth } = useAuth();
-  const [{ email, password, passwordType }, dispatch] = useReducer(loginReducer, {
-    email: "",
-    password: "",
-    passwordType:'password'
-  });
+  const dispatch = useDispatch();
 
+  const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  const { user } = useSelector((state) => state.auth);
+
 
   const loginHandler = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post(`/api/auth/login`, {
-        email,
-        password,
-      });
-
-      const {
-        status,
-        data: { encodedToken, foundUser },
-      } = response;
-
-      if (status >= 200 && status <= 299) {
-        setAuth({ ...auth, auth: true, user: foundUser, token: encodedToken });
-        localStorage.setItem("token", encodedToken);
-        navigate(from, { replace: true });
-        toast.success("Successfully logged In");
-      }
-    } catch (error) {
-      
-      toast.error('Something went wrong')
-    }
+    dispatch(login(form))
+      .unwrap()
+      .then(() => toast.success("Successfully logged In"))
+      .catch(() => toast.error("something went wrong"));
   };
 
   const guestLoginHandler = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(`/api/auth/login`, {
-        email: "adarshbalika@gmail.com",
-        password: "adarshBalika123",
-      });
-
-      const {
-        status,
-        data: { encodedToken, foundUser },
-      } = response;
-
-      if (status >= 200 && status <= 299) {
-      setAuth({ ...auth, auth: true, user: foundUser, token: encodedToken });
-      localStorage.setItem("token", encodedToken);
-      navigate(from, { replace: true });
-      toast.success("Successfully logged In");
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-    }
+    dispatch(
+      login({ email: "adarshbalika@gmail.com", password: "adarshBalika123" })
+    )
+      .unwrap()
+      .then(() => toast.success("Successfully logged In"))
+      .catch(() => toast.error("something went wrong"));
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [user, from, navigate]);
+
   return (
     <div className="login-form">
       <h2 className="login-title">login</h2>
@@ -78,43 +51,22 @@ export const Login = () => {
             id="email"
             placeholder="xyz@gmail.com"
             className="input"
-            onChange={(e) =>
-              dispatch({ type: "EMAIL", payload: e.target.value })
-            }
-            value={email}
+            onChange={(e) => formChangeHandler(e, form, setForm)}
+            value={form.email}
+            name="email"
           />
         </label>
         <label htmlFor="password">
           Password
           <div className="password-input">
             <input
-              type={passwordType}
               id="password"
               placeholder="*********"
               className="input"
-              onChange={(e) =>
-                dispatch({ type: "PASSWORD", payload: e.target.value })
-              }
-              value={password}
+              onChange={(e) => formChangeHandler(e, form, setForm)}
+              value={form.password}
+              name="password"
             />
-            {passwordType === "password" ? (
-              <BiShow
-                className="password-icons"
-                onClick={() =>
-                  dispatch({ type: "PASSWORD_VISIBILITY", payload: "text" })
-                }
-              />
-            ) : (
-              <BiHide
-                className="password-icons"
-                onClick={() =>
-                  dispatch({
-                    type: "PASSWORD_VISIBILITY",
-                    payload: "password",
-                  })
-                }
-              />
-            )}
           </div>
         </label>
 
@@ -123,9 +75,6 @@ export const Login = () => {
             <input name="checkbox" id="remember" type="checkbox" />
             Remember Me
           </label>
-          <Link to="#" className="text-decorations password-forgot">
-            forgot your password?
-          </Link>
         </div>
         <button className="login-btn" onClick={loginHandler}>
           login

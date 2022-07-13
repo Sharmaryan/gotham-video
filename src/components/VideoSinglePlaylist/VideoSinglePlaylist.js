@@ -1,33 +1,43 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./VideoSinglePlaylist.css";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useSinglePlayList, useAuth } from "context";
-import axios from "axios";
-import { removeFromPlaylist, clearSinglePlaylist } from "services";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  removeVideosFromPlaylists,
+  clearAllVideosFromSinglePlaylist,
+} from "features/videosSlice";
 import { toast } from "react-toastify";
 
 export const VideoSinglePlaylist = () => {
   const { playlistId } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { auth } = useAuth();
-  const { singlePlayList, setSinglePlayList } = useSinglePlayList();
+  const auth = useSelector((state) => state.auth);
+  const { playlists } = useSelector((state) => state.videos);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get(`/api/user/playlists/${playlistId}`, {
-          headers: { authorization: auth.token },
-        });
-        setSinglePlayList(response.data.playlist.videos);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, [playlistId, auth.token, setSinglePlayList]);
+  const removeVideoHandler = (_id) => {
+    const singleVideoId = _id;
+    dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth }))
+      .unwrap()
+      .then(() => toast.warn("Removed from playlist"));
+  };
+
+  const clearAllVideosHandler = () => {
+    dispatch(clearAllVideosFromSinglePlaylist({ playlistId, auth }))
+      .unwrap()
+      .then(() => {
+        navigate("/playlists");
+        toast.warn("Playlist Deleted");
+      });
+  };
+
+  const singlePlaylist =
+    playlists?.filter((playlist) => playlist._id === playlistId)?.[0]?.videos ??
+    [];
 
   return (
     <div className="video-liked ">
-      {singlePlayList.length === 0 && (
+      {singlePlaylist.length === 0 && (
         <div>
           There is no videos here{" "}
           <Link to="/explore" className="btn btn-explore">
@@ -35,31 +45,18 @@ export const VideoSinglePlaylist = () => {
           </Link>
         </div>
       )}
-      {singlePlayList.length > 0 && (
-        <button
-          className="btn btn-success"
-          onClick={() =>
-            clearSinglePlaylist(playlistId, auth, setSinglePlayList, navigate)
-          }
-        >
+      {singlePlaylist.length > 0 && (
+        <button className="btn btn-success" onClick={clearAllVideosHandler}>
           Clear All
         </button>
       )}
       <div className="video-liked-card">
-        {singlePlayList?.map(({ thumbnail, title, description, _id }) => {
+        {singlePlaylist.map(({ thumbnail, title, description, _id }) => {
           return (
             <div className="card card-horizontal card-video-like" key={_id}>
               <span
                 className="remove-liked"
-                onClick={() =>
-                  removeFromPlaylist(
-                    _id,
-                    auth,
-                    setSinglePlayList,
-                    playlistId,
-                    toast
-                  )
-                }
+                onClick={() => removeVideoHandler(_id)}
               >
                 x
               </span>

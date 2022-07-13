@@ -1,13 +1,13 @@
 import React from "react";
 import { Link} from "react-router-dom";
-import { useAuth, useHistory } from "context";
-import {addVideoToHistory} from '../../services'
 import "./VideoCard.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addVideoToHistory } from "features/videosSlice";
 
 export const VideoCard = ({ ...video }) => {
   const { _id, title,  thumbnail} = video;
-  const { auth } = useAuth();
-  const { setHistory } = useHistory();
+  const auth = useSelector((state) => state.auth)
+  const dispatch = useDispatch(); 
 
   return (
     <div className="videocard">
@@ -17,7 +17,7 @@ export const VideoCard = ({ ...video }) => {
             src={thumbnail}
             alt={title}
             className="card-logo"
-            onClick={() => addVideoToHistory(video, auth, setHistory)}
+            onClick={() => dispatch(addVideoToHistory({auth, video}))}
           />
         </Link>
         <div className="videocard-main">

@@ -1,54 +1,37 @@
-import React, { useReducer } from "react";
-import { signupReducer } from "reducer/signup-reducer";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "context/auth-context/auth-context";
-import { BiShow, BiHide } from "react-icons/bi";
-import axios from "axios";
+import React, { useState,useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+// import { BiShow, BiHide } from "react-icons/bi";
 import "./Signup.css";
 import { toast } from "react-toastify";
 
+import { signUp } from "features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { formChangeHandler } from "utils/formHandler";
 export const Signup = () => {
-  const [{ firstName, lastName, email, password, passwordType }, dispatch] =
-    useReducer(signupReducer, {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      passwordType: "password",
-    });
-
-  const { auth, setAuth } = useAuth();
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const { user } = useSelector((state) => state.auth);
   const signupHandler = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(`/api/auth/signup`, {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-      const {
-        status,
-        data: { encodedToken, createdUser },
-      } = response;
-
-      if (status >= 200 && status <= 299) {
-        setAuth({
-          ...auth,
-          auth: true,
-          user: createdUser,
-          token: encodedToken,
-        });
-        localStorage.setItem("token", encodedToken);
-        navigate("/");
-        toast.success("Successfully logged In");
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-    }
+    dispatch(signUp(form)).unwrap()
+      .then(() => toast.success("Successfully logged In"))
+      .catch(() => toast.error("something went wrong"));
   };
+
+   useEffect(() => {
+     if (user) {
+       navigate(from, { replace: true });
+     }
+   }, [user, from, navigate]);
+
 
   return (
     <div className="signup-section">
@@ -58,68 +41,51 @@ export const Signup = () => {
           <label className="label" htmlFor="fname">
             first name
             <input
-              onChange={(e) =>
-                dispatch({
-                  type: "FNAME",
-                  payload: e.target.value,
-                })
-              }
+              onChange={(e) => formChangeHandler(e, form, setForm)}
               type="text"
               id="fname"
               placeholder="enter your first name"
               className="input"
-              value={firstName}
+              value={form.firstName}
+              name='firstName'
             />
           </label>
           <label className="label" htmlFor="lname">
             last name
             <input
-              onChange={(e) =>
-                dispatch({
-                  type: "LNAME",
-                  payload: e.target.value,
-                })
-              }
+              onChange={(e) => formChangeHandler(e, form, setForm)}
               type="text"
               id="lname"
               placeholder="enter your last name"
               className="input"
-              value={lastName}
+              value={form.lastName}
+              name='lastName'
             />
           </label>
           <label className="label" htmlFor="email">
             Email
             <input
-              onChange={(e) =>
-                dispatch({
-                  type: "EMAIL",
-                  payload: e.target.value,
-                })
-              }
+              onChange={(e) => formChangeHandler(e, form, setForm)}
               type="email"
               id="email"
               placeholder="xyz@gmail.com"
               className="input"
-              value={email}
+              value={form.email}
+              name='email'
             />
           </label>
           <label className="label" htmlFor="password">
             Password
             <div className="password-input">
               <input
-                onChange={(e) =>
-                  dispatch({
-                    type: "PASSWORD",
-                    payload: e.target.value,
-                  })
-                }
-                type={passwordType}
+                onChange={(e) => formChangeHandler(e, form, setForm)}
                 id="password"
                 placeholder="*********"
                 className="input "
-                value={password}
+                value={form.password}
+                name='password'
               />
-              {passwordType === "password" ? (
+              {/* {passwordType === "password" ? (
                 <BiShow
                   className="password-icons"
                   onClick={() =>
@@ -136,10 +102,9 @@ export const Signup = () => {
                     })
                   }
                 />
-              )}
+              )} */}
             </div>
           </label>
-         
 
           <div className="t-and-c">
             <label className="label" htmlFor="t&c">
