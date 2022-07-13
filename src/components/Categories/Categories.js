@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useVideo } from "context/video-context/video-context";
+import { useDispatch } from "react-redux";
+import {
+  spiderman,
+  hulk,
+  drStrange,
+  blackPanther,
+} from "features/filterVideosSlice";
 
 export const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const { videoDispatch } = useVideo();
+  const videoDispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -18,6 +24,13 @@ export const Categories = () => {
       }
     })();
   }, []);
+
+  const categoryHandler = (dispatch) => {
+    if (dispatch === "SPIDER-MAN") videoDispatch(spiderman());
+    if (dispatch === "BLACK-PANTHER") videoDispatch(blackPanther());
+    if (dispatch === "DR-STRANGE") videoDispatch(drStrange());
+    if (dispatch === "HULK") videoDispatch(hulk());
+  };
 
   return (
     <div>
@@ -31,7 +44,7 @@ export const Categories = () => {
                 to="/explore"
                 className="text-decorations text-white title"
                 onClick={() => {
-                  videoDispatch({ type: dispatch });
+                  categoryHandler(dispatch);
                 }}
               >
                 <img src={image} className="category-image" alt={altText} />

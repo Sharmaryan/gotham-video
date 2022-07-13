@@ -1,23 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./VideoWatchLater.css";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import { useAuth, useWatchLater } from "context";
-import { removeWatchLater } from "services";
+import { useSelector, useDispatch } from "react-redux";
+import { removeWatchLater } from "features/videosSlice";
+import {toast} from 'react-toastify';
 export const VideoWatchLater = () => {
   
-  const { watchLaterVideos, setWatchLaterVideos } = useWatchLater();
-  const { auth } = useAuth();
-  useEffect(() => {
-    (async () => {
-      const response = await axios({
-        method: "get",
-        url: "/api/user/watchlater",
-        headers: { authorization: auth.token },
-      });
-      setWatchLaterVideos(response.data.watchlater);
-    })();
-  }, [auth.token, setWatchLaterVideos]);
+const {watchLaterVideos} = useSelector((state) => state.videos);
+const auth = useSelector((state) => state.auth);
+const dispatch = useDispatch();
+
+const removeWatchLaterHandler = (videoId) => {
+  dispatch(removeWatchLater({ videoId, auth })).unwrap().then(() => toast.warn('Removed from Watch Later'));
+}
 
   return (
     <div className="video-watch-later">
@@ -31,6 +26,7 @@ export const VideoWatchLater = () => {
       )}
       {watchLaterVideos.length > 0 &&
         watchLaterVideos.map(({ thumbnail, title, _id }) => {
+          const videoId = _id;
           return (
             <div className="card card-image" key={_id}>
               <Link to={`/video/${_id}`}>
@@ -39,7 +35,7 @@ export const VideoWatchLater = () => {
               <p className="card-title watch-later-title">{title}</p>
               <button
                 className="btn btn-success watch-later-remove"
-                onClick={() => removeWatchLater(_id, auth, setWatchLaterVideos)}
+                onClick={() => removeWatchLaterHandler(videoId)}
               >
                 remove
               </button>

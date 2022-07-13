@@ -1,31 +1,23 @@
 import React, { useEffect } from "react";
 import "./VideosPlaylists.css";
-import axios from "axios";
-import { useAuth } from "context/auth-context/auth-context";
-import { usePlayList } from "context/playlist-context/playlist-context";
 import { AiOutlinePlayCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getPlaylists } from "features/videosSlice";
 
 export const VideosPlaylists = () => {
-  const { auth } = useAuth();
-  const { playLists, setPlayLists } = usePlayList();
+  const {playlists}  = useSelector((state) => state.videos);
   
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    (async () => {
-      const response = await axios({
-        method: "get",
-        url: "/api/user/playlists",
-        headers: { authorization: auth.token },
-      });
-      setPlayLists(response.data.playlists);
-    })();
-  }, [auth.token, setPlayLists]);
+    dispatch(getPlaylists({auth}));
+  }, [dispatch, auth]);
 
   return (
     <div className="videos-playlists">
-      {playLists.length === 0 && (
+      {playlists?.length === 0 && (
         <div>
           There is no videos here{" "}
           <Link to="/explore" className="btn btn-explore">
@@ -33,7 +25,7 @@ export const VideosPlaylists = () => {
           </Link>
         </div>
       )}
-      {playLists?.map((playlist) => {
+      {playlists?.map((playlist) => {
         const { title, _id, videos } = playlist;
         return (
           <div className="playlist-card" key={_id}>
@@ -59,5 +51,3 @@ export const VideosPlaylists = () => {
     </div>
   );
 };
-
-

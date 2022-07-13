@@ -1,18 +1,18 @@
-import { useAuth, useVideo } from "context";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { FaUserCircle } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { videoSearch } from "features/filterVideosSlice";
 
 export const Navbar = () => {
-  const { auth } = useAuth();
+  const { user } = useSelector((state) => state.auth);
   const { pathname } = useLocation();
-  const { videoDispatch, search} = useVideo();
-
-  const searchVideos = (e) => {
-    videoDispatch({ type: "SEARCH_VIDEO" , payload: e.target.value});
-  }
- 
+  const { search } = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
+  const searchInputHandler = (e) => {
+    dispatch(videoSearch(e.target.value));
+  };
 
   return (
     <nav className="nav-menu navbar">
@@ -42,15 +42,15 @@ export const Navbar = () => {
             type="text"
             placeholder="search videos"
             className="search-bar"
-            onChange={searchVideos}
             value={search}
+            onChange={searchInputHandler}
           />
         </div>
       )}
       <div className="menu">
         <ul>
           <li className="menu-items">
-            {auth.user ? (
+            {user ? (
               <Link to="/profile" className="text-decorations text-white">
                 <FaUserCircle />
               </Link>

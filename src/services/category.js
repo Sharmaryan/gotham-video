@@ -1,4 +1,5 @@
-const category = (videos, categories) => {
+export const category = (videos, categories) => {
+  
   const { spiderman, drStrange, blackPanther, hulk, all } = categories;
 
   if (spiderman) {
@@ -29,9 +30,7 @@ const category = (videos, categories) => {
   return videos;
 };
 
-  const searchVideo = (currentCategory, search) =>
-    currentCategory.filter((item) =>
-      item.title.toLowerCase().includes(search.toLowerCase())
-    );
-
-    export { searchVideo, category}
+export const searchVideo = (currentCategory, search) =>
+  currentCategory.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase())
+  );
