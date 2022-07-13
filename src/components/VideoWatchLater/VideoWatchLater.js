@@ -3,11 +3,16 @@ import "./VideoWatchLater.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeWatchLater } from "features/videosSlice";
+import {toast} from 'react-toastify';
 export const VideoWatchLater = () => {
   
 const {watchLaterVideos} = useSelector((state) => state.videos);
 const auth = useSelector((state) => state.auth);
 const dispatch = useDispatch();
+
+const removeWatchLaterHandler = (videoId) => {
+  dispatch(removeWatchLater({ videoId, auth })).unwrap().then(() => toast.warn('Removed from Watch Later'));
+}
 
   return (
     <div className="video-watch-later">
@@ -30,7 +35,7 @@ const dispatch = useDispatch();
               <p className="card-title watch-later-title">{title}</p>
               <button
                 className="btn btn-success watch-later-remove"
-                onClick={() => dispatch(removeWatchLater({videoId, auth}))}
+                onClick={() => removeWatchLaterHandler(videoId)}
               >
                 remove
               </button>

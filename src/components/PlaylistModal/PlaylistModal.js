@@ -6,6 +6,7 @@ import {
   removeVideosFromPlaylists,
 } from "features/videosSlice";
 import "./PlaylistModal.css";
+import { toast } from "react-toastify";
 
 export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
   const auth = useSelector((state) => state.auth);
@@ -16,12 +17,22 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
   const handlePlaylistInput = (e) => setPlayListTitle(e.target.value);
   const playlistChangeHandler = (e, _id) => {
     if (e.target.checked) {
-      dispatch(addVideosToPlaylists({ _id, singleVideoDetail, auth }));
+      dispatch(addVideosToPlaylists({ _id, singleVideoDetail, auth }))
+        .unwrap()
+        .then(() => toast.success("Added to playlist"));
     } else {
       const singleVideoId = singleVideoDetail._id;
       const playlistId = _id;
-      dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth}));
+      dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth }))
+        .unwrap()
+        .then(() => toast.warn("Removed from playlist"));
     }
+  };
+
+  const createPlaylistHandler = () => {
+    dispatch(createPlaylists({ auth, playListTitle }))
+      .unwrap()
+      .then(() => toast.success("Playlist Created"));
   };
 
   return (
@@ -52,10 +63,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
           onChange={handlePlaylistInput}
         />
       </label>
-      <button
-        className="playlist-btn"
-        onClick={() => dispatch(createPlaylists({ auth, playListTitle }))}
-      >
+      <button className="playlist-btn" onClick={createPlaylistHandler}>
         create
       </button>
     </div>

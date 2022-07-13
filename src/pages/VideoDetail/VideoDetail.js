@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BiLike, BiPlayCircle, BiTime } from "react-icons/bi";
 import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
@@ -14,6 +14,7 @@ import {
   removeWatchLater,
   watchLater,
 } from "features/videosSlice";
+import { toast } from "react-toastify";
 
 export const VideoDetail = () => {
   const [singleVideoDetail, setSingleVideoDetail] = useState(null);
@@ -24,6 +25,7 @@ export const VideoDetail = () => {
   );
   const dispatch = useDispatch();
   const { videoId } = useParams();
+  const navigate = useNavigate();
   const { title, views, description, thumbnail, duration, _id, creator } =
     singleVideoDetail ?? {};
 
@@ -39,17 +41,29 @@ export const VideoDetail = () => {
   }, [videoId]);
 
   const likeVideosHandler = () => {
-    dispatch(likeVideo({ auth, singleVideoDetail }));
+    auth.user
+      ? dispatch(likeVideo({ auth, singleVideoDetail }))
+          .unwrap()
+          .then(() => toast.success("Added to Liked Videos"))
+      : navigate("/login");
   };
   const unlikeVideosHandler = () => {
-    dispatch(dislikeVideo({ videoId, auth }));
+    dispatch(dislikeVideo({ videoId, auth }))
+      .unwrap()
+      .then(() => toast.warn("Removed from Liked Videos"));
   };
 
   const watchLaterHandler = () => {
-    dispatch(watchLater({ auth, singleVideoDetail }));
+    auth.user
+      ? dispatch(watchLater({ auth, singleVideoDetail }))
+          .unwrap()
+          .then(() => toast.success("Added to Watch Later"))
+      : navigate("/login");
   };
   const removeWatchLaterHandler = () => {
-    dispatch(removeWatchLater({ videoId, auth }));
+    dispatch(removeWatchLater({ videoId, auth }))
+      .unwrap()
+      .then(() => toast.warn(" Removed from Watch Later"));
   };
 
   return (
@@ -109,7 +123,7 @@ export const VideoDetail = () => {
 
             <div
               className="video-playlist video"
-              onClick={() => setShowModal(true)}
+              onClick={() => auth.user ? setShowModal(true) : navigate('/login')}
             >
               <BiPlayCircle className="video-icons" />{" "}
               <span className="video-icon-title">add to playlist</span>

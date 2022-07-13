@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import "./VideoLike.css";
 import { useSelector, useDispatch } from "react-redux";
 import { dislikeVideo } from "features/videosSlice";
+import { toast } from "react-toastify";
 export const VideoLike = () => {
+  const { likedVideos } = useSelector((state) => state.videos);
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-const {likedVideos} = useSelector((state) => state.videos);
-const auth = useSelector((state) => state.auth)
-const dispatch = useDispatch();
+  const videoDislikeHandler = (videoId) => {
+    dispatch(dislikeVideo({ videoId, auth }))
+      .unwrap()
+      .then(() => toast.warn("Removed from Liked Videos"));
+  };
 
   return (
     <div className="video-liked ">
@@ -26,7 +32,7 @@ const dispatch = useDispatch();
             <div className="card card-horizontal card-video-like" key={_id}>
               <span
                 className="remove-liked"
-                onClick={() => dispatch(dislikeVideo({videoId, auth}))}
+                onClick={() => videoDislikeHandler(videoId)}
               >
                 x
               </span>

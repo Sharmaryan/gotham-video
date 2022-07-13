@@ -6,19 +6,30 @@ import {
   removeVideoFromHistory,
   clearAllVideosFromHistory,
 } from "features/videosSlice";
-
+import { toast } from "react-toastify";
 export const VideoHistory = () => {
-  
   const { historyVideos } = useSelector((state) => state.videos);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const removeVideoFromHistoryHandler = (_id) => {
+    dispatch(removeVideoFromHistory({ _id, auth }))
+      .unwrap()
+      .then(() => toast.warn("Video Removed"));
+  };
+
+  const clearAllVideosFromHistoryHandler = () => {
+    dispatch(clearAllVideosFromHistory(auth))
+      .unwrap()
+      .then(() => toast.warn("History Cleared"));
+  };
 
   return (
     <div className="video-history">
       {historyVideos.length > 0 && (
         <button
           className="btn btn-success"
-          onClick={() => dispatch(clearAllVideosFromHistory(auth))}
+          onClick={clearAllVideosFromHistoryHandler}
         >
           Clear All
         </button>
@@ -42,9 +53,7 @@ export const VideoHistory = () => {
                 <p className="card-title history-title">{title}</p>
                 <button
                   className="btn btn-success history-remove"
-                  onClick={() =>
-                    dispatch(removeVideoFromHistory({ _id, auth }))
-                  }
+                  onClick={() => removeVideoFromHistoryHandler(_id)}
                 >
                   remove
                 </button>

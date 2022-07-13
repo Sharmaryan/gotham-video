@@ -1,12 +1,12 @@
 import React from "react";
 import "./VideoSinglePlaylist.css";
 import { useParams, Link, useNavigate } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeVideosFromPlaylists,
   clearAllVideosFromSinglePlaylist,
 } from "features/videosSlice";
+import { toast } from "react-toastify";
 
 export const VideoSinglePlaylist = () => {
   const { playlistId } = useParams();
@@ -17,12 +17,23 @@ export const VideoSinglePlaylist = () => {
 
   const removeVideoHandler = (_id) => {
     const singleVideoId = _id;
-    dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth }));
+    dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth }))
+      .unwrap()
+      .then(() => toast.warn("Removed from playlist"));
   };
-  
-  const singlePlaylist =
-    playlists?.filter((playlist) => playlist._id === playlistId)?.[0]?.videos ?? [];
 
+  const clearAllVideosHandler = () => {
+    dispatch(clearAllVideosFromSinglePlaylist({ playlistId, auth }))
+      .unwrap()
+      .then(() => {
+        navigate("/playlists");
+        toast.warn("Playlist Deleted");
+      });
+  };
+
+  const singlePlaylist =
+    playlists?.filter((playlist) => playlist._id === playlistId)?.[0]?.videos ??
+    [];
 
   return (
     <div className="video-liked ">
@@ -35,41 +46,34 @@ export const VideoSinglePlaylist = () => {
         </div>
       )}
       {singlePlaylist.length > 0 && (
-        <button
-          className="btn btn-success"
-          onClick={() =>
-            dispatch(clearAllVideosFromSinglePlaylist({ playlistId, auth })).unwrap().then(navigate('/playlists'))
-          }
-        >
+        <button className="btn btn-success" onClick={clearAllVideosHandler}>
           Clear All
         </button>
       )}
       <div className="video-liked-card">
-        {singlePlaylist.map(
-          ({ thumbnail, title, description, _id }) => {
-            return (
-              <div className="card card-horizontal card-video-like" key={_id}>
-                <span
-                  className="remove-liked"
-                  onClick={() => removeVideoHandler(_id)}
-                >
-                  x
-                </span>
-                <Link to={`/video/${_id}`}>
-                  <img
-                    src={thumbnail}
-                    alt={title}
-                    className="card-logo card-horizontal-logo"
-                  />
-                </Link>
-                <div className="card-horizontal-content">
-                  <p className="card-title limit-text ">{title}</p>
-                  <p className="card-desc limit-text">{description}</p>
-                </div>
+        {singlePlaylist.map(({ thumbnail, title, description, _id }) => {
+          return (
+            <div className="card card-horizontal card-video-like" key={_id}>
+              <span
+                className="remove-liked"
+                onClick={() => removeVideoHandler(_id)}
+              >
+                x
+              </span>
+              <Link to={`/video/${_id}`}>
+                <img
+                  src={thumbnail}
+                  alt={title}
+                  className="card-logo card-horizontal-logo"
+                />
+              </Link>
+              <div className="card-horizontal-content">
+                <p className="card-title limit-text ">{title}</p>
+                <p className="card-desc limit-text">{description}</p>
               </div>
-            );
-          }
-        )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
