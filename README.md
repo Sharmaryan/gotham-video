@@ -50,6 +50,7 @@ This app is similar to YouTube.
 - [Gotham UI](https://gothamui-temp.netlify.app/)
 - CSS
 - React JS
+- Redux Toolkit
 - React Router v6
 - [Mockbee](https://mockbee.netlify.app/)
 
