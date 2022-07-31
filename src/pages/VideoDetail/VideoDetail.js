@@ -97,12 +97,14 @@ export const VideoDetail = () => {
             {likedVideos.some((video) => video._id === videoId) ? (
               <div className="video-like video" onClick={unlikeVideosHandler}>
                 <AiFillLike className="video-icons" />
-                <span className="video-icon-title">unlike</span>
+                <span className="video-icon-title hide-video-title">
+                  unlike
+                </span>
               </div>
             ) : (
               <div className="video-like video" onClick={likeVideosHandler}>
                 <BiLike className="video-icons" />
-                <span className="video-icon-title">like</span>
+                <span className="video-icon-title hide-video-title">like</span>
               </div>
             )}
 
@@ -112,21 +114,29 @@ export const VideoDetail = () => {
                 onClick={removeWatchLaterHandler}
               >
                 <MdWatchLater className="video-icons" />
-                <span className="video-icon-title">watch later</span>
+                <span className="video-icon-title hide-video-title">
+                  watch later
+                </span>
               </div>
             ) : (
               <div className="video-later video" onClick={watchLaterHandler}>
                 <MdOutlineWatchLater className="video-icons" />
-                <span className="video-icon-title">watch later</span>
+                <span className="video-icon-title hide-video-title">
+                  watch later
+                </span>
               </div>
             )}
 
             <div
               className="video-playlist video"
-              onClick={() => auth.user ? setShowModal(true) : navigate('/login')}
+              onClick={() =>
+                auth.user ? setShowModal(true) : navigate("/login")
+              }
             >
               <BiPlayCircle className="video-icons" />{" "}
-              <span className="video-icon-title">add to playlist</span>
+              <span className="video-icon-title hide-video-title">
+                playlist
+              </span>
             </div>
           </div>
           <div className="video-avatar-creator px-1">
@@ -136,7 +146,7 @@ export const VideoDetail = () => {
           <div className="video-desc px-2">{description}</div>
         </div>
       )}
-      <MobileSidebar/>
+      <MobileSidebar />
     </div>
   );
 };
