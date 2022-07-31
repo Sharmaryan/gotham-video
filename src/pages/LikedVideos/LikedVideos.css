@@ -2,4 +2,6 @@
     margin-top: 4rem;
   display: flex;
   position: relative;
+   background-color: var(--primary-color);
+  height: 100vh;
 }
