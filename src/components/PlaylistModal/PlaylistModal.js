@@ -7,6 +7,7 @@ import {
 } from "features/videosSlice";
 import "./PlaylistModal.css";
 import { toast } from "react-toastify";
+import {ImCross} from 'react-icons/im';
 
 export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
   const auth = useSelector((state) => state.auth);
@@ -37,35 +38,37 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
 
   return (
     <div className="playlist-modal">
-      <div className="modal-close" onClick={() => setShowModal(false)}>
-        X
-      </div>
-      {playlists?.map((item) => (
-        <div key={item._id}>
-          <label htmlFor="playlist-title">
-            <input
-              type="checkbox"
-              checked={item.videos?.some(
-                (video) => video._id === singleVideoDetail._id
-              )}
-              onChange={(e) => playlistChangeHandler(e, item._id)}
-            />
-            <span className="playlists-title">{item.title}</span>
-          </label>
+      <div className="modal-container">
+        <div className="modal-close" onClick={() => setShowModal(false)}>
+          <ImCross/>
         </div>
-      ))}
-      <label htmlFor="playlist">
-        <input
-          type="text"
-          placeholder="create playlist"
-          id="playlist"
-          className="playlist-input"
-          onChange={handlePlaylistInput}
-        />
-      </label>
-      <button className="playlist-btn" onClick={createPlaylistHandler}>
-        create
-      </button>
+        {playlists?.map((item) => (
+          <div key={item._id}>
+            <label htmlFor="playlist-title">
+              <input
+                type="checkbox"
+                checked={item.videos?.some(
+                  (video) => video._id === singleVideoDetail._id
+                )}
+                onChange={(e) => playlistChangeHandler(e, item._id)}
+              />
+              <span className="playlists-title">{item.title}</span>
+            </label>
+          </div>
+        ))}
+        <label htmlFor="playlist">
+          <input
+            type="text"
+            placeholder="create playlist"
+            id="playlist"
+            className="playlist-input"
+            onChange={handlePlaylistInput}
+          />
+        </label>
+        <button className="playlist-btn" onClick={createPlaylistHandler}>
+          create
+        </button>
+      </div>
     </div>
   );
 };
