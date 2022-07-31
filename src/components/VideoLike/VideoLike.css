@@ -1,22 +1,32 @@
-.video-liked{
-    position: absolute;
-    width: 70%;
-    right: 1rem;
+.video-liked {
+  margin-left: 14rem;
+  position: absolute;
+  top: 1.3rem;
+  background-color: var(--primary-color);
+  min-height: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
-.card-video-like{
-    width: 100%;
-    margin-bottom: 1rem;
-}
-.limit-text{
-    overflow: hidden;
+
+.video-like-title {
+  font-size: 1rem;
+  overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.remove-liked{
-    position: absolute;
-    right: 1rem;
-    font-size: 1.4rem;
-    cursor: pointer;
+
+.video-like-remove {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  width: 100%;
+  margin: 0;
+}
+
+@media screen and (max-width: 700px) {
+  .video-liked {
+    margin-left: revert;
+  }
 }

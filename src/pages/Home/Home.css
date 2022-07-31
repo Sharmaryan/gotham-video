@@ -1,5 +1,6 @@
 .home {
   margin-top: 3rem;
+  background-color: var(--primary-color);
 }
 .img{
     width: 100%;

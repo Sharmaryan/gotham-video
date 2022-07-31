@@ -1,15 +1,21 @@
 .video-categories {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-
+  margin-top: 1rem;
 }
 .video-button {
   background-color: var(--secondary-color);
   color: var(--primary-color);
+  width: revert;
 }
 .video-button:hover {
   color: var(--secondary-color);
   background-color: transparent;
   border: 1px solid var(--secondary-color);
+}
+
+@media screen and (max-width: 700px) {
+.video-categories{
+  justify-content: center;
+}
 }

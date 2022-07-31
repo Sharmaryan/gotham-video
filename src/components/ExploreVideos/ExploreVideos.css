@@ -2,7 +2,7 @@
   position: relative;
 }
 .explore-heading {
-  color: var(--primary-color);
+  color: var(--secondary-color);
   text-transform: uppercase;
   width: 70%;
 }

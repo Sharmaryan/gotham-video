@@ -25,31 +25,24 @@ export const VideoLike = () => {
           </Link>
         </div>
       )}
-      {likedVideos.length > 0 &&
-        likedVideos.map(({ thumbnail, title, description, _id }) => {
+      { likedVideos?.map(({ thumbnail, title, _id }) => {
           const videoId = _id;
           return (
-            <div className="card card-horizontal card-video-like" key={_id}>
-              <span
-                className="remove-liked"
+            <div className="card card-image" key={_id}>
+              <Link to={`/video/${_id}`}>
+                <img src={thumbnail} alt={title} className="card-logo" />
+              </Link>
+              <p className="card-title video-like-title">{title}</p>
+              <button
+                className="btn btn-success video-like-remove"
                 onClick={() => videoDislikeHandler(videoId)}
               >
-                x
-              </span>
-              <Link to={`/video/${_id}`}>
-                <img
-                  src={thumbnail}
-                  alt={title}
-                  className="card-logo card-horizontal-logo"
-                />
-              </Link>
-              <div className="card-horizontal-content">
-                <p className="card-title limit-text ">{title}</p>
-                <p className="card-desc limit-text">{description}</p>
-              </div>
+                remove
+              </button>
             </div>
           );
         })}
     </div>
   );
 };
+

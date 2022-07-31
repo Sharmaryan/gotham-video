@@ -2,11 +2,17 @@
   margin-top: 4rem;
   display: flex;
   position: relative;
+  background-color: var(--primary-color);
+  min-height: 100vh;
 }
 .explore-main {
-  width: 70%;
-  position: absolute;
-  right: 0;
-  top: 1.3rem;
-
+  margin-left: 14rem;
+  padding-left: 4rem;
+  background-color: var(--primary-color);
+}
+@media screen and (max-width: 700px) {
+  .explore-main {
+    margin-left: revert;
+    padding-left: revert;
+  }
 }

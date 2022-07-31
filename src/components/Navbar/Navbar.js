@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { FaUserCircle } from "react-icons/fa";
+import {BiLogIn} from 'react-icons/bi';
 import { useDispatch, useSelector } from "react-redux";
 import { videoSearch } from "features/filterVideosSlice";
 
@@ -24,20 +25,19 @@ export const Navbar = () => {
         </li>
 
         <li className="menu-items">
-          <Link to="/" className="text-decorations text-white">
+          <Link to="/" className="text-decorations text-white menu-home">
             Home
           </Link>
         </li>
 
         <li className="menu-items fas-icons">
-          <Link to="/explore" className="text-decorations text-white">
+          <Link to="/explore" className="text-decorations text-white menu-explore">
             Explore
           </Link>
         </li>
       </ul>
       {pathname === "/explore" && (
         <div className="search">
-          <i className="fas fa-search search-background"></i>
           <input
             type="text"
             placeholder="search videos"
@@ -56,7 +56,7 @@ export const Navbar = () => {
               </Link>
             ) : (
               <Link to="/login" className="text-decorations text-white">
-                login
+                <BiLogIn/>
               </Link>
             )}
           </li>

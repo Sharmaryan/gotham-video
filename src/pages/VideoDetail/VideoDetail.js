@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BiLike, BiPlayCircle, BiTime } from "react-icons/bi";
 import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
-import { PlaylistModal, Sidebar } from "components";
+import { PlaylistModal, Sidebar, MobileSidebar } from "components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
@@ -83,8 +83,8 @@ export const VideoDetail = () => {
             title="YouTube video player"
             frameBorder="0"
           ></iframe>
-          <div className="video-title">{title}</div>
-          <div className="video-main">
+          <div className="video-title px-2">{title}</div>
+          <div className="video-main px-2">
             <div className="video-views video">
               <AiOutlineEye className="video-icons" />
               <span className="video-icon-title"> {views}</span>
@@ -97,12 +97,14 @@ export const VideoDetail = () => {
             {likedVideos.some((video) => video._id === videoId) ? (
               <div className="video-like video" onClick={unlikeVideosHandler}>
                 <AiFillLike className="video-icons" />
-                <span className="video-icon-title">unlike</span>
+                <span className="video-icon-title hide-video-title">
+                  unlike
+                </span>
               </div>
             ) : (
               <div className="video-like video" onClick={likeVideosHandler}>
                 <BiLike className="video-icons" />
-                <span className="video-icon-title">like</span>
+                <span className="video-icon-title hide-video-title">like</span>
               </div>
             )}
 
@@ -112,30 +114,39 @@ export const VideoDetail = () => {
                 onClick={removeWatchLaterHandler}
               >
                 <MdWatchLater className="video-icons" />
-                <span className="video-icon-title">watch later</span>
+                <span className="video-icon-title hide-video-title">
+                  watch later
+                </span>
               </div>
             ) : (
               <div className="video-later video" onClick={watchLaterHandler}>
                 <MdOutlineWatchLater className="video-icons" />
-                <span className="video-icon-title">watch later</span>
+                <span className="video-icon-title hide-video-title">
+                  watch later
+                </span>
               </div>
             )}
 
             <div
               className="video-playlist video"
-              onClick={() => auth.user ? setShowModal(true) : navigate('/login')}
+              onClick={() =>
+                auth.user ? setShowModal(true) : navigate("/login")
+              }
             >
               <BiPlayCircle className="video-icons" />{" "}
-              <span className="video-icon-title">add to playlist</span>
+              <span className="video-icon-title hide-video-title">
+                playlist
+              </span>
             </div>
           </div>
-          <div className="video-avatar-creator">
+          <div className="video-avatar-creator px-1">
             <img src={thumbnail} alt="avatar" className="img-md avatar-round" />
             <div className="video-creator">{creator}</div>
           </div>
-          <div className="video-desc">{description}</div>
+          <div className="video-desc px-2">{description}</div>
         </div>
       )}
+      <MobileSidebar />
     </div>
   );
 };

@@ -1,32 +1,49 @@
-.playlist-modal{
-    position: fixed;
-    border: 2px solid var(--secondary-color);
-    top: 18rem;
-    left: 36rem;
-    display: flex;
-    flex-direction: column;
-    min-height: 10rem;
-    width: 15rem;
-    background-color: var(--primary-color);
+.playlist-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(54, 32, 32, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 7;
 }
-.modal-close{
-    padding: 2px 4px;
-    color: var(--secondary-color);
+.modal-container {
+  border: 1px solid black;
+  padding: 1rem 2rem;
 }
-.playlist-btn{
-    border: none;
-    padding:8px 5px;
-    color: var(--secondary-color);
-    text-transform: uppercase;
-    cursor: pointer;
+.playlist-input {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
-.playlists-title{
-    color: var(--secondary-color);
-    margin: 8px;
-    font-size: 1.2rem;
+
+.modal-close {
+    position: absolute;
+    padding: 3px;
+    top: 0;
+    right: 0;
+  color: var(--secondary-color);
 }
-.playlist-input{
-    border: 1px solid var(--secondary-color);
-    width: 100%;
-    padding: 8px 0;
+.playlist-btn {
+  margin-top: 1rem;
+  border: none;
+  padding: 8px 5px;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  background-color:var(--secondary-color);
+}
+.playlists-title {
+  color: var(--secondary-color);
+  margin: 8px;
+  font-size: 1.2rem;
+}
+.playlist-input {
+  border: 1px solid var(--secondary-color);
+  width: 100%;
+  padding: 8px 0;
 }

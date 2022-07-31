@@ -16,12 +16,12 @@ export const Profile = () => {
   return (
     <div className="profile">
       <div className="card card-simple">
-        <p className="card-title">Your Profile</p>
-        <p className="card-desc">
+        <p className="profile-desc">Your Profile</p>
+        <p className="profile-desc">
           Name : {user.firstName} {user.lastName}
         </p>
-        <p className="card-desc">Email : {user.email}</p>
-        <button className="card-btn" onClick={logout}>Logout</button>
+        <p className="profile-desc">Email : {user.email}</p>
+        <button className="card-btn profile-logout" onClick={logout}>Logout</button>
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 .sidebar {
   position: fixed;
-  min-width: 14rem;
+  width: 14rem;
   height: 100vh;
   border-right: 2px solid var(--secondary-color);
-     
+  background-color: var(--primary-color);   
+  top: 4rem;
 }
 
 .sidebar-item {
@@ -36,4 +37,9 @@
 .sidebar-link:hover {
   background-color: var(--secondary-color);
   color: var(--primary-color);
+}
+@media screen and (max-width: 700px) {
+.sidebar{
+    display: none;
+}
 }

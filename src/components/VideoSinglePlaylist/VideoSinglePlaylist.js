@@ -36,7 +36,7 @@ export const VideoSinglePlaylist = () => {
     [];
 
   return (
-    <div className="video-liked ">
+    <div className="video-single-playlists ">
       {singlePlaylist.length === 0 && (
         <div>
           There is no videos here{" "}
@@ -50,31 +50,27 @@ export const VideoSinglePlaylist = () => {
           Clear All
         </button>
       )}
-      <div className="video-liked-card">
-        {singlePlaylist.map(({ thumbnail, title, description, _id }) => {
+      <div className="single-playlist-card">
+        {singlePlaylist.map(({ thumbnail, title, _id }) => {
           return (
-            <div className="card card-horizontal card-video-like" key={_id}>
-              <span
-                className="remove-liked"
-                onClick={() => removeVideoHandler(_id)}
-              >
-                x
-              </span>
-              <Link to={`/video/${_id}`}>
-                <img
-                  src={thumbnail}
-                  alt={title}
-                  className="card-logo card-horizontal-logo"
-                />
-              </Link>
-              <div className="card-horizontal-content">
-                <p className="card-title limit-text ">{title}</p>
-                <p className="card-desc limit-text">{description}</p>
+           
+             <div className="card card-image" key={_id}>
+                <Link to={`/video/${_id}`}>
+                  <img src={thumbnail} alt={title} className="card-logo" />
+                </Link>
+                <p className="card-title single-playlist-title">{title}</p>
+                <button
+                  className="btn btn-success single-playlist-remove"
+                  onClick={() => removeVideoHandler(_id)}
+                >
+                  remove
+                </button>
               </div>
-            </div>
           );
         })}
       </div>
     </div>
   );
 };
+
+

@@ -1,11 +1,12 @@
 .video-watch-later {
-  width: 70%;
   position: absolute;
-  right: 0;
   top: 1.3rem;
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-left: 14rem;
+  background-color: var(--primary-color);
+  min-height: inherit;
 }
 
 .watch-later-title {
@@ -19,4 +20,13 @@
 .watch-later-remove {
   background-color: var(--secondary-color);
   color: var(--primary-color);
+}
+.watch-later-remove{
+  width: 100%;
+}
+
+@media screen and (max-width: 700px) {
+.video-watch-later{
+  margin-left: revert;
+}
 }
