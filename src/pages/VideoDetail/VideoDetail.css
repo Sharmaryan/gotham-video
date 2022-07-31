@@ -1,13 +1,15 @@
 .video-detail {
-  margin-top: 4rem;
+  margin-top: 3rem;
   display: flex;
   position: relative;
+  height: 100vh;
+  background-color: var(--primary-color);
 }
 .video-container {
-  width: 70%;
-  position: absolute;
-  right: 0;
-  top: 1.3rem;
+  background-color: var(--primary-color);
+  margin-left: 14rem;
+  top: 1rem;
+  width: 90%;
 }
 .video-title {
   font-size: 1.3rem;
@@ -53,4 +55,15 @@
 }
 .video-desc {
   color: var(--secondary-color);
+}
+
+.avatar-round {
+  z-index: revert;
+}
+
+@media screen and (max-width: 700px) {
+  .video-container {
+    width: 100%;
+      margin-left: revert;
+  }
 }
