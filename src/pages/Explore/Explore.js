@@ -1,5 +1,5 @@
 import React from "react";
-import { VideoCards, VideoCategories, Sidebar } from "components";
+import { VideoCards, VideoCategories, Sidebar, MobileSidebar } from "components";
 import "./Explore.css";
 export const Explore = () => {
   return (
@@ -10,6 +10,7 @@ export const Explore = () => {
       <VideoCategories />
       <VideoCards />
       </div>
+      <MobileSidebar/>
     </div>
   );
 };
