@@ -1,10 +1,34 @@
-.single-playlist{
-   width: 70%;
+.video-single-playlists{
+ margin-left: 14rem;
   position: absolute;
-  right: 0;
+  top: 1.3rem;
+  background-color: var(--primary-color);
+  min-height: inherit;
 }
-.video-liked-card{
-  display: flex;
+
+.single-playlist-card{
+    display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
   margin-top: 1rem;
+}
+.single-playlist-title{
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.single-playlist-remove{
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  width: 100%;
+  margin: 0;
+}
+
+@media screen and (max-width: 700px) {
+.video-single-playlists{
+  margin-left: revert;
+}
 }
