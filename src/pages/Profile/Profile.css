@@ -1,9 +1,14 @@
-.profile{
-    height: 100vh;
-    display: flex;;
-    justify-content: center;
-    align-items: center;
+.profile {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
 }
-.card-simple{
-    width: 18rem;
+.card-simple {
+  width: 18rem;
+  border: 1px solid var(--secondary-color);
+}
+.profile-logout{
+    background-color: var(--secondary-color);
 }
