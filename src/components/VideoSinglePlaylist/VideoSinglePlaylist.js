@@ -13,6 +13,7 @@ export const VideoSinglePlaylist = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
+  const { theme } = useSelector((state) => state.theme);
   const { playlists } = useSelector((state) => state.videos);
 
   const removeVideoHandler = (_id) => {
@@ -39,8 +40,7 @@ export const VideoSinglePlaylist = () => {
     <div className="video-single-playlists ">
       {singlePlaylist.length === 0 && (
         <div>
-          There is no videos here{" "}
-          <Link to="/explore" className="btn btn-explore">
+          <Link to="/explore" className={`${theme}btn btn-explore`}>
             Explore Videos
           </Link>
         </div>
@@ -50,11 +50,11 @@ export const VideoSinglePlaylist = () => {
           Clear All
         </button>
       )}
-      <div className="single-playlist-card">
+      <div className={`single-playlist-card ${theme}`}>
         {singlePlaylist.map(({ thumbnail, title, _id }) => {
           return (
            
-             <div className="card card-image" key={_id}>
+             <div className={`card card-image ${theme}`} key={_id}>
                 <Link to={`/video/${_id}`}>
                   <img src={thumbnail} alt={title} className="card-logo" />
                 </Link>

@@ -7,3 +7,13 @@
     margin: 0;
     height: 25rem;
 }
+
+.dark{
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.light{
+  background-color: white;
+  /* color: rgb(245, 193, 22); */
+}

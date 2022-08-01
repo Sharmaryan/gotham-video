@@ -28,6 +28,7 @@ export const VideoDetail = () => {
   const navigate = useNavigate();
   const { title, views, description, thumbnail, duration, _id, creator } =
     singleVideoDetail ?? {};
+  const {theme} = useSelector((state) => state.theme);
 
   useEffect(() => {
     (async () => {
@@ -67,10 +68,10 @@ export const VideoDetail = () => {
   };
 
   return (
-    <div className="video-detail">
+    <div className={`video-detail ${theme}`}>
       <Sidebar />
       {singleVideoDetail && (
-        <div className="video-container">
+        <div className={`video-container ${theme}`}>
           {showModal && (
             <PlaylistModal
               singleVideoDetail={singleVideoDetail}

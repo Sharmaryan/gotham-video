@@ -17,6 +17,7 @@ export const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+    const { theme } = useSelector((state) => state.theme);
   const from = location.state?.from?.pathname || "/";
   const { user } = useSelector((state) => state.auth);
   const signupHandler = async (e) => {
@@ -34,7 +35,7 @@ export const Signup = () => {
   }, [user, from, navigate]);
 
   return (
-    <div className="signup-section">
+    <div className={`signup-section ${theme}`}>
       <div className="signup-form">
         <h2 className="signup-form-title">signup</h2>
         <form>

@@ -8,7 +8,7 @@ export const VideoLike = () => {
   const { likedVideos } = useSelector((state) => state.videos);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+   const { theme } = useSelector((state) => state.theme);
   const videoDislikeHandler = (videoId) => {
     dispatch(dislikeVideo({ videoId, auth }))
       .unwrap()
@@ -16,11 +16,10 @@ export const VideoLike = () => {
   };
 
   return (
-    <div className="video-liked ">
+    <div className={`video-liked ${theme}`}>
       {likedVideos.length === 0 && (
         <div>
-          There is no videos here{" "}
-          <Link to="/explore" className="btn btn-explore">
+          <Link to="/explore" className={`btn btn-explore ${theme}`}>
             Explore Videos
           </Link>
         </div>
@@ -28,7 +27,7 @@ export const VideoLike = () => {
       { likedVideos?.map(({ thumbnail, title, _id }) => {
           const videoId = _id;
           return (
-            <div className="card card-image" key={_id}>
+            <div className={`card card-image ${theme}`} key={_id}>
               <Link to={`/video/${_id}`}>
                 <img src={thumbnail} alt={title} className="card-logo" />
               </Link>

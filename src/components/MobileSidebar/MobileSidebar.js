@@ -3,10 +3,12 @@ import "./MobileSidebar.css";
 import { Link } from "react-router-dom";
 import { BiLike, BiPlayCircle, BiHome, BiHistory } from "react-icons/bi";
 import { CgTimer } from "react-icons/cg";
+import { useSelector } from "react-redux";
 import { MdOutlineExplore } from "react-icons/md";
 export const MobileSidebar = () => {
+  const { theme } = useSelector((state) => state.theme);
   return (
-    <div className="mobile-sidebar">
+    <div className={`${theme} mobile-sidebar`}>
       <Link className="mobile-links" to="/">
         <BiHome className="mobile-icons" />
       </Link>

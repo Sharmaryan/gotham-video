@@ -5,6 +5,7 @@ import {
   AiFillLinkedin,
   AiFillTwitterCircle,
 } from "react-icons/ai";
+import { useSelector } from "react-redux";
 export const Social = () => {
   const icons = [
     {
@@ -24,16 +25,19 @@ export const Social = () => {
     },
   ];
 
+  const {theme} = useSelector((state) => state.theme);
+
   return (
-    <div className="social">
-      <p className="social-heading text-sm text-center">connect with me</p>
-      <ul className="social-icons">
+    <div className={`social ${theme}`}>
+      <p className={`social-heading text-sm text-center ${theme}`}>connect with me</p>
+      <ul className={`social-icons ${theme}`}>
         {icons.map(({ id, icon, socialLink }) => {
           return (
             <div key={id}>
-              <li className="social-icon text-m">
-                
-                <a href={socialLink} className='icon-color'>{icon}</a>
+              <li className={`social-icon text-m ${theme}`}>
+                <a href={socialLink} className={`icon-color ${theme}`}>
+                  {icon}
+                </a>
               </li>
             </div>
           );

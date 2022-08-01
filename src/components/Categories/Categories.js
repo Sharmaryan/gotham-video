@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   spiderman,
   hulk,
@@ -10,8 +10,10 @@ import {
   blackPanther,
 } from "features/filterVideosSlice";
 
+
 export const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const {theme} = useSelector((state) => state.theme);
   const videoDispatch = useDispatch();
 
   useEffect(() => {
@@ -34,12 +36,12 @@ export const Categories = () => {
 
   return (
     <div>
-      <h2 className="text-sm text-center categories-heading">categories</h2>
+      <h2 className={`text-sm text-center categories-heading ${theme}`}>categories</h2>
 
-      <div className="categories">
+      <div className={`categories ${theme}`}>
         {categories.map(({ image, altText, title, id, dispatch }) => {
           return (
-            <div className="category" key={id}>
+            <div className={`category ${theme}`} key={id}>
               <Link
                 to="/explore"
                 className="text-decorations text-white title"

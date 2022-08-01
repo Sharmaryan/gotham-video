@@ -7,11 +7,12 @@ import { addVideoToHistory } from "features/videosSlice";
 export const VideoCard = ({ ...video }) => {
   const { _id, title,  thumbnail} = video;
   const auth = useSelector((state) => state.auth)
+  const {theme} = useSelector((state) => state.theme);
   const dispatch = useDispatch(); 
 
   return (
-    <div className="videocard">
-      <div className="card card-vertical">
+    <div className={`videocard ${theme}`}>
+      <div className={`card card-vertical ${theme}`}>
         <Link to={`/video/${_id}`}>
           <img
             src={thumbnail}
