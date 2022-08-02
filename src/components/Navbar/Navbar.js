@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { FaUserCircle } from "react-icons/fa";
@@ -25,6 +25,10 @@ export const Navbar = () => {
   const searchClickedHandler = () => {
     setSearchClicked(true);
   };
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme)
+  },[theme])
 
   return (
     <>
@@ -108,72 +112,3 @@ export const Navbar = () => {
   );
 };
 
-// <nav className={`nav-menu navbar ${theme}`}>
-//   <ul>
-//     <li className={`menu-items ${theme}`}>
-//       <Link
-//         to="/"
-//         className={`text-decorations text-white nav-logo ${theme}`}
-//       >
-//         Clipz
-//       </Link>
-//     </li>
-
-//     <li className={`menu-items ${theme}`}>
-//       <Link
-//         to="/"
-//         className={`text-decorations text-white nav-logo menu-home ${theme}`}
-//       >
-//         Home
-//       </Link>
-//     </li>
-
-//     <li className={`menu-items fas-icons ${theme}`}>
-//       <Link
-//         to="/explore"
-//         className={`text-decorations text-white menu-explore ${theme}`}
-//       >
-//         Explore
-//       </Link>
-//     </li>
-//   </ul>
-//   {pathname === "/explore" && <SearchBar />}
-
-//   <div className="menu">
-//     <ul>
-//       <li className={`menu-items ${theme}`}>
-//         {pathname === "/explore" && (
-//           <BiSearchAlt2 className="search-icon" onClick={searchClickedHandler}/>
-//         )}
-//       </li>
-
-//       <li className={`menu-items ${theme}`}>
-//         {user ? (
-//           <Link
-//             to="/profile"
-//             className={`text-decorations text-white ${theme}`}
-//           >
-//             <FaUserCircle />
-//           </Link>
-//         ) : (
-//           <Link
-//             to="/login"
-//             className={`text-decorations text-white ${theme}`}
-//           >
-//             <BiLogIn />
-//           </Link>
-//         )}
-//       </li>
-//       <li className={`menu-items ${theme}`}>
-//         {theme === "dark" ? (
-//           <BsFillSunFill onClick={lightModeHandler} />
-//         ) : (
-//           <BsFillMoonFill
-//             onClick={darkModeHandler}
-//             className="light-icon"
-//           />
-//         )}
-//       </li>
-//     </ul>
-//   </div>
-// </nav>
