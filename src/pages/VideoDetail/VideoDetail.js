@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams,useLocation } from "react-router-dom";
 import { BiLike, BiPlayCircle, BiTime } from "react-icons/bi";
 import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
@@ -26,6 +26,7 @@ export const VideoDetail = () => {
   const dispatch = useDispatch();
   const { videoId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { title, views, description, thumbnail, duration, _id, creator } =
     singleVideoDetail ?? {};
   const {theme} = useSelector((state) => state.theme);
@@ -46,7 +47,7 @@ export const VideoDetail = () => {
       ? dispatch(likeVideo({ auth, singleVideoDetail }))
           .unwrap()
           .then(() => toast.success("Added to Liked Videos"))
-      : navigate("/login");
+      : navigate("/login",{ state: { from : location } });
   };
   const unlikeVideosHandler = () => {
     dispatch(dislikeVideo({ videoId, auth }))
@@ -59,7 +60,7 @@ export const VideoDetail = () => {
       ? dispatch(watchLater({ auth, singleVideoDetail }))
           .unwrap()
           .then(() => toast.success("Added to Watch Later"))
-      : navigate("/login");
+      : navigate("/login", { state: { from: location } });
   };
   const removeWatchLaterHandler = () => {
     dispatch(removeWatchLater({ videoId, auth }))
@@ -131,7 +132,7 @@ export const VideoDetail = () => {
             <div
               className="video-playlist video"
               onClick={() =>
-                auth.user ? setShowModal(true) : navigate("/login")
+                auth.user ? setShowModal(true) : navigate("/login",{ state: { from : location } })
               }
             >
               <BiPlayCircle className="video-icons" />{" "}
