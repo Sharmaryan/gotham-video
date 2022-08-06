@@ -6,7 +6,7 @@ import {
   removeVideosFromPlaylists,
   clearAllVideosFromSinglePlaylist,
 } from "features/videosSlice";
-import { toast } from "react-toastify";
+import { useToast } from "hooks/useToast";
 
 export const VideoSinglePlaylist = () => {
   const { playlistId } = useParams();
@@ -15,12 +15,13 @@ export const VideoSinglePlaylist = () => {
   const auth = useSelector((state) => state.auth);
   const { theme } = useSelector((state) => state.theme);
   const { playlists } = useSelector((state) => state.videos);
+  const { showToast } = useToast();
 
   const removeVideoHandler = (_id) => {
     const singleVideoId = _id;
     dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth }))
       .unwrap()
-      .then(() => toast.warn("Removed from playlist"));
+      .then(() => showToast('warn',"Removed from playlist"));
   };
 
   const clearAllVideosHandler = () => {
@@ -28,7 +29,7 @@ export const VideoSinglePlaylist = () => {
       .unwrap()
       .then(() => {
         navigate("/playlists");
-        toast.warn("Playlist Deleted");
+        showToast('warn',"Playlist Deleted");
       });
   };
 

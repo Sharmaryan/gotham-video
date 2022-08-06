@@ -3,16 +3,17 @@ import { Link } from "react-router-dom";
 import "./VideoLike.css";
 import { useSelector, useDispatch } from "react-redux";
 import { dislikeVideo } from "features/videosSlice";
-import { toast } from "react-toastify";
+import { useToast } from "hooks/useToast";
 export const VideoLike = () => {
   const { likedVideos } = useSelector((state) => state.videos);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
    const { theme } = useSelector((state) => state.theme);
+   const { showToast } = useToast();
   const videoDislikeHandler = (videoId) => {
     dispatch(dislikeVideo({ videoId, auth }))
       .unwrap()
-      .then(() => toast.warn("Removed from Liked Videos"));
+      .then(() => showToast('warn',"Removed from Liked Videos"));
   };
 
   return (

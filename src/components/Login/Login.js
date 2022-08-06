@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { login } from "features/authSlice";
-// import { BiShow, BiHide } from "react-icons/bi";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { formChangeHandler } from "utils/formHandler";
+import { useToast } from "hooks/useToast";
 export const Login = () => {
   const dispatch = useDispatch();
 
@@ -14,14 +13,14 @@ export const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const { user } = useSelector((state) => state.auth);
-
+  const { showToast } = useToast();
 
   const loginHandler = async (e) => {
     e.preventDefault();
     dispatch(login(form))
       .unwrap()
-      .then(() => toast.success("Successfully logged In"))
-      .catch(() => toast.error("something went wrong"));
+      .then(() => showToast("success", "Successfully logged In"))
+      .catch(() => showToast("error", "Successfully Went Wrong"));
   };
 
   const guestLoginHandler = async (e) => {
@@ -30,8 +29,8 @@ export const Login = () => {
       login({ email: "adarshbalika@gmail.com", password: "adarshBalika123" })
     )
       .unwrap()
-      .then(() => toast.success("Successfully logged In"))
-      .catch(() => toast.error("something went wrong"));
+      .then(() => showToast("success", "Successfully logged In"))
+      .catch(() => showToast("error", "Successfully Went Wrong"));
   };
 
   useEffect(() => {
@@ -43,11 +42,7 @@ export const Login = () => {
   return (
     <div className="login-form">
       <h2 className="login-title">login</h2>
-      <form
-        onSubmit={(e) =>
-          loginHandler(e, navigate, from)
-        }
-      >
+      <form onSubmit={(e) => loginHandler(e, navigate, from)}>
         <label htmlFor="email">
           Email
           <input

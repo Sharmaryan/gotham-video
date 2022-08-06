@@ -3,17 +3,19 @@ import "./VideoWatchLater.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeWatchLater } from "features/videosSlice";
-import {toast} from 'react-toastify';
+import { useToast } from "hooks/useToast";
 export const VideoWatchLater = () => {
-  
-const {watchLaterVideos} = useSelector((state) => state.videos);
-const auth = useSelector((state) => state.auth);
-   const { theme } = useSelector((state) => state.theme);
-const dispatch = useDispatch();
+  const { watchLaterVideos } = useSelector((state) => state.videos);
+  const auth = useSelector((state) => state.auth);
+  const { theme } = useSelector((state) => state.theme);
+  const { showToast } = useToast();
+  const dispatch = useDispatch();
 
-const removeWatchLaterHandler = (videoId) => {
-  dispatch(removeWatchLater({ videoId, auth })).unwrap().then(() => toast.warn('Removed from Watch Later'));
-}
+  const removeWatchLaterHandler = (videoId) => {
+    dispatch(removeWatchLater({ videoId, auth }))
+      .unwrap()
+      .then(() => showToast("warn", "Removed from Watch Later"));
+  };
 
   return (
     <div className={`${theme} video-watch-later`}>

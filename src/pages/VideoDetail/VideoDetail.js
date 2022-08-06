@@ -14,7 +14,7 @@ import {
   removeWatchLater,
   watchLater,
 } from "features/videosSlice";
-import { toast } from "react-toastify";
+import { useToast } from "hooks/useToast";
 import { useTitle } from "hooks/useTitle";
 
 export const VideoDetail = () => {
@@ -31,6 +31,7 @@ export const VideoDetail = () => {
   const { title, views, description, thumbnail, duration, _id, creator } =
     singleVideoDetail ?? {};
   const {theme} = useSelector((state) => state.theme);
+  const { showToast } = useToast();
   useTitle("Video | Clipz");
 
   useEffect(() => {
@@ -48,26 +49,26 @@ export const VideoDetail = () => {
     auth.user
       ? dispatch(likeVideo({ auth, singleVideoDetail }))
           .unwrap()
-          .then(() => toast.success("Added to Liked Videos"))
+          .then(() => showToast('success',"Added to Liked Videos"))
       : navigate("/login",{ state: { from : location } });
   };
   const unlikeVideosHandler = () => {
     dispatch(dislikeVideo({ videoId, auth }))
       .unwrap()
-      .then(() => toast.warn("Removed from Liked Videos"));
+      .then(() => showToast('warn',"Removed from Liked Videos"));
   };
 
   const watchLaterHandler = () => {
     auth.user
       ? dispatch(watchLater({ auth, singleVideoDetail }))
           .unwrap()
-          .then(() => toast.success("Added to Watch Later"))
+          .then(() => showToast('success',"Added to Watch Later"))
       : navigate("/login", { state: { from: location } });
   };
   const removeWatchLaterHandler = () => {
     dispatch(removeWatchLater({ videoId, auth }))
       .unwrap()
-      .then(() => toast.warn(" Removed from Watch Later"));
+      .then(() => showToast('warn'," Removed from Watch Later"));
   };
 
   return (

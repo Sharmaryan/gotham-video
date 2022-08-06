@@ -6,17 +6,21 @@ import {
   removeVideosFromPlaylists,
 } from "features/videosSlice";
 import "./PlaylistModal.css";
-import { toast } from "react-toastify";
-import {ImCross} from 'react-icons/im';
+import { ImCross } from "react-icons/im";
+import { useToast } from "hooks/useToast";
 
-
-export const PlaylistModal = ({ singleVideoDetail, setShowModal, showModal }) => {
+export const PlaylistModal = ({
+  singleVideoDetail,
+  setShowModal,
+  showModal,
+}) => {
   const auth = useSelector((state) => state.auth);
   const { playlists } = useSelector((state) => state.videos);
   const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [playListTitle, setPlayListTitle] = useState("");
   const ref = useRef();
+  const { showToast } = useToast();
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
@@ -35,21 +39,21 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal, showModal }) =>
     if (e.target.checked) {
       dispatch(addVideosToPlaylists({ _id, singleVideoDetail, auth }))
         .unwrap()
-        .then(() => toast.success("Added to playlist"));
+        .then(() => showToast("success", "Added to playlist"));
     } else {
       const singleVideoId = singleVideoDetail._id;
       const playlistId = _id;
       dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth }))
         .unwrap()
-        .then(() => toast.warn("Removed from playlist"));
+        .then(() => showToast("warn", "Removed from playlist"));
     }
   };
 
   const createPlaylistHandler = () => {
     dispatch(createPlaylists({ auth, playListTitle }))
-    .unwrap()
-    .then(() => toast.success("Playlist Created"));
-    setPlayListTitle('');
+      .unwrap()
+      .then(() => showToast("success", "Playlist Created"));
+    setPlayListTitle("");
   };
 
   return (
@@ -87,7 +91,9 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal, showModal }) =>
             create
           </button>
         ) : (
-          <button className="playlist-btn disable-btn " disabled={true}>create</button>
+          <button className="playlist-btn disable-btn " disabled={true}>
+            create
+          </button>
         )}
       </div>
     </div>

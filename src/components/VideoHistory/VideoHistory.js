@@ -6,23 +6,24 @@ import {
   removeVideoFromHistory,
   clearAllVideosFromHistory,
 } from "features/videosSlice";
-import { toast } from "react-toastify";
+import { useToast } from "hooks/useToast";
+
 export const VideoHistory = () => {
   const { historyVideos } = useSelector((state) => state.videos);
   const auth = useSelector((state) => state.auth);
   const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
-
+const { showToast } = useToast();
   const removeVideoFromHistoryHandler = (_id) => {
     dispatch(removeVideoFromHistory({ _id, auth }))
       .unwrap()
-      .then(() => toast.warn("Video Removed"));
+      .then(() => showToast('warn',"Video Removed"));
   };
 
   const clearAllVideosFromHistoryHandler = () => {
     dispatch(clearAllVideosFromHistory(auth))
       .unwrap()
-      .then(() => toast.warn("History Cleared"));
+      .then(() => showToast('warn',"History Cleared"));
   };
 
   return (
