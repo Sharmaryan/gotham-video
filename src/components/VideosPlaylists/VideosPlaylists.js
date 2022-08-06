@@ -10,17 +10,17 @@ export const VideosPlaylists = () => {
   
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+   const { theme } = useSelector((state) => state.theme);
 
   useEffect(() => {
     dispatch(getPlaylists({auth}));
   }, [dispatch, auth]);
 
   return (
-    <div className="videos-playlists">
+    <div className= {`${theme} videos-playlists`}>
       {playlists?.length === 0 && (
         <div>
-          There is no videos here{" "}
-          <Link to="/explore" className="btn btn-explore">
+          <Link to="/explore" className={`btn btn-explore ${theme}`}>
             Explore Videos
           </Link>
         </div>
@@ -28,7 +28,7 @@ export const VideosPlaylists = () => {
       {playlists?.map((playlist) => {
         const { title, _id, videos } = playlist;
         return (
-          <div className="playlist-card" key={_id}>
+          <div className={`${theme} playlist-card`} key={_id}>
             <Link to={`/playlists/${_id}`}>
               <img
                 className="playlist-image"

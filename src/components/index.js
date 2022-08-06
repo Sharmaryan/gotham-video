@@ -17,3 +17,5 @@ export {PlaylistModal} from './PlaylistModal/PlaylistModal';
 export {VideosPlaylists} from './VideosPlaylists/VideosPlaylists';
 export {VideoSinglePlaylist} from './VideoSinglePlaylist/VideoSinglePlaylist';
 export {MobileSidebar} from './MobileSidebar/MobileSidebar';
+export {SearchBar} from './SearchBar/SearchBar';
+export {NavbarMobileSearch} from './NavbarMobileSearch/NavbarMobileSearch';

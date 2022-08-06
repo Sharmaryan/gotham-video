@@ -12,13 +12,10 @@
   z-index: 7;
 }
 .modal-container {
-  border: 1px solid black;
   padding: 1rem 2rem;
 }
-.playlist-input {
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
-}
+
+
 
 .modal-close {
     position: absolute;
@@ -36,6 +33,10 @@
   cursor: pointer;
   width: 100%;
   background-color:var(--secondary-color);
+}
+.disable-btn{
+  cursor: none;
+  background-color: rgb(78, 88, 85);
 }
 .playlists-title {
   color: var(--secondary-color);

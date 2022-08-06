@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { createPlaylists } from "features/videosSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,41 +6,61 @@ import {
   removeVideosFromPlaylists,
 } from "features/videosSlice";
 import "./PlaylistModal.css";
-import { toast } from "react-toastify";
-import {ImCross} from 'react-icons/im';
+import { ImCross } from "react-icons/im";
+import { useToast } from "hooks/useToast";
 
-export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
+export const PlaylistModal = ({
+  singleVideoDetail,
+  setShowModal,
+  showModal,
+}) => {
   const auth = useSelector((state) => state.auth);
   const { playlists } = useSelector((state) => state.videos);
+  const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [playListTitle, setPlayListTitle] = useState("");
+  const ref = useRef();
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (showModal && ref.current && !ref.current.contains(e.target)) {
+        setShowModal(false);
+      }
+    };
+    document.addEventListener("mousedown", checkIfClickedOutside);
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [showModal, setShowModal]);
 
   const handlePlaylistInput = (e) => setPlayListTitle(e.target.value);
   const playlistChangeHandler = (e, _id) => {
     if (e.target.checked) {
       dispatch(addVideosToPlaylists({ _id, singleVideoDetail, auth }))
         .unwrap()
-        .then(() => toast.success("Added to playlist"));
+        .then(() => showToast("success", "Added to playlist"));
     } else {
       const singleVideoId = singleVideoDetail._id;
       const playlistId = _id;
       dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth }))
         .unwrap()
-        .then(() => toast.warn("Removed from playlist"));
+        .then(() => showToast("warn", "Removed from playlist"));
     }
   };
 
   const createPlaylistHandler = () => {
     dispatch(createPlaylists({ auth, playListTitle }))
       .unwrap()
-      .then(() => toast.success("Playlist Created"));
+      .then(() => showToast("success", "Playlist Created"));
+    setPlayListTitle("");
   };
 
   return (
     <div className="playlist-modal">
-      <div className="modal-container">
+      <div className={`${theme} modal-container`} ref={ref}>
         <div className="modal-close" onClick={() => setShowModal(false)}>
-          <ImCross/>
+          <ImCross />
         </div>
         {playlists?.map((item) => (
           <div key={item._id}>
@@ -61,13 +81,20 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
             type="text"
             placeholder="create playlist"
             id="playlist"
-            className="playlist-input"
+            className={`${theme} playlist-input`}
             onChange={handlePlaylistInput}
+            value={playListTitle}
           />
         </label>
-        <button className="playlist-btn" onClick={createPlaylistHandler}>
-          create
-        </button>
+        {playListTitle ? (
+          <button className="playlist-btn" onClick={createPlaylistHandler}>
+            create
+          </button>
+        ) : (
+          <button className="playlist-btn disable-btn " disabled={true}>
+            create
+          </button>
+        )}
       </div>
     </div>
   );

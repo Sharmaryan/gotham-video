@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--primary-color);
 }
 .card-simple {
   width: 18rem;

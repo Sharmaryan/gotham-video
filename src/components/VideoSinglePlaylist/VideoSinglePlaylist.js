@@ -6,20 +6,22 @@ import {
   removeVideosFromPlaylists,
   clearAllVideosFromSinglePlaylist,
 } from "features/videosSlice";
-import { toast } from "react-toastify";
+import { useToast } from "hooks/useToast";
 
 export const VideoSinglePlaylist = () => {
   const { playlistId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
+  const { theme } = useSelector((state) => state.theme);
   const { playlists } = useSelector((state) => state.videos);
+  const { showToast } = useToast();
 
   const removeVideoHandler = (_id) => {
     const singleVideoId = _id;
     dispatch(removeVideosFromPlaylists({ playlistId, singleVideoId, auth }))
       .unwrap()
-      .then(() => toast.warn("Removed from playlist"));
+      .then(() => showToast('warn',"Removed from playlist"));
   };
 
   const clearAllVideosHandler = () => {
@@ -27,7 +29,7 @@ export const VideoSinglePlaylist = () => {
       .unwrap()
       .then(() => {
         navigate("/playlists");
-        toast.warn("Playlist Deleted");
+        showToast('warn',"Playlist Deleted");
       });
   };
 
@@ -39,8 +41,7 @@ export const VideoSinglePlaylist = () => {
     <div className="video-single-playlists ">
       {singlePlaylist.length === 0 && (
         <div>
-          There is no videos here{" "}
-          <Link to="/explore" className="btn btn-explore">
+          <Link to="/explore" className={`${theme}btn btn-explore`}>
             Explore Videos
           </Link>
         </div>
@@ -50,11 +51,11 @@ export const VideoSinglePlaylist = () => {
           Clear All
         </button>
       )}
-      <div className="single-playlist-card">
+      <div className={`single-playlist-card ${theme}`}>
         {singlePlaylist.map(({ thumbnail, title, _id }) => {
           return (
            
-             <div className="card card-image" key={_id}>
+             <div className={`card card-image ${theme}`} key={_id}>
                 <Link to={`/video/${_id}`}>
                   <img src={thumbnail} alt={title} className="card-logo" />
                 </Link>

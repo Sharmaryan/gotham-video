@@ -10,10 +10,12 @@
   font-size: 1.1rem;
   font-weight: 400;
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; 
+           line-clamp: 2;
+   -webkit-box-orient: vertical;
+   height: 2.5rem;
 }
 
 

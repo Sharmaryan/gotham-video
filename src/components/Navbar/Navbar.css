@@ -18,24 +18,19 @@
 .text-decorations{
     color: var(--secondary-color);  
 }
-.search{
-border: 2px solid var(--secondary-color);
-padding: 5px;
-border-radius: 0;
-}
-.search-bar{
-    background-color: var(--secondary-color)
-}
-.fa-search{
-    color: var(--secondary-color);
-    background-color: red;
-}
 .menu-items{
     font-size: 1.1rem;
 }
 .fas-icons{
     color: var(--secondary-color);
     font-size: 1.2rem;
+}
+.light-icon{
+    color: var(--secondary-color);
+}
+
+.search-icon{
+    display: none;
 }
 
 @media screen and (max-width: 700px) {
@@ -45,5 +40,21 @@ border-radius: 0;
 .menu-home, .menu-explore{
     display: none;
 }
+.search-icon{
+    display: inline;
+}
+}
+
+@media screen and (max-width: 700px) {
+.videos{
+  justify-content: center;
+}
+.menu-home, .menu-explore{
+    display: none;
+}
+.search-icon{
+    display: inline;
+}
+
 }
 

@@ -1,21 +1,25 @@
 import React from "react";
-
 import "./Profile.css";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "features/authSlice";
+import { useTitle } from "hooks/useTitle";
+import { useToast } from "hooks/useToast";
+
 export const Profile = () => {
   const {user} = useSelector((state) => state.auth);
+  const {theme} = useSelector((state) => state.theme);
   const dispatch = useDispatch();
+  const { showToast } = useToast();
+  useTitle("Profile | Clipz");
 
   const logout = () => {
     dispatch(userLogout());
-    toast.warn("Successfully logged out!");
+    showToast('warn',"Successfully logged out!");
   };
 
   return (
-    <div className="profile">
-      <div className="card card-simple">
+    <div className={`profile ${theme}`}>
+      <div className={`card card-simple ${theme}`}>
         <p className="profile-desc">Your Profile</p>
         <p className="profile-desc">
           Name : {user.firstName} {user.lastName}

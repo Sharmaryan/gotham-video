@@ -6,26 +6,28 @@ import {
   removeVideoFromHistory,
   clearAllVideosFromHistory,
 } from "features/videosSlice";
-import { toast } from "react-toastify";
+import { useToast } from "hooks/useToast";
+
 export const VideoHistory = () => {
   const { historyVideos } = useSelector((state) => state.videos);
   const auth = useSelector((state) => state.auth);
+  const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
-
+const { showToast } = useToast();
   const removeVideoFromHistoryHandler = (_id) => {
     dispatch(removeVideoFromHistory({ _id, auth }))
       .unwrap()
-      .then(() => toast.warn("Video Removed"));
+      .then(() => showToast('warn',"Video Removed"));
   };
 
   const clearAllVideosFromHistoryHandler = () => {
     dispatch(clearAllVideosFromHistory(auth))
       .unwrap()
-      .then(() => toast.warn("History Cleared"));
+      .then(() => showToast('warn',"History Cleared"));
   };
 
   return (
-    <div className="video-history">
+    <div className={`${theme} video-history`}>
       {historyVideos.length > 0 && (
         <button
           className="btn btn-success"
@@ -36,17 +38,16 @@ export const VideoHistory = () => {
       )}
       {historyVideos.length === 0 && (
         <div>
-          There is no videos here{" "}
-          <Link to="/explore" className="btn btn-explore">
+          <Link to="/explore" className={`${theme} btn btn-explore`}>
             Explore Videos
           </Link>
         </div>
       )}
-      <div className="video-history-card">
+      <div className={`${theme} video-history-card`}>
         {historyVideos.length > 0 &&
           historyVideos.map(({ thumbnail, title, _id }) => {
             return (
-              <div className="card card-image" key={_id}>
+              <div className={`${theme} card card-image`} key={_id}>
                 <Link to={`/video/${_id}`}>
                   <img src={thumbnail} alt={title} className="card-logo" />
                 </Link>

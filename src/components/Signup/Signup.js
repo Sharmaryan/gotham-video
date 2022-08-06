@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-// import { BiShow, BiHide } from "react-icons/bi";
 import "./Signup.css";
-import { toast } from "react-toastify";
-
 import { signUp } from "features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { formChangeHandler } from "utils/formHandler";
+import { useToast } from "hooks/useToast";
 export const Signup = () => {
   const [form, setForm] = useState({
     firstName: "",
@@ -17,14 +15,16 @@ export const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { showToast } = useToast();
+    const { theme } = useSelector((state) => state.theme);
   const from = location.state?.from?.pathname || "/";
   const { user } = useSelector((state) => state.auth);
   const signupHandler = async (e) => {
     e.preventDefault();
     dispatch(signUp(form))
       .unwrap()
-      .then(() => toast.success("Successfully logged In"))
-      .catch(() => toast.error("something went wrong"));
+      .then(() => showToast('success',"Successfully logged In"))
+      .catch(() => showToast('error',"something went wrong"));
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const Signup = () => {
   }, [user, from, navigate]);
 
   return (
-    <div className="signup-section">
+    <div className={`signup-section ${theme}`}>
       <div className="signup-form">
         <h2 className="signup-form-title">signup</h2>
         <form>
@@ -85,24 +85,6 @@ export const Signup = () => {
                 value={form.password}
                 name="password"
               />
-              {/* {passwordType === "password" ? (
-                <BiShow
-                  className="password-icons"
-                  onClick={() =>
-                    dispatch({ type: "PASSWORD_VISIBILITY", payload: "text" })
-                  }
-                />
-              ) : (
-                <BiHide
-                  className="password-icons"
-                  onClick={() =>
-                    dispatch({
-                      type: "PASSWORD_VISIBILITY",
-                      payload: "password",
-                    })
-                  }
-                />
-              )} */}
             </div>
           </label>
 

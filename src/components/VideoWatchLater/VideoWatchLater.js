@@ -3,23 +3,25 @@ import "./VideoWatchLater.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeWatchLater } from "features/videosSlice";
-import {toast} from 'react-toastify';
+import { useToast } from "hooks/useToast";
 export const VideoWatchLater = () => {
-  
-const {watchLaterVideos} = useSelector((state) => state.videos);
-const auth = useSelector((state) => state.auth);
-const dispatch = useDispatch();
+  const { watchLaterVideos } = useSelector((state) => state.videos);
+  const auth = useSelector((state) => state.auth);
+  const { theme } = useSelector((state) => state.theme);
+  const { showToast } = useToast();
+  const dispatch = useDispatch();
 
-const removeWatchLaterHandler = (videoId) => {
-  dispatch(removeWatchLater({ videoId, auth })).unwrap().then(() => toast.warn('Removed from Watch Later'));
-}
+  const removeWatchLaterHandler = (videoId) => {
+    dispatch(removeWatchLater({ videoId, auth }))
+      .unwrap()
+      .then(() => showToast("warn", "Removed from Watch Later"));
+  };
 
   return (
-    <div className="video-watch-later">
+    <div className={`${theme} video-watch-later`}>
       {watchLaterVideos.length === 0 && (
         <div>
-          There is no videos here{" "}
-          <Link to="/explore" className="btn btn-explore">
+          <Link to="/explore" className={`btn btn-explore ${theme}`}>
             Explore Videos
           </Link>
         </div>
@@ -28,7 +30,7 @@ const removeWatchLaterHandler = (videoId) => {
         watchLaterVideos.map(({ thumbnail, title, _id }) => {
           const videoId = _id;
           return (
-            <div className="card card-image" key={_id}>
+            <div className={`${theme} card card-image`} key={_id}>
               <Link to={`/video/${_id}`}>
                 <img src={thumbnail} alt={title} className="card-logo" />
               </Link>

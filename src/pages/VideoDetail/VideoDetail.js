@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams,useLocation } from "react-router-dom";
 import { BiLike, BiPlayCircle, BiTime } from "react-icons/bi";
 import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
@@ -14,7 +14,8 @@ import {
   removeWatchLater,
   watchLater,
 } from "features/videosSlice";
-import { toast } from "react-toastify";
+import { useToast } from "hooks/useToast";
+import { useTitle } from "hooks/useTitle";
 
 export const VideoDetail = () => {
   const [singleVideoDetail, setSingleVideoDetail] = useState(null);
@@ -26,8 +27,12 @@ export const VideoDetail = () => {
   const dispatch = useDispatch();
   const { videoId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { title, views, description, thumbnail, duration, _id, creator } =
     singleVideoDetail ?? {};
+  const {theme} = useSelector((state) => state.theme);
+  const { showToast } = useToast();
+  useTitle("Video | Clipz");
 
   useEffect(() => {
     (async () => {
@@ -44,37 +49,38 @@ export const VideoDetail = () => {
     auth.user
       ? dispatch(likeVideo({ auth, singleVideoDetail }))
           .unwrap()
-          .then(() => toast.success("Added to Liked Videos"))
-      : navigate("/login");
+          .then(() => showToast('success',"Added to Liked Videos"))
+      : navigate("/login",{ state: { from : location } });
   };
   const unlikeVideosHandler = () => {
     dispatch(dislikeVideo({ videoId, auth }))
       .unwrap()
-      .then(() => toast.warn("Removed from Liked Videos"));
+      .then(() => showToast('warn',"Removed from Liked Videos"));
   };
 
   const watchLaterHandler = () => {
     auth.user
       ? dispatch(watchLater({ auth, singleVideoDetail }))
           .unwrap()
-          .then(() => toast.success("Added to Watch Later"))
-      : navigate("/login");
+          .then(() => showToast('success',"Added to Watch Later"))
+      : navigate("/login", { state: { from: location } });
   };
   const removeWatchLaterHandler = () => {
     dispatch(removeWatchLater({ videoId, auth }))
       .unwrap()
-      .then(() => toast.warn(" Removed from Watch Later"));
+      .then(() => showToast('warn'," Removed from Watch Later"));
   };
 
   return (
-    <div className="video-detail">
+    <div className={`video-detail ${theme}`}>
       <Sidebar />
       {singleVideoDetail && (
-        <div className="video-container">
+        <div className={`video-container ${theme}`}>
           {showModal && (
             <PlaylistModal
               singleVideoDetail={singleVideoDetail}
               setShowModal={setShowModal}
+              showModal={showModal}
             />
           )}
           <iframe
@@ -130,7 +136,7 @@ export const VideoDetail = () => {
             <div
               className="video-playlist video"
               onClick={() =>
-                auth.user ? setShowModal(true) : navigate("/login")
+                auth.user ? setShowModal(true) : navigate("/login",{ state: { from : location } })
               }
             >
               <BiPlayCircle className="video-icons" />{" "}

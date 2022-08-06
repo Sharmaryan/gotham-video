@@ -1,0 +1,14 @@
+.search{
+border: 2px solid var(--secondary-color);
+padding: 5px;
+border-radius: 0;
+}
+.search-bar{
+    background-color: var(--secondary-color)
+}
+
+@media screen and (max-width: 700px) {
+.search{
+    display: none;
+}
+}
