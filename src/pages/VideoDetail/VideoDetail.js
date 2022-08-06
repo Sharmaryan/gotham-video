@@ -77,6 +77,7 @@ export const VideoDetail = () => {
             <PlaylistModal
               singleVideoDetail={singleVideoDetail}
               setShowModal={setShowModal}
+              showModal={showModal}
             />
           )}
           <iframe

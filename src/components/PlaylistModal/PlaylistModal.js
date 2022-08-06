@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { createPlaylists } from "features/videosSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,12 +10,25 @@ import { toast } from "react-toastify";
 import {ImCross} from 'react-icons/im';
 
 
-export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
+export const PlaylistModal = ({ singleVideoDetail, setShowModal, showModal }) => {
   const auth = useSelector((state) => state.auth);
   const { playlists } = useSelector((state) => state.videos);
-  const {theme} = useSelector((state) => state.theme);
+  const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [playListTitle, setPlayListTitle] = useState("");
+  const ref = useRef();
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (showModal && ref.current && !ref.current.contains(e.target)) {
+        setShowModal(false);
+      }
+    };
+    document.addEventListener("mousedown", checkIfClickedOutside);
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [showModal, setShowModal]);
 
   const handlePlaylistInput = (e) => setPlayListTitle(e.target.value);
   const playlistChangeHandler = (e, _id) => {
@@ -39,10 +52,10 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
   };
 
   return (
-    <div className="playlist-modal">
-      <div className={`${theme} modal-container`}>
+    <div className="playlist-modal" >
+      <div className={`${theme} modal-container`} ref={ref}>
         <div className="modal-close" onClick={() => setShowModal(false)}>
-          <ImCross/>
+          <ImCross />
         </div>
         {playlists?.map((item) => (
           <div key={item._id}>
