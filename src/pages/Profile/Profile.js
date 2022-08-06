@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "features/authSlice";
 export const Profile = () => {
   const {user} = useSelector((state) => state.auth);
+  const {theme} = useSelector((state) => state.theme);
   const dispatch = useDispatch();
 
   const logout = () => {
@@ -14,8 +15,8 @@ export const Profile = () => {
   };
 
   return (
-    <div className="profile">
-      <div className="card card-simple">
+    <div className={`profile ${theme}`}>
+      <div className={`card card-simple ${theme}`}>
         <p className="profile-desc">Your Profile</p>
         <p className="profile-desc">
           Name : {user.firstName} {user.lastName}
