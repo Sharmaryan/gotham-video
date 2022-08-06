@@ -9,9 +9,11 @@ import "./PlaylistModal.css";
 import { toast } from "react-toastify";
 import {ImCross} from 'react-icons/im';
 
+
 export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
   const auth = useSelector((state) => state.auth);
   const { playlists } = useSelector((state) => state.videos);
+  const {theme} = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [playListTitle, setPlayListTitle] = useState("");
 
@@ -38,7 +40,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
 
   return (
     <div className="playlist-modal">
-      <div className="modal-container">
+      <div className={`${theme} modal-container`}>
         <div className="modal-close" onClick={() => setShowModal(false)}>
           <ImCross/>
         </div>
@@ -61,7 +63,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal }) => {
             type="text"
             placeholder="create playlist"
             id="playlist"
-            className="playlist-input"
+            className={`${theme} playlist-input`}
             onChange={handlePlaylistInput}
           />
         </label>

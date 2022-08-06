@@ -12,12 +12,7 @@
   z-index: 7;
 }
 .modal-container {
-  border: 1px solid black;
   padding: 1rem 2rem;
-}
-.playlist-input {
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
 }
 
 .modal-close {
