@@ -27,8 +27,23 @@ export const Navbar = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('theme', theme)
-  },[theme])
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    function windowSizeHandler() {
+      if (window.innerWidth > 700) {
+        setSearchClicked(false);
+      } else {
+        setSearchClicked(true);
+      }
+      setSearchClicked(false);
+    }
+    window.addEventListener("resize", windowSizeHandler);
+    return () => {
+      window.removeEventListener("resize", windowSizeHandler);
+    };
+  }, []);
 
   return (
     <>
@@ -111,4 +126,3 @@ export const Navbar = () => {
     </>
   );
 };
-
