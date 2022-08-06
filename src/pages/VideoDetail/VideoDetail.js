@@ -15,6 +15,7 @@ import {
   watchLater,
 } from "features/videosSlice";
 import { toast } from "react-toastify";
+import { useTitle } from "hooks/useTitle";
 
 export const VideoDetail = () => {
   const [singleVideoDetail, setSingleVideoDetail] = useState(null);
@@ -30,6 +31,7 @@ export const VideoDetail = () => {
   const { title, views, description, thumbnail, duration, _id, creator } =
     singleVideoDetail ?? {};
   const {theme} = useSelector((state) => state.theme);
+  useTitle("Video | Clipz");
 
   useEffect(() => {
     (async () => {

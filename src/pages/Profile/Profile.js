@@ -4,10 +4,12 @@ import "./Profile.css";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "features/authSlice";
+import { useTitle } from "hooks/useTitle";
 export const Profile = () => {
   const {user} = useSelector((state) => state.auth);
   const {theme} = useSelector((state) => state.theme);
   const dispatch = useDispatch();
+  useTitle("Profile | Clipz");
 
   const logout = () => {
     dispatch(userLogout());
