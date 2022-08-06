@@ -52,7 +52,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal, showModal }) =>
   };
 
   return (
-    <div className="playlist-modal" >
+    <div className="playlist-modal">
       <div className={`${theme} modal-container`} ref={ref}>
         <div className="modal-close" onClick={() => setShowModal(false)}>
           <ImCross />
@@ -80,9 +80,13 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal, showModal }) =>
             onChange={handlePlaylistInput}
           />
         </label>
-        <button className="playlist-btn" onClick={createPlaylistHandler}>
-          create
-        </button>
+        {playListTitle ? (
+          <button className="playlist-btn" onClick={createPlaylistHandler}>
+            create
+          </button>
+        ) : (
+          <button className="playlist-btn disable-btn " disabled={true}>create</button>
+        )}
       </div>
     </div>
   );
