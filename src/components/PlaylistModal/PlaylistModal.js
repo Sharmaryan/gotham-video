@@ -47,8 +47,9 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal, showModal }) =>
 
   const createPlaylistHandler = () => {
     dispatch(createPlaylists({ auth, playListTitle }))
-      .unwrap()
-      .then(() => toast.success("Playlist Created"));
+    .unwrap()
+    .then(() => toast.success("Playlist Created"));
+    setPlayListTitle('');
   };
 
   return (
@@ -78,6 +79,7 @@ export const PlaylistModal = ({ singleVideoDetail, setShowModal, showModal }) =>
             id="playlist"
             className={`${theme} playlist-input`}
             onChange={handlePlaylistInput}
+            value={playListTitle}
           />
         </label>
         {playListTitle ? (
